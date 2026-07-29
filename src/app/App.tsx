@@ -1042,50 +1042,11 @@ function TryOnPage({ item, onBack }: { item: { img: string; name: string }; onBa
             }}>
               {stage === "result" ? (
                 <>
-                  <div style={{
-                    width: "100%", height: "100%",
-                    background: `linear-gradient(135deg, ${ACCENT_LIGHT} 0%, #f0e6d8 50%, ${ACCENT_LIGHT} 100%)`,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    position: "relative",
-                  }}>
-                    {/* Simulated body silhouette with clothing overlay */}
-                    <div style={{ position: "relative", width: "60%", height: "80%" }}>
-                      {/* Body outline */}
-                      <div style={{
-                        position: "absolute",
-                        inset: 0,
-                        background: `radial-gradient(ellipse 50% 50% at 50% 35%, rgba(184,135,74,0.3) 0%, transparent 70%),
-                                     linear-gradient(180deg, rgba(184,135,74,0.15) 0%, rgba(184,135,74,0.25) 50%, rgba(184,135,74,0.1) 100%)`,
-                        borderRadius: "40% 40% 0 0",
-                      }} />
-                      {/* Silhouette shape */}
-                      <svg viewBox="0 0 100 140" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
-                        {/* Head */}
-                        <circle cx="50" cy="18" r="12" fill="rgba(184,135,74,0.25)" />
-                        {/* Neck */}
-                        <rect x="45" y="28" width="10" height="8" rx="3" fill="rgba(184,135,74,0.2)" />
-                        {/* Shoulders & body */}
-                        <path d="M20,38 Q10,42 12,58 L18,80 Q20,90 25,100 L75,100 Q80,90 82,80 L88,58 Q90,42 80,38 Z"
-                          fill="rgba(184,135,74,0.2)" />
-                        {/* Legs */}
-                        <rect x="30" y="100" width="16" height="38" rx="7" fill="rgba(184,135,74,0.15)" />
-                        <rect x="54" y="100" width="16" height="38" rx="7" fill="rgba(184,135,74,0.15)" />
-                      </svg>
-                    </div>
-                    {/* Sparkle effects */}
-                    {[...Array(6)].map((_, i) => (
-                      <div key={i} style={{
-                        position: "absolute",
-                        width: 4 + Math.random() * 4,
-                        height: 4 + Math.random() * 4,
-                        borderRadius: "50%",
-                        background: ACCENT,
-                        opacity: 0.5 + Math.random() * 0.5,
-                        top: `${15 + Math.random() * 70}%`,
-                        left: `${10 + Math.random() * 70}%`,
-                      }} />
-                    ))}
-                  </div>
+                  <img
+                    src="https://test-assets.tos-cn-shanghai.volces.com/videos/20260724_144306_b62fc67f.mp4?x-tos-process=video/snapshot%2Ct_1"
+                    alt="AI试衣效果"
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
                   <div style={{
                     position: "absolute",
                     top: 6,
@@ -1429,13 +1390,13 @@ function TryOnPage({ item, onBack }: { item: { img: string; name: string }; onBa
                 autoPlay
                 playsInline
                 controls
+                loop
                 style={{
                   width: "100%",
                   borderRadius: 16,
                   boxShadow: "0 10px 50px rgba(184,135,74,0.25)",
                   outline: "none",
                 }}
-                onEnded={() => setShowVideo(false)}
               />
 
               {/* Product name */}
