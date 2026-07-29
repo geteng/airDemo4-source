@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Home,
@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 
 type Tab = "home" | "wardrobe" | "recommend" | "mine";
-type SubPage = "live" | "product" | null;
+type SubPage = "live" | "product" | "tryon" | null;
 
 const ACCENT = "#b8874a";
 const ACCENT_LIGHT = "#f5ede0";
@@ -200,7 +200,7 @@ const wardrobeItems = [
   { id: 6, img: IMG.wardrobe6, name: "白色Polo领针织", date: "2026.5", times: 3 },
 ];
 
-function WardrobePage() {
+function WardrobePage({ onGoTryOn }: { onGoTryOn: (item: (typeof wardrobeItems)[0]) => void }) {
   const [activeCategory, setActiveCategory] = useState("上衣");
   return (
     <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%" }}>
@@ -245,8 +245,33 @@ function WardrobePage() {
       <div style={{ padding: "0 20px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         {wardrobeItems.map(item => (
           <div key={item.id} style={{ background: CARD, borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 10px rgba(0,0,0,0.06)" }}>
-            <div style={{ height: 150, background: "#f0ebe3", overflow: "hidden" }}>
+            <div style={{ height: 150, background: "#f0ebe3", overflow: "hidden", position: "relative" }}>
               <img src={item.img} alt={item.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              {/* AI 试衣按钮 */}
+              <button
+                onClick={(e) => { e.stopPropagation(); onGoTryOn(item); }}
+                style={{
+                  position: "absolute",
+                  bottom: 8,
+                  right: 8,
+                  background: `linear-gradient(135deg, ${ACCENT}, #d4a56a)`,
+                  color: "#fff",
+                  fontFamily: font,
+                  fontSize: 11,
+                  fontWeight: 600,
+                  padding: "5px 10px",
+                  borderRadius: 14,
+                  border: "none",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 4,
+                  boxShadow: "0 2px 8px rgba(184,135,74,0.4)",
+                  zIndex: 5,
+                }}
+              >
+                <Sparkles size={11} /> AI试衣
+              </button>
             </div>
             <div style={{ padding: "10px 12px 12px" }}>
               <div style={{ fontFamily: font, fontSize: 13, fontWeight: 500, color: TEXT, marginBottom: 4, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.name}</div>
@@ -299,7 +324,7 @@ const looks = [
   },
 ];
 
-function RecommendPage({ onGoProduct }: { onGoProduct: (look: (typeof looks)[0]) => void }) {
+function RecommendPage({ onGoProduct, onGoTryOn }: { onGoProduct: (look: (typeof looks)[0]) => void; onGoTryOn: (look: (typeof looks)[0]) => void }) {
   const [activeScene, setActiveScene] = useState("通勤");
   const [likedItems, setLikedItems] = useState<Set<number>>(new Set());
   const scenes = ["通勤", "约会", "旅行"];
@@ -331,6 +356,30 @@ function RecommendPage({ onGoProduct }: { onGoProduct: (look: (typeof looks)[0])
                 style={{ position: "absolute", top: 14, right: 14, width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.2)", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)" }}
               >
                 <Heart size={16} color={likedItems.has(look.id) ? "#e53935" : "#fff"} fill={likedItems.has(look.id) ? "#e53935" : "none"} />
+              </button>
+              <button
+                onClick={(e) => { e.stopPropagation(); onGoTryOn(look); }}
+                style={{
+                  position: "absolute",
+                  bottom: 14,
+                  right: 14,
+                  background: `linear-gradient(135deg, ${ACCENT}, #d4a56a)`,
+                  color: "#fff",
+                  fontFamily: font,
+                  fontSize: 11,
+                  fontWeight: 600,
+                  padding: "5px 10px",
+                  borderRadius: 14,
+                  border: "none",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 4,
+                  boxShadow: "0 2px 8px rgba(184,135,74,0.4)",
+                  zIndex: 5,
+                }}
+              >
+                <Sparkles size={11} /> AI试衣
               </button>
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 16px 16px" }}>
                 <div style={{ fontFamily: font, fontSize: 17, fontWeight: 700, color: "#fff" }}>{look.title}</div>
@@ -610,6 +659,368 @@ function ProductPage({ look, onBack }: { look: { img: string; title: string; ite
   );
 }
 
+// ─── AI TRY-ON PAGE ───────────────────────────────────────────────────────────
+function TryOnPage({ item, onBack }: { item: { img: string; name: string }; onBack: () => void }) {
+  const [stage, setStage] = useState<"analyzing" | "generating" | "result">("analyzing");
+  const [progress, setProgress] = useState(0);
+
+  // Simulate AI processing
+  useEffect(() => {
+    const t1 = setTimeout(() => setStage("generating"), 1500);
+    return () => clearTimeout(t1);
+  }, []);
+
+  useEffect(() => {
+    if (stage !== "generating") return;
+    let cancelled = false;
+    const interval = setInterval(() => {
+      setProgress(p => {
+        if (cancelled) return p;
+        if (p >= 100) {
+          clearInterval(interval);
+          if (!cancelled) setStage("result");
+          return 100;
+        }
+        return p + Math.random() * 6;
+      });
+    }, 120);
+    return () => { cancelled = true; clearInterval(interval); };
+  }, [stage]);
+
+  return (
+    <div style={{ height: "100%", display: "flex", flexDirection: "column", background: BG }}>
+      {/* Header */}
+      <div style={{ padding: "16px 20px 14px", display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
+        <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex" }}>
+          <X size={22} color={TEXT} />
+        </button>
+        <span style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: TEXT }}>AI 虚拟试衣</span>
+      </div>
+
+      <div style={{ flex: 1, overflowY: "auto", padding: "0 20px" }}>
+        {/* Two-panel comparison */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 20 }}>
+          {/* Original item */}
+          <div style={{ background: CARD, borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
+            <div style={{ padding: "8px 10px", fontFamily: font, fontSize: 12, fontWeight: 600, color: MUTED, textAlign: "center" }}>
+              原单品
+            </div>
+            <img src={item.img} alt={item.name} style={{ width: "100%", height: 180, objectFit: "cover" }} />
+            <div style={{ padding: "8px 10px", fontFamily: font, fontSize: 11, color: MUTED, textAlign: "center" }}>
+              {item.name}
+            </div>
+          </div>
+
+          {/* AI result */}
+          <div style={{
+            background: CARD,
+            borderRadius: 16,
+            overflow: "hidden",
+            boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+          }}>
+            <div style={{
+              padding: "8px 10px",
+              fontFamily: font,
+              fontSize: 12,
+              fontWeight: 600,
+              color: ACCENT,
+              textAlign: "center",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 4,
+            }}>
+              <Sparkles size={12} /> AI 效果
+            </div>
+            <div style={{
+              height: 180,
+              position: "relative",
+              overflow: "hidden",
+            }}>
+              {stage === "result" ? (
+                <>
+                  <div style={{
+                    width: "100%", height: "100%",
+                    background: `linear-gradient(135deg, ${ACCENT_LIGHT} 0%, #f0e6d8 50%, ${ACCENT_LIGHT} 100%)`,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    position: "relative",
+                  }}>
+                    {/* Simulated body silhouette with clothing overlay */}
+                    <div style={{ position: "relative", width: "60%", height: "80%" }}>
+                      {/* Body outline */}
+                      <div style={{
+                        position: "absolute",
+                        inset: 0,
+                        background: `radial-gradient(ellipse 50% 50% at 50% 35%, rgba(184,135,74,0.3) 0%, transparent 70%),
+                                     linear-gradient(180deg, rgba(184,135,74,0.15) 0%, rgba(184,135,74,0.25) 50%, rgba(184,135,74,0.1) 100%)`,
+                        borderRadius: "40% 40% 0 0",
+                      }} />
+                      {/* Silhouette shape */}
+                      <svg viewBox="0 0 100 140" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
+                        {/* Head */}
+                        <circle cx="50" cy="18" r="12" fill="rgba(184,135,74,0.25)" />
+                        {/* Neck */}
+                        <rect x="45" y="28" width="10" height="8" rx="3" fill="rgba(184,135,74,0.2)" />
+                        {/* Shoulders & body */}
+                        <path d="M20,38 Q10,42 12,58 L18,80 Q20,90 25,100 L75,100 Q80,90 82,80 L88,58 Q90,42 80,38 Z"
+                          fill="rgba(184,135,74,0.2)" />
+                        {/* Legs */}
+                        <rect x="30" y="100" width="16" height="38" rx="7" fill="rgba(184,135,74,0.15)" />
+                        <rect x="54" y="100" width="16" height="38" rx="7" fill="rgba(184,135,74,0.15)" />
+                      </svg>
+                    </div>
+                    {/* Sparkle effects */}
+                    {[...Array(6)].map((_, i) => (
+                      <div key={i} style={{
+                        position: "absolute",
+                        width: 4 + Math.random() * 4,
+                        height: 4 + Math.random() * 4,
+                        borderRadius: "50%",
+                        background: ACCENT,
+                        opacity: 0.5 + Math.random() * 0.5,
+                        top: `${15 + Math.random() * 70}%`,
+                        left: `${10 + Math.random() * 70}%`,
+                      }} />
+                    ))}
+                  </div>
+                  <div style={{
+                    position: "absolute",
+                    top: 6,
+                    right: 6,
+                    background: "rgba(46,125,50,0.9)",
+                    color: "#fff",
+                    fontFamily: font,
+                    fontSize: 9,
+                    fontWeight: 600,
+                    padding: "2px 6px",
+                    borderRadius: 8,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                  }}>
+                    <Check size={9} /> 完成
+                  </div>
+                </>
+              ) : (
+                <div style={{
+                  width: "100%", height: "100%",
+                  background: `linear-gradient(180deg, ${ACCENT_LIGHT} 0%, rgba(184,135,74,0.05) 100%)`,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 10,
+                }}>
+                  {/* Animated processing dots */}
+                  <div style={{ display: "flex", gap: 4 }}>
+                    {[0, 1, 2].map(i => (
+                      <motion.div
+                        key={i}
+                        animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1.2, 0.8] }}
+                        transition={{
+                          duration: 1.2,
+                          repeat: Infinity,
+                          delay: i * 0.2,
+                          ease: "easeInOut",
+                        }}
+                        style={{
+                          width: 6,
+                          height: 6,
+                          borderRadius: "50%",
+                          background: ACCENT,
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <span style={{
+                    fontFamily: font,
+                    fontSize: 11,
+                    color: ACCENT,
+                    fontWeight: 500,
+                  }}>
+                    {stage === "analyzing" ? "分析款式中..." : "AI 生成中..."}
+                  </span>
+                  {stage === "generating" && (
+                    <div style={{
+                      width: "70%",
+                      height: 3,
+                      background: "rgba(184,135,74,0.15)",
+                      borderRadius: 2,
+                      overflow: "hidden",
+                    }}>
+                      <div style={{
+                        height: "100%",
+                        width: `${Math.min(progress, 100)}%`,
+                        background: `linear-gradient(90deg, ${ACCENT}, #d4a56a)`,
+                        borderRadius: 2,
+                        transition: "width 0.1s ease-out",
+                      }} />
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+            <div style={{ padding: "8px 10px", fontFamily: font, fontSize: 11, color: ACCENT, textAlign: "center", fontWeight: 500 }}>
+              {stage === "result" ? "上身效果" : "等待生成..."}
+            </div>
+          </div>
+        </div>
+
+        {/* AI recommendations */}
+        {stage === "result" && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 24 }}
+          >
+            {/* Score card */}
+            <div style={{
+              background: `linear-gradient(135deg, ${ACCENT}, #9c6b34)`,
+              borderRadius: 18,
+              padding: "18px 18px",
+              color: "#fff",
+              boxShadow: "0 4px 20px rgba(184,135,74,0.3)",
+            }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+                <span style={{ fontFamily: font, fontSize: 14, fontWeight: 600 }}>AI 穿搭评分</span>
+                <div style={{
+                  background: "rgba(255,255,255,0.2)",
+                  borderRadius: 12,
+                  padding: "4px 12px",
+                  fontFamily: font,
+                  fontSize: 20,
+                  fontWeight: 700,
+                }}>
+                  {Math.floor(82 + Math.random() * 15)}分
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: 8 }}>
+                {["版型匹配", "颜色协调", "风格统一"].map(tag => (
+                  <span key={tag} style={{
+                    background: "rgba(255,255,255,0.18)",
+                    fontFamily: font,
+                    fontSize: 11,
+                    padding: "3px 9px",
+                    borderRadius: 10,
+                  }}>
+                    ✓ {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Why it works */}
+            <div style={{ background: CARD, borderRadius: 16, padding: "16px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
+              <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: TEXT, marginBottom: 10 }}>
+                <Sparkles size={14} color={ACCENT} style={{ display: "inline", verticalAlign: "middle", marginRight: 6 }} />
+                为什么适合你
+              </div>
+              {[
+                `${item.name}的版型与你的身型曲线高度契合`,
+                "颜色饱和度完美匹配你的肤色基调",
+                "剪裁风格符合你的穿搭偏好画像",
+                "与衣橱中其它单品可形成多种搭配方案",
+              ].map((reason, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 8 }}>
+                  <div style={{
+                    width: 20,
+                    height: 20,
+                    borderRadius: "50%",
+                    background: ACCENT_LIGHT,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                    marginTop: 1,
+                  }}>
+                    <span style={{ fontSize: 11, color: ACCENT, fontWeight: 700 }}>{i + 1}</span>
+                  </div>
+                  <span style={{ fontFamily: font, fontSize: 13, color: "#5a4a3a", lineHeight: 1.4 }}>
+                    {reason}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Recommended pairing */}
+            <div style={{ background: CARD, borderRadius: 16, padding: "16px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", marginBottom: 8 }}>
+              <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: TEXT, marginBottom: 12 }}>
+                推荐搭配
+              </div>
+              <div style={{ display: "flex", gap: 8, overflowX: "auto" }}>
+                {[
+                  { label: "高腰阔腿裤", color: "#d4c5b2" },
+                  { label: "简约高跟鞋", color: "#c9b896" },
+                  { label: "质感手提包", color: "#8c6d4a" },
+                ].map(pair => (
+                  <div key={pair.label} style={{
+                    flexShrink: 0,
+                    background: pair.color,
+                    borderRadius: 12,
+                    padding: "10px 14px",
+                    textAlign: "center",
+                  }}>
+                    <div style={{
+                      width: 50,
+                      height: 60,
+                      background: "rgba(255,255,255,0.3)",
+                      borderRadius: 8,
+                      marginBottom: 6,
+                    }} />
+                    <div style={{ fontFamily: font, fontSize: 11, color: "#4a3a2a", fontWeight: 500 }}>
+                      {pair.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Action buttons */}
+            <div style={{ display: "flex", gap: 10, paddingBottom: 24 }}>
+              <button
+                onClick={onBack}
+                style={{
+                  flex: 1,
+                  padding: "14px",
+                  borderRadius: 24,
+                  border: `1.5px solid ${ACCENT}`,
+                  background: "transparent",
+                  color: ACCENT,
+                  fontFamily: font,
+                  fontSize: 14,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                }}
+              >
+                返回衣橱
+              </button>
+              <button style={{
+                flex: 2,
+                padding: "14px",
+                borderRadius: 24,
+                border: "none",
+                background: ACCENT,
+                color: "#fff",
+                fontFamily: font,
+                fontSize: 14,
+                fontWeight: 700,
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 6,
+              }}>
+                <Sparkles size={14} /> 重新试衣
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ─── BOTTOM TAB BAR ───────────────────────────────────────────────────────────
 const tabs: { id: Tab; label: string; Icon: React.FC<{ size: number; color: string; fill?: string }> }[] = [
   { id: "home", label: "首页", Icon: ({ size, color }) => <Home size={size} color={color} /> },
@@ -623,10 +1034,15 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [subPage, setSubPage] = useState<SubPage>(null);
   const [selectedLook, setSelectedLook] = useState<(typeof looks)[0] | null>(null);
+  const [selectedTryOnItem, setSelectedTryOnItem] = useState<{ img: string; name: string } | null>(null);
 
   const handleGoProduct = (look?: (typeof looks)[0]) => {
     if (look) setSelectedLook(look);
     setSubPage("product");
+  };
+  const handleGoTryOn = (item: { img: string; name: string }) => {
+    setSelectedTryOnItem(item);
+    setSubPage("tryon");
   };
   const handleBack = () => setSubPage(null);
 
@@ -684,8 +1100,8 @@ export default function App() {
                 style={{ position: "absolute", inset: 0 }}
               >
                 {activeTab === "home" && <HomePage onGoLive={() => setSubPage("live")} onGoProduct={() => handleGoProduct()} />}
-                {activeTab === "wardrobe" && <WardrobePage />}
-                {activeTab === "recommend" && <RecommendPage onGoProduct={handleGoProduct} />}
+                {activeTab === "wardrobe" && <WardrobePage onGoTryOn={handleGoTryOn} />}
+                {activeTab === "recommend" && <RecommendPage onGoProduct={handleGoProduct} onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title })} />}
                 {activeTab === "mine" && <MinePage />}
               </motion.div>
             )}
@@ -704,6 +1120,7 @@ export default function App() {
               >
                 {subPage === "live" && <LivePage onBack={handleBack} />}
                 {subPage === "product" && <ProductPage look={selectedLook} onBack={handleBack} />}
+                {subPage === "tryon" && selectedTryOnItem && <TryOnPage item={selectedTryOnItem} onBack={handleBack} />}
               </motion.div>
             )}
           </AnimatePresence>
