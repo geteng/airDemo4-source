@@ -663,6 +663,7 @@ function ProductPage({ look, onBack }: { look: { img: string; title: string; ite
 function TryOnPage({ item, onBack }: { item: { img: string; name: string }; onBack: () => void }) {
   const [stage, setStage] = useState<"analyzing" | "generating" | "result">("analyzing");
   const [progress, setProgress] = useState(0);
+  const [showVideo, setShowVideo] = useState(false);
 
   // Simulate AI processing
   useEffect(() => {
@@ -861,7 +862,29 @@ function TryOnPage({ item, onBack }: { item: { img: string; name: string }; onBa
               )}
             </div>
             <div style={{ padding: "8px 10px", fontFamily: font, fontSize: 11, color: ACCENT, textAlign: "center", fontWeight: 500 }}>
-              {stage === "result" ? "上身效果" : "等待生成..."}
+              {stage === "result" ? (
+                <button
+                  onClick={() => setShowVideo(true)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    color: ACCENT,
+                    fontFamily: font,
+                    fontSize: 11,
+                    fontWeight: 600,
+                    padding: 0,
+                    textDecoration: "underline",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 4,
+                  }}
+                >
+                  上身效果（点击查看）
+                </button>
+              ) : (
+                "等待生成..."
+              )}
             </div>
           </div>
         </div>
@@ -1017,6 +1040,115 @@ function TryOnPage({ item, onBack }: { item: { img: string; name: string }; onBa
           </motion.div>
         )}
       </div>
+
+      {/* Full-screen video overlay */}
+      <AnimatePresence>
+        {showVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            onClick={() => setShowVideo(false)}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 1000,
+              background: "rgba(0,0,0,0.92)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setShowVideo(false)}
+              style={{
+                position: "absolute",
+                top: 20,
+                right: 20,
+                background: "rgba(255,255,255,0.15)",
+                border: "none",
+                borderRadius: "50%",
+                width: 36,
+                height: 36,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                zIndex: 10,
+              }}
+            >
+              <X size={18} color="#fff" />
+            </button>
+
+            {/* Video player UI badge */}
+            <div style={{
+              position: "absolute",
+              top: 24,
+              left: 24,
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+            }}>
+              <div style={{
+                width: 8,
+                height: 8,
+                borderRadius: "50%",
+                background: "#ff3b30",
+                boxShadow: "0 0 6px #ff3b30",
+              }} />
+              <span style={{
+                fontFamily: font,
+                fontSize: 12,
+                color: "rgba(255,255,255,0.7)",
+                fontWeight: 500,
+              }}>
+                REC · 04:00
+              </span>
+            </div>
+
+            {/* Center video player */}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              style={{
+                width: "90%",
+                maxWidth: 380,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <video
+                src="https://test-assets.tos-cn-shanghai.volces.com/videos/20260724_144306_b62fc67f.mp4"
+                autoPlay
+                playsInline
+                controls
+                style={{
+                  width: "100%",
+                  borderRadius: 16,
+                  boxShadow: "0 10px 50px rgba(184,135,74,0.25)",
+                  outline: "none",
+                }}
+                onEnded={() => setShowVideo(false)}
+              />
+
+              {/* Product name */}
+              <div style={{ marginTop: 16, textAlign: "center" }}>
+                <div style={{ fontFamily: font, fontSize: 16, fontWeight: 700, color: "#fff", marginBottom: 4 }}>
+                  {item.name}
+                </div>
+                <div style={{ fontFamily: font, fontSize: 12, color: "rgba(255,255,255,0.5)" }}>
+                  虚拟试穿 · 上身效果展示
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
