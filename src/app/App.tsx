@@ -1223,7 +1223,7 @@ function TryOnPage({ item, onBack }: { item: { img: string; name: string }; onBa
                 gap: 8,
               }}
             >
-              <Share2 size={16} /> 分享试衣效果
+              <Share2 size={16} /> 分享给穿搭师点评
             </button>
 
             {/* Why it works */}
