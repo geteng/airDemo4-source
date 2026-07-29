@@ -1196,6 +1196,36 @@ function TryOnPage({ item, onBack }: { item: { img: string; name: string }; onBa
               </div>
             </div>
 
+            {/* Share button */}
+            <button
+              onClick={() => {
+                // Simulate share
+                const el = document.createElement("div");
+                el.style.cssText = "position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#333;color:#fff;padding:12px 28px;border-radius:24px;font-size:14px;font-weight:600;z-index:9999;font-family:system-ui;";
+                el.textContent = "已复制分享链接 ✅";
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 2000);
+              }}
+              style={{
+                width: "100%",
+                padding: "12px",
+                borderRadius: 14,
+                border: `1.5px dashed ${ACCENT}`,
+                background: ACCENT_LIGHT,
+                color: ACCENT,
+                fontFamily: font,
+                fontSize: 14,
+                fontWeight: 600,
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 8,
+              }}
+            >
+              <Share2 size={16} /> 分享试衣效果
+            </button>
+
             {/* Why it works */}
             <div style={{ background: CARD, borderRadius: 16, padding: "16px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
               <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: TEXT, marginBottom: 10 }}>
