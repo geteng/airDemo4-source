@@ -21,10 +21,14 @@ import {
   Star,
   Clock,
   Camera,
+  Share2,
+  Ellipsis,
+  MessageCircle,
+  Bookmark,
 } from "lucide-react";
 
 type Tab = "home" | "wardrobe" | "recommend" | "mine";
-type SubPage = "live" | "product" | "tryon" | null;
+type SubPage = "live" | "product" | "tryon" | "note" | null;
 
 const ACCENT = "#b8874a";
 const ACCENT_LIGHT = "#f5ede0";
@@ -73,7 +77,7 @@ function Pill({ children, active, onClick }: { children: string; active?: boolea
 }
 
 // ─── HOME PAGE ────────────────────────────────────────────────────────────────
-function HomePage({ onGoLive, onGoProduct }: { onGoLive: () => void; onGoProduct: () => void }) {
+function HomePage({ onGoLive, onGoProduct, onGoNote }: { onGoLive: () => void; onGoProduct: () => void; onGoNote: (note: (typeof notesData)[0]) => void }) {
   const [reserved, setReserved] = useState(false);
   return (
     <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%" }}>
@@ -163,12 +167,11 @@ function HomePage({ onGoLive, onGoProduct }: { onGoLive: () => void; onGoProduct
         </div>
 
         <div style={{ display: "flex", gap: 10, overflowX: "auto", paddingBottom: 4 }}>
-          {[
-            { img: IMG.look2, title: "夏日通勤穿搭｜一周不重样", likes: "2.3万", author: "穿搭灵感簿" },
-            { img: IMG.look1, title: "梨形身材的天菜！这三套绝了", likes: "1.8万", author: "是小陈呀" },
-            { img: IMG.look3, title: "董洁同款，普通人也能驾驭", likes: "5.6万", author: "Lily穿搭记" },
-          ].map((article, i) => (
-            <div key={i} style={{
+          {notesData.map((article, i) => (
+            <div
+              key={i}
+              onClick={() => onGoNote(article)}
+              style={{
               flexShrink: 0,
               width: 140,
               background: CARD,
@@ -303,6 +306,36 @@ const wardrobeItems = [
   { id: 4, img: IMG.wardrobe4, name: "黑色西装外套", date: "2026.2", times: 11 },
   { id: 5, img: IMG.wardrobe5, name: "浅蓝牛仔外套", date: "2025.9", times: 5 },
   { id: 6, img: IMG.wardrobe6, name: "白色Polo领针织", date: "2026.5", times: 3 },
+];
+
+const notesData = [
+  {
+    img: IMG.look2,
+    title: "夏日通勤穿搭｜一周不重样",
+    likes: "2.3万",
+    author: "穿搭灵感簿",
+    body: "分享一周通勤穿搭灵感✨\n\n周一到周五，每天都有不同的搭配思路。这周主打简约通勤风，以基础款为主，通过配饰和色彩点缀提升整体质感。\n\n周一选了白色衬衫搭配高腰西裤，清爽干练；周三换上了柔和的针织开衫，温柔知性；周五则轻松一些，用宽松的亚麻衬衫收尾。\n\n关键单品推荐：\n• 垂感高腰西裤 — 修饰腿型第一名\n• 薄款醋酸衬衫 — 透气不闷热\n• 细带中跟凉鞋 — 舒适又拉长比例\n\n每一套都适合办公室穿着，同时下班后也能轻松过渡到晚间的聚会～",
+    images: [IMG.look2, IMG.look1, IMG.look3],
+    tags: ["通勤穿搭", "简约风", "一周搭配"],
+  },
+  {
+    img: IMG.look1,
+    title: "梨形身材的天菜！这三套绝了",
+    likes: "1.8万",
+    author: "是小陈呀",
+    body: "作为典型的梨形身材，选衣服真的踩了太多雷！😭\n\n经过多年摸索，总结出三个黄金法则：\n\n1️⃣ 上浅下深 — 视觉重心上移\n2️⃣ 高腰线 — 拉长腿部比例\n3️⃣ A字下摆 — 完美遮胯\n\n这三套是我近期最满意的搭配，每一套都扬长避短。尤其是那件米色高腰阔腿裤，版型真的太好了，穿上直接显高5cm！\n\n梨形姐妹们冲就完事了～",
+    images: [IMG.look1, IMG.look2, IMG.look3],
+    tags: ["梨形穿搭", "显瘦", "版型推荐"],
+  },
+  {
+    img: IMG.look3,
+    title: "董洁同款，普通人也能驾驭",
+    likes: "5.6万",
+    author: "Lily穿搭记",
+    body: "一直很喜欢董洁的穿搭风格，优雅又不失松弛感。\n\n这次扒了她的几套日常look，发现她的穿搭秘诀其实很简单：\n\n✨ 基础款为主，不超过三种颜色\n✨ 材质优选天然面料（棉麻、羊毛、真丝）\n✨ 配饰点到为止，不堆砌\n✨ 鞋子决定风格，平底乐福鞋是她的最爱\n\n我按照这个思路复刻了其中三套，惊喜地发现普通人穿也很好看！\n\n高级感不等于贵，选对款比选贵更重要～",
+    images: [IMG.look3, IMG.look2, IMG.look1],
+    tags: ["明星同款", "高级感", "日常穿搭"],
+  },
 ];
 
 function WardrobePage({ onGoTryOn }: { onGoTryOn: (item: (typeof wardrobeItems)[0]) => void }) {
@@ -674,6 +707,170 @@ function LivePage({ onBack }: { onBack: () => void }) {
               <span style={{ fontFamily: font, fontSize: 12, color: ACCENT, fontWeight: 500 }}>回放 ›</span>
             </div>
           ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── NOTE DETAIL PAGE ──────────────────────────────────────────────────────────
+function NoteDetailPage({ note, onBack }: { note: (typeof notesData)[0]; onBack: () => void }) {
+  return (
+    <div style={{ height: "100%", display: "flex", flexDirection: "column", background: "#fff" }}>
+      {/* Header */}
+      <div style={{
+        padding: "12px 16px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        borderBottom: "1px solid #f0f0f0",
+      }}>
+        <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex" }}>
+          <X size={22} color="#333" />
+        </button>
+        <div style={{ display: "flex", gap: 16 }}>
+          <Share2 size={20} color="#333" />
+          <Ellipsis size={20} color="#333" />
+        </div>
+      </div>
+
+      <div style={{ flex: 1, overflowY: "auto" }}>
+        {/* Image carousel */}
+        <div style={{ background: "#f8f8f8" }}>
+          <img src={note.img} alt={note.title} style={{ width: "100%", maxHeight: 420, objectFit: "cover" }} />
+        </div>
+
+        {/* Author & interaction bar */}
+        <div style={{ padding: "14px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{
+              width: 40,
+              height: 40,
+              borderRadius: "50%",
+              background: `linear-gradient(135deg, #ff2442, #ff6b6b)`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#fff",
+              fontFamily: font,
+              fontSize: 14,
+              fontWeight: 700,
+            }}>
+              {note.author.charAt(0)}
+            </div>
+            <div>
+              <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: "#333" }}>{note.author}</div>
+              <div style={{ fontFamily: font, fontSize: 11, color: "#999" }}>已关注</div>
+            </div>
+          </div>
+          <button style={{
+            background: "#ff2442",
+            color: "#fff",
+            border: "none",
+            borderRadius: 16,
+            padding: "7px 18px",
+            fontFamily: font,
+            fontSize: 13,
+            fontWeight: 600,
+            cursor: "pointer",
+          }}>
+            关注
+          </button>
+        </div>
+
+        {/* Title */}
+        <div style={{ padding: "0 16px" }}>
+          <div style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: "#222", lineHeight: 1.4, marginBottom: 10 }}>
+            {note.title}
+          </div>
+
+          {/* Tags */}
+          <div style={{ display: "flex", gap: 6, marginBottom: 14, flexWrap: "wrap" }}>
+            {note.tags.map((tag, i) => (
+              <span key={i} style={{
+                background: "#fff0f3",
+                color: "#ff2442",
+                fontFamily: font,
+                fontSize: 11,
+                padding: "4px 10px",
+                borderRadius: 10,
+                fontWeight: 500,
+              }}>
+                #{tag}
+              </span>
+            ))}
+          </div>
+
+          {/* Body */}
+          <div style={{
+            fontFamily: font,
+            fontSize: 15,
+            color: "#444",
+            lineHeight: 1.8,
+            whiteSpace: "pre-wrap",
+            marginBottom: 20,
+          }}>
+            {note.body}
+          </div>
+
+          {/* More images */}
+          <div style={{ marginBottom: 20 }}>
+            <div style={{ fontFamily: font, fontSize: 13, fontWeight: 600, color: "#333", marginBottom: 8 }}>
+              更多图片
+            </div>
+            <div style={{ display: "flex", gap: 8, overflowX: "auto", paddingBottom: 4 }}>
+              {note.images.map((img, i) => (
+                <img
+                  key={i}
+                  src={img}
+                  alt={`图${i + 1}`}
+                  style={{
+                    width: 180,
+                    height: 220,
+                    objectFit: "cover",
+                    borderRadius: 10,
+                    flexShrink: 0,
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom bar */}
+      <div style={{
+        borderTop: "1px solid #f0f0f0",
+        padding: "10px 16px",
+        background: "#fff",
+        display: "flex",
+        alignItems: "center",
+        gap: 20,
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 4, color: "#ff2442" }}>
+          <Heart size={22} fill="#ff2442" /> <span style={{ fontFamily: font, fontSize: 13, fontWeight: 600 }}>{note.likes}</span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 4, color: "#666" }}>
+          <MessageCircle size={22} /> <span style={{ fontFamily: font, fontSize: 13 }}>1.2万</span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 4, color: "#666" }}>
+          <Bookmark size={22} /> <span style={{ fontFamily: font, fontSize: 13 }}>收藏</span>
+        </div>
+        <div style={{ flex: 1 }} />
+        <div style={{
+          background: "#ff2442",
+          color: "#fff",
+          borderRadius: 18,
+          padding: "8px 18px",
+          fontFamily: font,
+          fontSize: 13,
+          fontWeight: 600,
+          display: "flex",
+          alignItems: "center",
+          gap: 4,
+          cursor: "pointer",
+        }}>
+          <ShoppingBag size={14} /> 去购买
         </div>
       </div>
     </div>
@@ -1272,6 +1469,7 @@ export default function App() {
   const [subPage, setSubPage] = useState<SubPage>(null);
   const [selectedLook, setSelectedLook] = useState<(typeof looks)[0] | null>(null);
   const [selectedTryOnItem, setSelectedTryOnItem] = useState<{ img: string; name: string } | null>(null);
+  const [selectedNote, setSelectedNote] = useState<(typeof notesData)[0] | null>(null);
 
   const handleGoProduct = (look?: (typeof looks)[0]) => {
     if (look) setSelectedLook(look);
@@ -1280,6 +1478,10 @@ export default function App() {
   const handleGoTryOn = (item: { img: string; name: string }) => {
     setSelectedTryOnItem(item);
     setSubPage("tryon");
+  };
+  const handleGoNote = (note: (typeof notesData)[0]) => {
+    setSelectedNote(note);
+    setSubPage("note");
   };
   const handleBack = () => setSubPage(null);
 
@@ -1336,7 +1538,7 @@ export default function App() {
                 transition={{ duration: 0.22, ease: "easeInOut" }}
                 style={{ position: "absolute", inset: 0 }}
               >
-                {activeTab === "home" && <HomePage onGoLive={() => setSubPage("live")} onGoProduct={() => handleGoProduct()} />}
+                {activeTab === "home" && <HomePage onGoLive={() => setSubPage("live")} onGoProduct={() => handleGoProduct()} onGoNote={handleGoNote} />}
                 {activeTab === "wardrobe" && <WardrobePage onGoTryOn={handleGoTryOn} />}
                 {activeTab === "recommend" && <RecommendPage onGoProduct={handleGoProduct} onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title })} />}
                 {activeTab === "mine" && <MinePage />}
@@ -1358,6 +1560,7 @@ export default function App() {
                 {subPage === "live" && <LivePage onBack={handleBack} />}
                 {subPage === "product" && <ProductPage look={selectedLook} onBack={handleBack} />}
                 {subPage === "tryon" && selectedTryOnItem && <TryOnPage item={selectedTryOnItem} onBack={handleBack} />}
+                {subPage === "note" && selectedNote && <NoteDetailPage note={selectedNote} onBack={handleBack} />}
               </motion.div>
             )}
           </AnimatePresence>
