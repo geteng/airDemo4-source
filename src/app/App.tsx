@@ -125,6 +125,111 @@ function HomePage({ onGoLive, onGoProduct }: { onGoLive: () => void; onGoProduct
         </div>
       </div>
 
+      {/* 小红书种草文章 */}
+      <div style={{ margin: "0 20px 16px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <div style={{
+              width: 24,
+              height: 24,
+              borderRadius: 6,
+              background: "linear-gradient(135deg, #ff2442, #ff6b6b)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 13,
+              color: "#fff",
+              fontWeight: 700,
+              fontFamily: font,
+            }}>
+             红
+            </div>
+            <span style={{ fontFamily: font, fontSize: 15, fontWeight: 700, color: TEXT }}>种草笔记</span>
+          </div>
+          <button style={{
+            background: "none",
+            border: "none",
+            color: ACCENT,
+            fontFamily: font,
+            fontSize: 12,
+            fontWeight: 500,
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          }}>
+            更多 <ChevronRight size={14} />
+          </button>
+        </div>
+
+        <div style={{ display: "flex", gap: 10, overflowX: "auto", paddingBottom: 4 }}>
+          {[
+            { img: IMG.look2, title: "夏日通勤穿搭｜一周不重样", likes: "2.3万", author: "穿搭灵感簿" },
+            { img: IMG.look1, title: "梨形身材的天菜！这三套绝了", likes: "1.8万", author: "是小陈呀" },
+            { img: IMG.look3, title: "董洁同款，普通人也能驾驭", likes: "5.6万", author: "Lily穿搭记" },
+          ].map((article, i) => (
+            <div key={i} style={{
+              flexShrink: 0,
+              width: 140,
+              background: CARD,
+              borderRadius: 14,
+              overflow: "hidden",
+              boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
+              cursor: "pointer",
+            }}>
+              <div style={{ height: 140, overflow: "hidden", position: "relative" }}>
+                <img src={article.img} alt={article.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                {/* image tag */}
+                <div style={{
+                  position: "absolute",
+                  bottom: 6,
+                  right: 6,
+                  background: "rgba(0,0,0,0.55)",
+                  color: "#fff",
+                  fontFamily: font,
+                  fontSize: 10,
+                  padding: "2px 6px",
+                  borderRadius: 4,
+                }}>
+                  9图
+                </div>
+              </div>
+              <div style={{ padding: "8px 10px 10px" }}>
+                <div style={{
+                  fontFamily: font,
+                  fontSize: 12,
+                  fontWeight: 600,
+                  color: TEXT,
+                  lineHeight: 1.4,
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                  marginBottom: 6,
+                  minHeight: 34,
+                }}>
+                  {article.title}
+                </div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <span style={{ fontFamily: font, fontSize: 10, color: "#999" }}>{article.author}</span>
+                  <span style={{
+                    fontFamily: font,
+                    fontSize: 11,
+                    color: "#ff2442",
+                    fontWeight: 500,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                  }}>
+                    ♥ {article.likes}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Live reservation */}
       <div style={{ margin: "0 20px 16px", background: CARD, borderRadius: 18, padding: "18px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.05)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
