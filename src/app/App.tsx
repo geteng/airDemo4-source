@@ -24,6 +24,10 @@ import {
   MessageCircle,
   Bookmark,
   Phone,
+  Footprints,
+  Crown,
+  Zap,
+  Gem,
 } from "lucide-react";
 
 type Tab = "home" | "recommend" | "mine";
@@ -76,7 +80,7 @@ function Pill({ children, active, onClick }: { children: string; active?: boolea
 }
 
 // ─── HOME PAGE ────────────────────────────────────────────────────────────────
-function HomePage({ onGoProduct, onGoNote }: { onGoProduct: () => void; onGoNote: (note: (typeof notesData)[0]) => void }) {
+function HomePage({ onGoProduct, onGoNote, onGoVipJoin }: { onGoProduct: () => void; onGoNote: (note: (typeof notesData)[0]) => void; onGoVipJoin: () => void }) {
   return (
     <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%" }}>
       {/* Top bar */}
@@ -249,11 +253,14 @@ function HomePage({ onGoProduct, onGoNote }: { onGoProduct: () => void; onGoNote
             </div>
           ))}
         </div>
-        <button style={{
+        <button
+          onClick={onGoVipJoin}
+          style={{
           background: ACCENT, color: "#fff", fontFamily: font, fontSize: 13, fontWeight: 600,
           padding: "9px 20px", borderRadius: 22, border: "none", cursor: "pointer",
-        }}>
-          成为会员
+          display: "flex", alignItems: "center", gap: 6,
+          }}>
+          成为会员 <Crown size={14} />
         </button>
       </div>
     </div>
@@ -587,7 +594,7 @@ function MinePage({ onGoOrders, onGoFavorites, onGoCoupons, onGoRecords, onGoVip
     { icon: Package, label: "我的订单", desc: "查看所有订单", action: () => onGoOrders("all") },
     { icon: Heart, label: "我的收藏", desc: "收藏的单品与搭配", action: onGoFavorites },
     { icon: Tag, label: "我的优惠券", desc: "3张可用", action: onGoCoupons },
-    { icon: Sparkles, label: "我的穿搭记录", desc: "已记录 24 套", action: onGoRecords },
+    { icon: Footprints, label: "足迹", desc: "已记录 24 套", action: onGoRecords },
     { icon: Headphones, label: "联系客服", desc: "7×12小时在线", action: onCallService },
   ];
 
@@ -1712,7 +1719,7 @@ function RecordsPage({ onBack }: { onBack: () => void }) {
         <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex" }}>
           <X size={22} color={TEXT} />
         </button>
-        <span style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: TEXT }}>我的穿搭记录</span>
+        <span style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: TEXT }}>足迹</span>
       </div>
 
       {/* Stats */}
@@ -1839,6 +1846,8 @@ export default function App() {
   const [selectedNote, setSelectedNote] = useState<(typeof notesData)[0] | null>(null);
   const [showStylistQR, setShowStylistQR] = useState(false);
   const [showCallDialog, setShowCallDialog] = useState(false);
+  const [showVipJoin, setShowVipJoin] = useState(false);
+  const [vipPlan, setVipPlan] = useState<"month" | "season" | "year">("year");
   const [orderInitialTab, setOrderInitialTab] = useState<string>("all");
   const dragConstraintsRef = useRef<HTMLDivElement>(null);
 
@@ -1915,7 +1924,7 @@ export default function App() {
                 transition={{ duration: 0.22, ease: "easeInOut" }}
                 style={{ position: "absolute", inset: 0 }}
               >
-                {activeTab === "home" && <HomePage onGoProduct={() => handleGoProduct()} onGoNote={handleGoNote} />}
+                {activeTab === "home" && <HomePage onGoProduct={() => handleGoProduct()} onGoNote={handleGoNote} onGoVipJoin={() => setShowVipJoin(true)} />}
                 {activeTab === "recommend" && <RecommendPage onGoProduct={handleGoProduct} onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title })} />}
                 {activeTab === "mine" && <MinePage
                   onGoOrders={handleGoOrders}
@@ -2264,9 +2273,182 @@ export default function App() {
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
 
-        {/* Bottom tab bar */}
+          {/* VIP Join bottom sheet */}
+          <AnimatePresence>
+            {showVipJoin && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setShowVipJoin(false)}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "rgba(0,0,0,0.55)",
+                  display: "flex",
+                  alignItems: "flex-end",
+                  zIndex: 200,
+                  backdropFilter: "blur(4px)",
+                }}
+              >
+                <motion.div
+                  initial={{ y: "100%" }}
+                  animate={{ y: 0 }}
+                  exit={{ y: "100%" }}
+                  transition={{ type: "spring", stiffness: 340, damping: 36 }}
+                  onClick={(e) => e.stopPropagation()}
+                  style={{
+                    width: "100%",
+                    background: "#fff",
+                    borderRadius: "24px 24px 0 0",
+                    padding: "0 0 20px",
+                    maxHeight: "88%",
+                    overflowY: "auto",
+                  }}
+                >
+                  {/* Drag handle */}
+                  <div style={{ width: 36, height: 4, background: "#e0d8cc", borderRadius: 2, margin: "10px auto 0" }} />
+
+                  {/* Header */}
+                  <div style={{
+                    background: "linear-gradient(135deg, #3a2a18 0%, #6b4a28 100%)",
+                    borderRadius: "0 0 0 0",
+                    padding: "20px 24px 22px",
+                    position: "relative",
+                  }}>
+                    <button
+                      onClick={() => setShowVipJoin(false)}
+                      style={{
+                        position: "absolute", top: 14, right: 16,
+                        width: 28, height: 28, borderRadius: "50%",
+                        border: "none", background: "rgba(255,255,255,0.15)",
+                        cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+                      }}
+                    >
+                      <X size={15} color="#fff" />
+                    </button>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+                      <div style={{
+                        width: 40, height: 40, borderRadius: 12,
+                        background: `linear-gradient(135deg, ${ACCENT}, #d4a56a)`,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                      }}>
+                        <Crown size={20} color="#fff" />
+                      </div>
+                      <div>
+                        <div style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: "#f5d9a8" }}>开通 VIP 会员</div>
+                        <div style={{ fontFamily: font, fontSize: 12, color: "rgba(245,217,168,0.6)" }}>解锁全部专属权益</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Plan cards */}
+                  <div style={{ padding: "20px 20px 16px" }}>
+                    <div style={{ fontFamily: font, fontSize: 14, fontWeight: 700, color: TEXT, marginBottom: 12 }}>选择套餐</div>
+                    <div style={{ display: "flex", gap: 10 }}>
+                      {/* Month */}
+                      <div
+                        onClick={() => setVipPlan("month")}
+                        style={{
+                          flex: 1, borderRadius: 16, padding: "14px 10px", textAlign: "center",
+                          border: vipPlan === "month" ? `2px solid ${ACCENT}` : "2px solid #eee",
+                          background: vipPlan === "month" ? ACCENT_LIGHT : "#fafafa",
+                          cursor: "pointer", transition: "all 0.2s", position: "relative",
+                        }}
+                      >
+                        <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginBottom: 4 }}>月卡</div>
+                        <div style={{ fontFamily: font, fontSize: 22, fontWeight: 700, color: TEXT }}>¥29</div>
+                        <div style={{ fontFamily: font, fontSize: 10, color: MUTED, marginTop: 2 }}>¥29/月</div>
+                      </div>
+                      {/* Season */}
+                      <div
+                        onClick={() => setVipPlan("season")}
+                        style={{
+                          flex: 1, borderRadius: 16, padding: "14px 10px", textAlign: "center",
+                          border: vipPlan === "season" ? `2px solid ${ACCENT}` : "2px solid #eee",
+                          background: vipPlan === "season" ? ACCENT_LIGHT : "#fafafa",
+                          cursor: "pointer", transition: "all 0.2s", position: "relative",
+                        }}
+                      >
+                        {vipPlan === "season" && (
+                          <span style={{ position: "absolute", top: -8, left: "50%", transform: "translateX(-50%)", background: ACCENT, color: "#fff", fontSize: 9, fontWeight: 600, padding: "2px 8px", borderRadius: 8, fontFamily: font, whiteSpace: "nowrap" }}>超值</span>
+                        )}
+                        <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginBottom: 4 }}>季卡</div>
+                        <div style={{ fontFamily: font, fontSize: 22, fontWeight: 700, color: TEXT }}>¥79</div>
+                        <div style={{ fontFamily: font, fontSize: 10, color: MUTED, marginTop: 2 }}>¥26.3/月</div>
+                      </div>
+                      {/* Year */}
+                      <div
+                        onClick={() => setVipPlan("year")}
+                        style={{
+                          flex: 1, borderRadius: 16, padding: "14px 10px", textAlign: "center",
+                          border: vipPlan === "year" ? `2px solid ${ACCENT}` : "2px solid #eee",
+                          background: vipPlan === "year" ? ACCENT_LIGHT : "#fafafa",
+                          cursor: "pointer", transition: "all 0.2s", position: "relative",
+                        }}
+                      >
+                        {vipPlan === "year" && (
+                          <span style={{ position: "absolute", top: -8, left: "50%", transform: "translateX(-50%)", background: `linear-gradient(90deg, ${ACCENT}, #d4a56a)`, color: "#fff", fontSize: 9, fontWeight: 600, padding: "2px 8px", borderRadius: 8, fontFamily: font, whiteSpace: "nowrap" }}>省 60 元</span>
+                        )}
+                        <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginBottom: 4 }}>年卡</div>
+                        <div style={{ fontFamily: font, fontSize: 22, fontWeight: 700, color: TEXT }}>¥288</div>
+                        <div style={{ fontFamily: font, fontSize: 10, color: MUTED, marginTop: 2 }}>¥24/月</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Benefits list */}
+                  <div style={{ padding: "0 20px 20px" }}>
+                    <div style={{ fontFamily: font, fontSize: 14, fontWeight: 700, color: TEXT, marginBottom: 12 }}>会员专属权益</div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                      {[
+                        { icon: Sparkles, title: "每周专属穿搭建议", desc: "根据身形、场景定制搭配方案" },
+                        { icon: Zap, title: "新品优先体验", desc: "每季新品提前 48 小时预览购买" },
+                        { icon: Gem, title: "专属搭配问答", desc: "无限次向穿搭师提问，1对1解答" },
+                        { icon: Award, title: "生日双倍积分", desc: "生日当月消费积分双倍累计" },
+                        { icon: Package, title: "全年免邮", desc: "全年不限次数免运费" },
+                        { icon: Heart, title: "30天无忧退换", desc: "会员专享30天退换货保障" },
+                      ].map(b => (
+                        <div key={b.title} style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                          <div style={{ width: 32, height: 32, borderRadius: 10, background: ACCENT_LIGHT, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                            <b.icon size={15} color={ACCENT} />
+                          </div>
+                          <div style={{ flex: 1, paddingTop: 2 }}>
+                            <div style={{ fontFamily: font, fontSize: 13, fontWeight: 600, color: TEXT }}>{b.title}</div>
+                            <div style={{ fontFamily: font, fontSize: 11, color: MUTED, marginTop: 1 }}>{b.desc}</div>
+                          </div>
+                          <Check size={14} color={ACCENT} style={{ flexShrink: 0, marginTop: 8 }} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* CTA */}
+                  <div style={{ padding: "0 20px", position: "sticky", bottom: 0, background: "#fff", paddingBottom: 4 }}>
+                    <button
+                      onClick={() => setShowVipJoin(false)}
+                      style={{
+                        width: "100%", padding: "14px", borderRadius: 24,
+                        border: "none",
+                        background: `linear-gradient(90deg, ${ACCENT}, #d4a56a)`,
+                        color: "#fff", fontFamily: font, fontSize: 15, fontWeight: 700,
+                        cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                        boxShadow: "0 4px 16px rgba(184,135,74,0.35)",
+                      }}
+                    >
+                      <Crown size={16} /> 立即开通 · {vipPlan === "month" ? "¥29" : vipPlan === "season" ? "¥79" : "¥288"}
+                    </button>
+                    <div style={{ textAlign: "center", fontFamily: font, fontSize: 11, color: MUTED, marginTop: 8 }}>
+                      支付即同意《VIP会员服务协议》· 自动续费可随时取消
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
         {subPage === null && (
           <div
             style={{
