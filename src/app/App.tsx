@@ -2072,7 +2072,7 @@ export default function App() {
                     overflow: "hidden",
                   }}>
                     <img
-                      src="/assets/stylist_qr.png"
+                      src={`${import.meta.env.BASE_URL}assets/stylist_qr.png`}
                       alt="企业微信二维码"
                       style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 14, display: "block" }}
                     />
