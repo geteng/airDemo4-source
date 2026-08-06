@@ -23,10 +23,11 @@ import {
   Ellipsis,
   MessageCircle,
   Bookmark,
+  Phone,
 } from "lucide-react";
 
 type Tab = "home" | "recommend" | "mine";
-type SubPage = "live" | "product" | "tryon" | "note" | null;
+type SubPage = "live" | "product" | "tryon" | "note" | "orders" | "favorites" | "coupons" | "records" | "vip" | null;
 
 const ACCENT = "#b8874a";
 const ACCENT_LIGHT = "#f5ede0";
@@ -305,6 +306,54 @@ const notesData = [
   },
 ];
 
+// ─── MOCK DATA: Orders / Favorites / Coupons / Records / VIP ──────────────────
+const ordersData: { id: string; status: string; statusLabel: string; img: string; name: string; price: number; date: string; items: string; refundStatus?: string }[] = [
+  { id: "DD20260806001", status: "pending_pay", statusLabel: "待付款", img: IMG.look1, name: "高级感白领风套装", price: 899, date: "2026-08-06", items: "白衬衫 + 阔腿裤 + 高跟鞋" },
+  { id: "DD20260805002", status: "pending_pay", statusLabel: "待付款", img: IMG.look2, name: "都市柔美格调", price: 1260, date: "2026-08-05", items: "黑色西装 + 丝绒裙 + 小皮包" },
+  { id: "DD20260804003", status: "pending_pay", statusLabel: "待付款", img: IMG.wardrobe3, name: "米色高腰阔腿裤", price: 329, date: "2026-08-04", items: "米色阔腿裤" },
+  { id: "DD20260803004", status: "pending_ship", statusLabel: "待发货", img: IMG.look3, name: "轻盈度假系套装", price: 680, date: "2026-08-03", items: "白色长裤 + 针织衫 + 草编帽" },
+  { id: "DD20260730005", status: "pending_review", statusLabel: "待评价", img: IMG.wardrobe1, name: "白色薄棉衬衫", price: 199, date: "2026-07-30", items: "白色衬衫" },
+  { id: "DD20260728006", status: "pending_review", statusLabel: "待评价", img: IMG.wardrobe4, name: "黑色西装外套", price: 599, date: "2026-07-28", items: "黑色西装外套" },
+  { id: "DD20260720007", status: "refund", statusLabel: "退换货", img: IMG.wardrobe5, name: "浅蓝牛仔外套", price: 359, date: "2026-07-20", items: "牛仔外套", refundStatus: "退款处理中" },
+  { id: "DD20260715008", status: "refund", statusLabel: "退换货", img: IMG.wardrobe6, name: "白色Polo领针织", price: 259, date: "2026-07-15", items: "针织衫", refundStatus: "已退款" },
+  { id: "DD20260710009", status: "done", statusLabel: "已完成", img: IMG.wardrobe2, name: "驼色羊绒大衣", price: 1299, date: "2026-07-10", items: "驼色大衣" },
+  { id: "DD20260705100", status: "done", statusLabel: "已完成", img: IMG.look3, name: "旅行轻装穿搭", price: 680, date: "2026-07-05", items: "白色长裤 + 针织衫" },
+];
+
+const favoritesData = [
+  { id: 1, img: IMG.look1, name: "高级感白领风", price: 899, type: "搭配" },
+  { id: 2, img: IMG.look2, name: "都市柔美格调", price: 1260, type: "搭配" },
+  { id: 3, img: IMG.wardrobe1, name: "白色薄棉衬衫", price: 199, type: "单品" },
+  { id: 4, img: IMG.wardrobe2, name: "驼色羊绒大衣", price: 1299, type: "单品" },
+  { id: 5, img: IMG.look3, name: "轻盈度假系", price: 680, type: "搭配" },
+  { id: 6, img: IMG.wardrobe4, name: "黑色西装外套", price: 599, type: "单品" },
+];
+
+const couponsData = [
+  { id: 1, amount: 100, threshold: 500, name: "新人专享券", expire: "2026-08-31", status: "available" },
+  { id: 2, amount: 50, threshold: 300, name: "满减优惠券", expire: "2026-08-20", status: "available" },
+  { id: 3, amount: 200, threshold: 1000, name: "VIP 专享券", expire: "2026-09-15", status: "available" },
+  { id: 4, amount: 30, threshold: 200, name: "夏日清凉券", expire: "2026-07-31", status: "expired" },
+  { id: 5, amount: 80, threshold: 400, name: "会员日券", expire: "2026-06-30", status: "expired" },
+];
+
+const recordsData = [
+  { id: 1, date: "2026-08-06", img: IMG.look1, title: "高级感白领风", scene: "通勤", weather: "晴 28°C", note: "今天穿了白衬衫搭配阔腿裤，干练又不失优雅" },
+  { id: 2, date: "2026-08-05", img: IMG.look2, title: "都市柔美格调", scene: "约会", weather: "多云 26°C", note: "黑色西装搭配丝绒裙，晚上约会很合适" },
+  { id: 3, date: "2026-08-03", img: IMG.look3, title: "轻盈度假系", scene: "旅行", weather: "晴 32°C", note: "周末去海边，穿了轻盈的度假风搭配" },
+  { id: 4, date: "2026-08-01", img: IMG.wardrobe4, title: "黑色西装穿搭", scene: "通勤", weather: "阴 25°C", note: "黑色西装外套搭配白T，简约利落" },
+  { id: 5, date: "2026-07-28", img: IMG.wardrobe2, title: "驼色大衣造型", scene: "日常", weather: "雨 20°C", note: "下雨天穿了驼色大衣，温暖又有型" },
+];
+
+const vipBenefits = [
+  { icon: "👗", title: "每周专属穿搭建议", desc: "专业穿搭师每周为你定制 3 套搭配方案" },
+  { icon: "🛍️", title: "新品优先体验", desc: "每季新品提前 7 天优先选购" },
+  { icon: "💬", title: "专属搭配问答", desc: "1对1穿搭顾问，随时解答搭配疑问" },
+  { icon: "🎁", title: "生日双倍积分", desc: "生日月消费积分双倍累计" },
+  { icon: "🚚", title: "全年免邮", desc: "所有订单全年免运费" },
+  { icon: "↩️", title: "30天无理由退换", desc: "VIP 专享 30 天无理由退换货服务" },
+];
+
 function WardrobePage({ onGoTryOn }: { onGoTryOn: (item: (typeof wardrobeItems)[0]) => void }) {
   const [activeCategory, setActiveCategory] = useState("上衣");
   return (
@@ -519,13 +568,27 @@ function RecommendPage({ onGoProduct, onGoTryOn }: { onGoProduct: (look: (typeof
 }
 
 // ─── MINE / PROFILE PAGE ──────────────────────────────────────────────────────
-function MinePage() {
-  const menuItems = [
-    { icon: Package, label: "我的订单", desc: "查看所有订单" },
-    { icon: Heart, label: "我的收藏", desc: "收藏的单品与搭配" },
-    { icon: Tag, label: "我的优惠券", desc: "3张可用" },
-    { icon: Sparkles, label: "我的穿搭记录", desc: "已记录 24 套" },
-    { icon: Headphones, label: "联系客服", desc: "7×12小时在线" },
+function MinePage({ onGoOrders, onGoFavorites, onGoCoupons, onGoRecords, onGoVip, onCallService }: {
+  onGoOrders: (tab?: string) => void;
+  onGoFavorites: () => void;
+  onGoCoupons: () => void;
+  onGoRecords: () => void;
+  onGoVip: () => void;
+  onCallService: () => void;
+}) {
+  const orderStats = [
+    { v: "3", l: "待付款", tab: "pending_pay" },
+    { v: "1", l: "待发货", tab: "pending_ship" },
+    { v: "2", l: "待评价", tab: "pending_review" },
+    { v: "2", l: "退换货", tab: "refund" },
+  ];
+
+  const menuItems: { icon: React.FC<{ size: number; color: string }>; label: string; desc: string; action: () => void }[] = [
+    { icon: Package, label: "我的订单", desc: "查看所有订单", action: () => onGoOrders("all") },
+    { icon: Heart, label: "我的收藏", desc: "收藏的单品与搭配", action: onGoFavorites },
+    { icon: Tag, label: "我的优惠券", desc: "3张可用", action: onGoCoupons },
+    { icon: Sparkles, label: "我的穿搭记录", desc: "已记录 24 套", action: onGoRecords },
+    { icon: Headphones, label: "联系客服", desc: "7×12小时在线", action: onCallService },
   ];
 
   return (
@@ -546,10 +609,14 @@ function MinePage() {
           </div>
         </div>
 
-        {/* Stats */}
+        {/* Stats - clickable, navigate to orders with tab */}
         <div style={{ display: "flex", justifyContent: "space-around", marginTop: 24, padding: "16px 0", background: "rgba(255,255,255,0.08)", borderRadius: 14 }}>
-          {[{ v: "3", l: "待付款" }, { v: "1", l: "待发货" }, { v: "0", l: "待评价" }, { v: "2", l: "退换货" }].map(s => (
-            <div key={s.l} style={{ textAlign: "center" }}>
+          {orderStats.map(s => (
+            <div
+              key={s.l}
+              onClick={() => onGoOrders(s.tab)}
+              style={{ textAlign: "center", cursor: "pointer", transition: "opacity 0.2s" }}
+            >
               <div style={{ fontFamily: font, fontSize: 20, fontWeight: 700, color: "#f5d9a8" }}>{s.v}</div>
               <div style={{ fontFamily: font, fontSize: 11, color: "rgba(255,255,255,0.5)", marginTop: 2 }}>{s.l}</div>
             </div>
@@ -557,8 +624,11 @@ function MinePage() {
         </div>
       </div>
 
-      {/* VIP card */}
-      <div style={{ margin: "16px 20px", background: CARD, borderRadius: 18, padding: "16px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      {/* VIP card - clickable */}
+      <div
+        onClick={onGoVip}
+        style={{ margin: "16px 20px", background: CARD, borderRadius: 18, padding: "16px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer" }}
+      >
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <Award size={22} color={ACCENT} />
           <div>
@@ -569,11 +639,12 @@ function MinePage() {
         <ChevronRight size={16} color={MUTED} />
       </div>
 
-      {/* Menu */}
+      {/* Menu - clickable items */}
       <div style={{ margin: "0 20px", background: CARD, borderRadius: 18, overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
         {menuItems.map((item, i) => (
           <div
             key={item.label}
+            onClick={item.action}
             style={{
               display: "flex", alignItems: "center", gap: 14,
               padding: "15px 18px",
@@ -1413,6 +1484,345 @@ function TryOnPage({ item, onBack }: { item: { img: string; name: string }; onBa
   );
 }
 
+// ─── ORDERS PAGE ─────────────────────────────────────────────────────────────
+function OrdersPage({ onBack, initialTab }: { onBack: () => void; initialTab?: string }) {
+  const [activeTab, setActiveTab] = useState(initialTab || "all");
+  const orderTabs = [
+    { key: "all", label: "全部" },
+    { key: "pending_pay", label: "待付款" },
+    { key: "pending_ship", label: "待发货" },
+    { key: "pending_review", label: "待评价" },
+    { key: "refund", label: "退换货" },
+  ];
+  const filtered = activeTab === "all" ? ordersData : ordersData.filter(o => o.status === activeTab);
+
+  return (
+    <div style={{ height: "100%", display: "flex", flexDirection: "column", background: BG }}>
+      {/* Header */}
+      <div style={{ padding: "16px 20px 12px", display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
+        <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex" }}>
+          <X size={22} color={TEXT} />
+        </button>
+        <span style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: TEXT }}>我的订单</span>
+      </div>
+
+      {/* Tabs */}
+      <div style={{ padding: "0 20px 12px", display: "flex", gap: 6, overflowX: "auto", flexShrink: 0 }}>
+        {orderTabs.map(t => (
+          <button
+            key={t.key}
+            onClick={() => setActiveTab(t.key)}
+            style={{
+              flexShrink: 0,
+              background: activeTab === t.key ? ACCENT : ACCENT_LIGHT,
+              color: activeTab === t.key ? "#fff" : ACCENT,
+              fontFamily: font, fontSize: 12, fontWeight: 500,
+              padding: "6px 14px", borderRadius: 18, border: "none", cursor: "pointer",
+            }}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Order list */}
+      <div style={{ flex: 1, overflowY: "auto", padding: "0 20px 20px" }}>
+        {filtered.length === 0 ? (
+          <div style={{ textAlign: "center", paddingTop: 80, color: MUTED, fontFamily: font, fontSize: 14 }}>
+            暂无相关订单
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {filtered.map(order => (
+              <div key={order.id} style={{ background: CARD, borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
+                {/* Order header */}
+                <div style={{ padding: "12px 16px", display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: `1px solid ${ACCENT_LIGHT}` }}>
+                  <span style={{ fontFamily: font, fontSize: 12, color: MUTED }}>订单号: {order.id}</span>
+                  <span style={{ fontFamily: font, fontSize: 13, fontWeight: 600, color: order.refundStatus ? "#e53935" : ACCENT }}>
+                    {order.refundStatus || order.statusLabel}
+                  </span>
+                </div>
+                {/* Order body */}
+                <div style={{ padding: "12px 16px", display: "flex", gap: 12 }}>
+                  <img src={order.img} alt={order.name} style={{ width: 80, height: 80, borderRadius: 10, objectFit: "cover", flexShrink: 0 }} />
+                  <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                    <div>
+                      <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: TEXT }}>{order.name}</div>
+                      <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 2 }}>{order.items}</div>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <span style={{ fontFamily: font, fontSize: 12, color: MUTED }}>{order.date}</span>
+                      <span style={{ fontFamily: font, fontSize: 16, fontWeight: 700, color: ACCENT }}>¥{order.price}</span>
+                    </div>
+                  </div>
+                </div>
+                {/* Order actions */}
+                <div style={{ padding: "8px 16px 14px", display: "flex", gap: 8, justifyContent: "flex-end" }}>
+                  {order.status === "pending_pay" && (
+                    <>
+                      <button style={{ padding: "7px 16px", borderRadius: 18, border: `1px solid ${ACCENT}`, background: "transparent", color: ACCENT, fontFamily: font, fontSize: 12, fontWeight: 500, cursor: "pointer" }}>取消订单</button>
+                      <button style={{ padding: "7px 16px", borderRadius: 18, border: "none", background: ACCENT, color: "#fff", fontFamily: font, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>去付款</button>
+                    </>
+                  )}
+                  {order.status === "pending_ship" && (
+                    <button style={{ padding: "7px 16px", borderRadius: 18, border: `1px solid ${ACCENT}`, background: "transparent", color: ACCENT, fontFamily: font, fontSize: 12, fontWeight: 500, cursor: "pointer" }}>提醒发货</button>
+                  )}
+                  {order.status === "pending_review" && (
+                    <button style={{ padding: "7px 16px", borderRadius: 18, border: "none", background: ACCENT, color: "#fff", fontFamily: font, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>去评价</button>
+                  )}
+                  {order.status === "refund" && (
+                    <button style={{ padding: "7px 16px", borderRadius: 18, border: `1px solid ${ACCENT}`, background: "transparent", color: ACCENT, fontFamily: font, fontSize: 12, fontWeight: 500, cursor: "pointer" }}>查看详情</button>
+                  )}
+                  {order.status === "done" && (
+                    <button style={{ padding: "7px 16px", borderRadius: 18, border: `1px solid ${ACCENT}`, background: "transparent", color: ACCENT, fontFamily: font, fontSize: 12, fontWeight: 500, cursor: "pointer" }}>再次购买</button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── FAVORITES PAGE ───────────────────────────────────────────────────────────
+function FavoritesPage({ onBack }: { onBack: () => void }) {
+  const [filter, setFilter] = useState<"all" | "单品" | "搭配">("all");
+  const filtered = filter === "all" ? favoritesData : favoritesData.filter(f => f.type === filter);
+
+  return (
+    <div style={{ height: "100%", display: "flex", flexDirection: "column", background: BG }}>
+      <div style={{ padding: "16px 20px 12px", display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
+        <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex" }}>
+          <X size={22} color={TEXT} />
+        </button>
+        <span style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: TEXT }}>我的收藏</span>
+      </div>
+
+      <div style={{ padding: "0 20px 12px", display: "flex", gap: 8, flexShrink: 0 }}>
+        {[{ k: "all", l: "全部" }, { k: "单品", l: "单品" }, { k: "搭配", l: "搭配" }].map(t => (
+          <button
+            key={t.k}
+            onClick={() => setFilter(t.k as "all" | "单品" | "搭配")}
+            style={{
+              background: filter === t.k ? ACCENT : ACCENT_LIGHT,
+              color: filter === t.k ? "#fff" : ACCENT,
+              fontFamily: font, fontSize: 12, fontWeight: 500,
+              padding: "6px 14px", borderRadius: 18, border: "none", cursor: "pointer",
+            }}
+          >
+            {t.l}
+          </button>
+        ))}
+      </div>
+
+      <div style={{ flex: 1, overflowY: "auto", padding: "0 20px 20px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+          {filtered.map(item => (
+            <div key={item.id} style={{ background: CARD, borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 10px rgba(0,0,0,0.06)" }}>
+              <div style={{ height: 160, overflow: "hidden", position: "relative" }}>
+                <img src={item.img} alt={item.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <span style={{ position: "absolute", top: 8, left: 8, background: "rgba(0,0,0,0.5)", color: "#fff", fontFamily: font, fontSize: 10, padding: "2px 8px", borderRadius: 8 }}>{item.type}</span>
+              </div>
+              <div style={{ padding: "10px 12px 12px" }}>
+                <div style={{ fontFamily: font, fontSize: 13, fontWeight: 600, color: TEXT, marginBottom: 4, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.name}</div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <span style={{ fontFamily: font, fontSize: 15, fontWeight: 700, color: ACCENT }}>¥{item.price}</span>
+                  <Heart size={16} color="#e53935" fill="#e53935" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── COUPONS PAGE ─────────────────────────────────────────────────────────────
+function CouponsPage({ onBack }: { onBack: () => void }) {
+  const [tab, setTab] = useState<"available" | "expired">("available");
+  const filtered = couponsData.filter(c => c.status === tab);
+
+  return (
+    <div style={{ height: "100%", display: "flex", flexDirection: "column", background: BG }}>
+      <div style={{ padding: "16px 20px 12px", display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
+        <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex" }}>
+          <X size={22} color={TEXT} />
+        </button>
+        <span style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: TEXT }}>我的优惠券</span>
+      </div>
+
+      <div style={{ padding: "0 20px 12px", display: "flex", gap: 8, flexShrink: 0 }}>
+        <button onClick={() => setTab("available")} style={{ background: tab === "available" ? ACCENT : ACCENT_LIGHT, color: tab === "available" ? "#fff" : ACCENT, fontFamily: font, fontSize: 13, fontWeight: 500, padding: "6px 16px", borderRadius: 18, border: "none", cursor: "pointer" }}>可用 ({couponsData.filter(c => c.status === "available").length})</button>
+        <button onClick={() => setTab("expired")} style={{ background: tab === "expired" ? ACCENT : ACCENT_LIGHT, color: tab === "expired" ? "#fff" : ACCENT, fontFamily: font, fontSize: 13, fontWeight: 500, padding: "6px 16px", borderRadius: 18, border: "none", cursor: "pointer" }}>已过期 ({couponsData.filter(c => c.status === "expired").length})</button>
+      </div>
+
+      <div style={{ flex: 1, overflowY: "auto", padding: "0 20px 20px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          {filtered.map(coupon => (
+            <div key={coupon.id} style={{
+              background: coupon.status === "available" ? CARD : "#f0ebe3",
+              borderRadius: 16,
+              overflow: "hidden",
+              boxShadow: coupon.status === "available" ? "0 2px 12px rgba(0,0,0,0.06)" : "none",
+              display: "flex",
+              opacity: coupon.status === "expired" ? 0.6 : 1,
+            }}>
+              {/* Left amount */}
+              <div style={{
+                width: 100,
+                background: coupon.status === "available" ? `linear-gradient(135deg, ${ACCENT}, #9c6b34)` : "#d8cfc4",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#fff",
+                flexShrink: 0,
+              }}>
+                <div style={{ fontFamily: font, fontSize: 28, fontWeight: 700 }}>
+                  <span style={{ fontSize: 14 }}>¥</span>{coupon.amount}
+                </div>
+                <div style={{ fontFamily: font, fontSize: 11, opacity: 0.8 }}>满{coupon.threshold}可用</div>
+              </div>
+              {/* Right info */}
+              <div style={{ flex: 1, padding: "14px 16px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                <div style={{ fontFamily: font, fontSize: 15, fontWeight: 600, color: TEXT, marginBottom: 4 }}>{coupon.name}</div>
+                <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginBottom: 8 }}>有效期至 {coupon.expire}</div>
+                {coupon.status === "available" ? (
+                  <button style={{ alignSelf: "flex-start", padding: "5px 14px", borderRadius: 14, border: "none", background: ACCENT, color: "#fff", fontFamily: font, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>去使用</button>
+                ) : (
+                  <span style={{ fontFamily: font, fontSize: 12, color: MUTED }}>已过期</span>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── RECORDS PAGE ─────────────────────────────────────────────────────────────
+function RecordsPage({ onBack }: { onBack: () => void }) {
+  return (
+    <div style={{ height: "100%", display: "flex", flexDirection: "column", background: BG }}>
+      <div style={{ padding: "16px 20px 12px", display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
+        <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex" }}>
+          <X size={22} color={TEXT} />
+        </button>
+        <span style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: TEXT }}>我的穿搭记录</span>
+      </div>
+
+      {/* Stats */}
+      <div style={{ margin: "0 20px 12px", background: ACCENT_LIGHT, borderRadius: 14, padding: "12px 16px", display: "flex", justifyContent: "space-around", flexShrink: 0 }}>
+        {[{ v: "24", l: "总记录" }, { v: "18", l: "本月" }, { v: "6", l: "场景" }].map(s => (
+          <div key={s.l} style={{ textAlign: "center" }}>
+            <div style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: ACCENT }}>{s.v}</div>
+            <div style={{ fontFamily: font, fontSize: 11, color: MUTED }}>{s.l}</div>
+          </div>
+        ))}
+      </div>
+
+      <div style={{ flex: 1, overflowY: "auto", padding: "0 20px 20px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          {recordsData.map((record, i) => (
+            <div key={record.id} style={{ display: "flex", gap: 14 }}>
+              {/* Timeline dot & line */}
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0 }}>
+                <div style={{ width: 10, height: 10, borderRadius: "50%", background: ACCENT, marginTop: 4 }} />
+                {i < recordsData.length - 1 && <div style={{ width: 2, flex: 1, background: `${ACCENT}30`, marginTop: 4 }} />}
+              </div>
+              {/* Card */}
+              <div style={{ flex: 1, background: CARD, borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", marginBottom: i < recordsData.length - 1 ? 0 : 0 }}>
+                <div style={{ display: "flex", gap: 12, padding: "12px 14px" }}>
+                  <img src={record.img} alt={record.title} style={{ width: 70, height: 70, borderRadius: 10, objectFit: "cover", flexShrink: 0 }} />
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
+                      <span style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: TEXT }}>{record.title}</span>
+                      <span style={{ fontFamily: font, fontSize: 11, color: MUTED }}>{record.date}</span>
+                    </div>
+                    <div style={{ display: "flex", gap: 6, marginBottom: 6 }}>
+                      <span style={{ background: ACCENT_LIGHT, color: ACCENT, fontFamily: font, fontSize: 10, padding: "2px 8px", borderRadius: 8 }}>{record.scene}</span>
+                      <span style={{ background: "#f0f0f0", color: MUTED, fontFamily: font, fontSize: 10, padding: "2px 8px", borderRadius: 8 }}>{record.weather}</span>
+                    </div>
+                    <div style={{ fontFamily: font, fontSize: 12, color: "#666", lineHeight: 1.4 }}>{record.note}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── VIP BENEFITS PAGE ────────────────────────────────────────────────────────
+function VipPage({ onBack }: { onBack: () => void }) {
+  return (
+    <div style={{ height: "100%", display: "flex", flexDirection: "column", background: BG }}>
+      <div style={{ padding: "16px 20px 12px", display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
+        <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex" }}>
+          <X size={22} color={TEXT} />
+        </button>
+        <span style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: TEXT }}>VIP 专属权益</span>
+      </div>
+
+      <div style={{ flex: 1, overflowY: "auto", padding: "0 20px 20px" }}>
+        {/* VIP card */}
+        <div style={{
+          background: `linear-gradient(135deg, #3a2a18 0%, #6b4a28 100%)`,
+          borderRadius: 18, padding: "20px 18px",
+          marginBottom: 20,
+          display: "flex", alignItems: "center", gap: 14,
+        }}>
+          <div style={{ width: 50, height: 50, borderRadius: "50%", overflow: "hidden", border: `2px solid ${ACCENT}`, flexShrink: 0 }}>
+            <img src={IMG.hero} alt="头像" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          </div>
+          <div>
+            <div style={{ fontFamily: font, fontSize: 16, fontWeight: 700, color: "#f5d9a8" }}>VIP 会员</div>
+            <div style={{ fontFamily: font, fontSize: 12, color: "rgba(245,217,168,0.6)", marginTop: 2 }}>有效期至 2027.03.15</div>
+          </div>
+        </div>
+
+        {/* Benefits list */}
+        <div style={{ fontFamily: font, fontSize: 15, fontWeight: 700, color: TEXT, marginBottom: 12 }}>专属权益</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 24 }}>
+          {vipBenefits.map(b => (
+            <div key={b.title} style={{ background: CARD, borderRadius: 14, padding: "14px 16px", display: "flex", alignItems: "flex-start", gap: 12, boxShadow: "0 2px 10px rgba(0,0,0,0.05)" }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: ACCENT_LIGHT, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, flexShrink: 0 }}>
+                {b.icon}
+              </div>
+              <div>
+                <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: TEXT, marginBottom: 3 }}>{b.title}</div>
+                <div style={{ fontFamily: font, fontSize: 12, color: MUTED, lineHeight: 1.4 }}>{b.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Member level progress */}
+        <div style={{ background: CARD, borderRadius: 16, padding: "16px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
+          <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: TEXT, marginBottom: 12 }}>成长进度</div>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+            <span style={{ fontFamily: font, fontSize: 13, color: ACCENT, fontWeight: 600 }}>黄金会员</span>
+            <span style={{ fontFamily: font, fontSize: 12, color: MUTED }}>距铂金会员还差 2,000 积分</span>
+          </div>
+          <div style={{ width: "100%", height: 8, background: ACCENT_LIGHT, borderRadius: 4, overflow: "hidden" }}>
+            <div style={{ width: "72%", height: "100%", background: `linear-gradient(90deg, ${ACCENT}, #d4a56a)`, borderRadius: 4 }} />
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginTop: 6 }}>
+            <span style={{ fontFamily: font, fontSize: 11, color: MUTED }}>当前 5,200 积分</span>
+            <span style={{ fontFamily: font, fontSize: 11, color: MUTED }}>铂金 7,200 积分</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── BOTTOM TAB BAR ───────────────────────────────────────────────────────────
 const tabs: { id: Tab; label: string; Icon: React.FC<{ size: number; color: string; fill?: string }> }[] = [
   { id: "home", label: "首页", Icon: ({ size, color }) => <Home size={size} color={color} /> },
@@ -1428,6 +1838,8 @@ export default function App() {
   const [selectedTryOnItem, setSelectedTryOnItem] = useState<{ img: string; name: string } | null>(null);
   const [selectedNote, setSelectedNote] = useState<(typeof notesData)[0] | null>(null);
   const [showStylistQR, setShowStylistQR] = useState(false);
+  const [showCallDialog, setShowCallDialog] = useState(false);
+  const [orderInitialTab, setOrderInitialTab] = useState<string>("all");
   const dragConstraintsRef = useRef<HTMLDivElement>(null);
 
   const handleGoProduct = (look?: (typeof looks)[0]) => {
@@ -1443,6 +1855,12 @@ export default function App() {
     setSubPage("note");
   };
   const handleBack = () => setSubPage(null);
+  const handleGoOrders = (tab?: string) => { setOrderInitialTab(tab || "all"); setSubPage("orders"); };
+  const handleGoFavorites = () => setSubPage("favorites");
+  const handleGoCoupons = () => setSubPage("coupons");
+  const handleGoRecords = () => setSubPage("records");
+  const handleGoVip = () => setSubPage("vip");
+  const handleCallService = () => setShowCallDialog(true);
 
   const tabIndex = tabs.findIndex(t => t.id === activeTab);
 
@@ -1499,7 +1917,14 @@ export default function App() {
               >
                 {activeTab === "home" && <HomePage onGoProduct={() => handleGoProduct()} onGoNote={handleGoNote} />}
                 {activeTab === "recommend" && <RecommendPage onGoProduct={handleGoProduct} onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title })} />}
-                {activeTab === "mine" && <MinePage />}
+                {activeTab === "mine" && <MinePage
+                  onGoOrders={handleGoOrders}
+                  onGoFavorites={handleGoFavorites}
+                  onGoCoupons={handleGoCoupons}
+                  onGoRecords={handleGoRecords}
+                  onGoVip={handleGoVip}
+                  onCallService={handleCallService}
+                />}
               </motion.div>
             )}
           </AnimatePresence>
@@ -1727,6 +2152,115 @@ export default function App() {
                 {subPage === "product" && <ProductPage look={selectedLook} onBack={handleBack} />}
                 {subPage === "tryon" && selectedTryOnItem && <TryOnPage item={selectedTryOnItem} onBack={handleBack} />}
                 {subPage === "note" && selectedNote && <NoteDetailPage note={selectedNote} onBack={handleBack} />}
+                {subPage === "orders" && <OrdersPage onBack={handleBack} initialTab={orderInitialTab} />}
+                {subPage === "favorites" && <FavoritesPage onBack={handleBack} />}
+                {subPage === "coupons" && <CouponsPage onBack={handleBack} />}
+                {subPage === "records" && <RecordsPage onBack={handleBack} />}
+                {subPage === "vip" && <VipPage onBack={handleBack} />}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Phone call confirmation dialog */}
+          <AnimatePresence>
+            {showCallDialog && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setShowCallDialog(false)}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "rgba(0,0,0,0.5)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  zIndex: 200,
+                  backdropFilter: "blur(4px)",
+                }}
+              >
+                <motion.div
+                  initial={{ scale: 0.85, y: 20 }}
+                  animate={{ scale: 1, y: 0 }}
+                  exit={{ scale: 0.85, y: 20 }}
+                  transition={{ type: "spring", stiffness: 320, damping: 28 }}
+                  onClick={(e) => e.stopPropagation()}
+                  style={{
+                    width: 280,
+                    background: "#fff",
+                    borderRadius: 20,
+                    padding: "24px 24px 20px",
+                    textAlign: "center",
+                    boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+                  }}
+                >
+                  {/* Phone icon */}
+                  <div style={{
+                    width: 56,
+                    height: 56,
+                    borderRadius: "50%",
+                    background: `linear-gradient(135deg, ${ACCENT}, #d4a56a)`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "0 auto 16px",
+                  }}>
+                    <Phone size={26} color="#fff" />
+                  </div>
+
+                  <div style={{ fontFamily: font, fontSize: 16, fontWeight: 700, color: TEXT, marginBottom: 6 }}>
+                    联系客服
+                  </div>
+                  <div style={{ fontFamily: font, fontSize: 13, color: MUTED, marginBottom: 4, lineHeight: 1.5 }}>
+                    客服热线：400-888-6688
+                  </div>
+                  <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginBottom: 20 }}>
+                    服务时间：9:00 - 21:00（全年无休）
+                  </div>
+
+                  <div style={{ display: "flex", gap: 10 }}>
+                    <button
+                      onClick={() => setShowCallDialog(false)}
+                      style={{
+                        flex: 1,
+                        padding: "11px",
+                        borderRadius: 22,
+                        border: `1px solid ${ACCENT}`,
+                        background: "transparent",
+                        color: ACCENT,
+                        fontFamily: font,
+                        fontSize: 14,
+                        fontWeight: 600,
+                        cursor: "pointer",
+                      }}
+                    >
+                      取消
+                    </button>
+                    <button
+                      onClick={() => setShowCallDialog(false)}
+                      style={{
+                        flex: 1,
+                        padding: "11px",
+                        borderRadius: 22,
+                        border: "none",
+                        background: ACCENT,
+                        color: "#fff",
+                        fontFamily: font,
+                        fontSize: 14,
+                        fontWeight: 600,
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 6,
+                      }}
+                    >
+                      <Phone size={14} /> 立即拨打
+                    </button>
+                  </div>
+                </motion.div>
               </motion.div>
             )}
           </AnimatePresence>
