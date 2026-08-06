@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Home,
-  Shirt,
   Sparkles,
   User,
   Plus,
@@ -11,7 +10,6 @@ import {
   ShoppingBag,
   Bell,
   Play,
-  Calendar,
   Award,
   Package,
   Tag,
@@ -27,7 +25,7 @@ import {
   Bookmark,
 } from "lucide-react";
 
-type Tab = "home" | "wardrobe" | "recommend" | "mine";
+type Tab = "home" | "recommend" | "mine";
 type SubPage = "live" | "product" | "tryon" | "note" | null;
 
 const ACCENT = "#b8874a";
@@ -77,8 +75,7 @@ function Pill({ children, active, onClick }: { children: string; active?: boolea
 }
 
 // ─── HOME PAGE ────────────────────────────────────────────────────────────────
-function HomePage({ onGoLive, onGoProduct, onGoNote }: { onGoLive: () => void; onGoProduct: () => void; onGoNote: (note: (typeof notesData)[0]) => void }) {
-  const [reserved, setReserved] = useState(false);
+function HomePage({ onGoProduct, onGoNote }: { onGoProduct: () => void; onGoNote: (note: (typeof notesData)[0]) => void }) {
   return (
     <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%" }}>
       {/* Top bar */}
@@ -230,36 +227,6 @@ function HomePage({ onGoLive, onGoProduct, onGoNote }: { onGoLive: () => void; o
               </div>
             </div>
           ))}
-        </div>
-      </div>
-
-      {/* Live reservation */}
-      <div style={{ margin: "0 20px 16px", background: CARD, borderRadius: 18, padding: "18px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.05)" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-          <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#e53935", animation: "pulse 1.5s infinite" }} />
-          <span style={{ fontFamily: font, fontSize: 13, fontWeight: 600, color: TEXT }}>下一场直播</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div>
-            <div style={{ fontFamily: font, fontSize: 15, fontWeight: 700, color: TEXT, marginBottom: 4 }}>春季高级感穿搭分享</div>
-            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <Calendar size={12} color={MUTED} />
-              <span style={{ fontFamily: font, fontSize: 12, color: MUTED }}>周五 20:00</span>
-            </div>
-            <div style={{ fontFamily: font, fontSize: 12, color: ACCENT, marginTop: 4 }}>已有 3,280 人预约</div>
-          </div>
-          <button
-            onClick={() => { setReserved(true); onGoLive(); }}
-            style={{
-              background: reserved ? ACCENT_LIGHT : ACCENT,
-              color: reserved ? ACCENT : "#fff",
-              fontFamily: font, fontSize: 13, fontWeight: 600,
-              padding: "9px 16px", borderRadius: 22, border: "none", cursor: "pointer",
-              display: "flex", alignItems: "center", gap: 6,
-            }}
-          >
-            {reserved ? <><Check size={13} /> 已预约</> : "立即预约"}
-          </button>
         </div>
       </div>
 
@@ -471,7 +438,7 @@ function RecommendPage({ onGoProduct, onGoTryOn }: { onGoProduct: (look: (typeof
   return (
     <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%" }}>
       <div style={{ padding: "16px 20px 14px" }}>
-        <span style={{ fontFamily: font, fontSize: 20, fontWeight: 700, color: TEXT }}>老师推荐</span>
+        <span style={{ fontFamily: font, fontSize: 20, fontWeight: 700, color: TEXT }}>老师穿搭定制</span>
         <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 2 }}>为你精选的穿搭方案</div>
       </div>
 
@@ -1449,8 +1416,7 @@ function TryOnPage({ item, onBack }: { item: { img: string; name: string }; onBa
 // ─── BOTTOM TAB BAR ───────────────────────────────────────────────────────────
 const tabs: { id: Tab; label: string; Icon: React.FC<{ size: number; color: string; fill?: string }> }[] = [
   { id: "home", label: "首页", Icon: ({ size, color }) => <Home size={size} color={color} /> },
-  { id: "wardrobe", label: "衣橱", Icon: ({ size, color }) => <Shirt size={size} color={color} /> },
-  { id: "recommend", label: "推荐", Icon: ({ size, color }) => <Sparkles size={size} color={color} /> },
+  { id: "recommend", label: "穿搭定制", Icon: ({ size, color }) => <Sparkles size={size} color={color} /> },
   { id: "mine", label: "我的", Icon: ({ size, color }) => <User size={size} color={color} /> },
 ];
 
@@ -1461,6 +1427,8 @@ export default function App() {
   const [selectedLook, setSelectedLook] = useState<(typeof looks)[0] | null>(null);
   const [selectedTryOnItem, setSelectedTryOnItem] = useState<{ img: string; name: string } | null>(null);
   const [selectedNote, setSelectedNote] = useState<(typeof notesData)[0] | null>(null);
+  const [showStylistQR, setShowStylistQR] = useState(false);
+  const dragConstraintsRef = useRef<HTMLDivElement>(null);
 
   const handleGoProduct = (look?: (typeof looks)[0]) => {
     if (look) setSelectedLook(look);
@@ -1517,7 +1485,7 @@ export default function App() {
         </div>
 
         {/* Page content */}
-        <div style={{ flex: 1, overflow: "hidden", position: "relative" }}>
+        <div ref={dragConstraintsRef} style={{ flex: 1, overflow: "hidden", position: "relative" }}>
           {/* Tab pages */}
           <AnimatePresence mode="wait" initial={false}>
             {subPage === null && (
@@ -1529,10 +1497,217 @@ export default function App() {
                 transition={{ duration: 0.22, ease: "easeInOut" }}
                 style={{ position: "absolute", inset: 0 }}
               >
-                {activeTab === "home" && <HomePage onGoLive={() => setSubPage("live")} onGoProduct={() => handleGoProduct()} onGoNote={handleGoNote} />}
-                {activeTab === "wardrobe" && <WardrobePage onGoTryOn={handleGoTryOn} />}
+                {activeTab === "home" && <HomePage onGoProduct={() => handleGoProduct()} onGoNote={handleGoNote} />}
                 {activeTab === "recommend" && <RecommendPage onGoProduct={handleGoProduct} onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title })} />}
                 {activeTab === "mine" && <MinePage />}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Floating stylist button - only on home and recommend tabs, draggable */}
+          {subPage === null && (activeTab === "home" || activeTab === "recommend") && (
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3, type: "spring", stiffness: 300, damping: 20 }}
+              drag
+              dragConstraints={dragConstraintsRef}
+              dragMomentum={false}
+              whileDrag={{ scale: 1.12, boxShadow: "0 8px 28px rgba(184,135,74,0.5)" }}
+              whileTap={{ scale: 0.95 }}
+              onTap={() => setShowStylistQR(true)}
+              style={{
+                position: "absolute",
+                right: 0,
+                top: "calc(50% - 30px)",
+                background: `linear-gradient(135deg, ${ACCENT}, #d4a56a)`,
+                color: "#fff",
+                border: "none",
+                borderRadius: 16,
+                padding: "12px 10px",
+                fontFamily: font,
+                fontSize: 12,
+                fontWeight: 600,
+                cursor: "grab",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 4,
+                boxShadow: "0 4px 16px rgba(184,135,74,0.35)",
+                zIndex: 15,
+                width: 48,
+                touchAction: "none",
+                WebkitTouchCallout: "none",
+                userSelect: "none",
+              }}
+            >
+              <Headphones size={18} color="#fff" />
+              <span style={{ writingMode: "vertical-rl", fontSize: 11, letterSpacing: 1, userSelect: "none" }}>穿搭师</span>
+            </motion.button>
+          )}
+
+          {/* Stylist QR code popup */}
+          <AnimatePresence>
+            {showStylistQR && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setShowStylistQR(false)}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "rgba(0,0,0,0.6)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  zIndex: 100,
+                  backdropFilter: "blur(4px)",
+                }}
+              >
+                <motion.div
+                  initial={{ scale: 0.85, y: 20 }}
+                  animate={{ scale: 1, y: 0 }}
+                  exit={{ scale: 0.85, y: 20 }}
+                  transition={{ type: "spring", stiffness: 320, damping: 28 }}
+                  onClick={(e) => e.stopPropagation()}
+                  style={{
+                    width: 300,
+                    background: "#fff",
+                    borderRadius: 24,
+                    padding: "28px 24px 24px",
+                    textAlign: "center",
+                    boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+                  }}
+                >
+                  {/* Close */}
+                  <button
+                    onClick={() => setShowStylistQR(false)}
+                    style={{
+                      position: "absolute",
+                      top: 12,
+                      right: 12,
+                      width: 30,
+                      height: 30,
+                      borderRadius: "50%",
+                      border: "none",
+                      background: "#f5f3f0",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <X size={16} color={MUTED} />
+                  </button>
+
+                  {/* Avatar */}
+                  <div style={{
+                    width: 52,
+                    height: 52,
+                    borderRadius: "50%",
+                    background: `linear-gradient(135deg, ${ACCENT}, #d4a56a)`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "0 auto 12px",
+                  }}>
+                    <Headphones size={24} color="#fff" />
+                  </div>
+
+                  <div style={{ fontFamily: font, fontSize: 17, fontWeight: 700, color: TEXT, marginBottom: 4 }}>
+                    添加专属穿搭师
+                  </div>
+                  <div style={{ fontFamily: font, fontSize: 13, color: MUTED, marginBottom: 18 }}>
+                    扫码添加企业微信，获取1对1穿搭服务
+                  </div>
+
+                  {/* QR code placeholder */}
+                  <div style={{
+                    width: 200,
+                    height: 200,
+                    margin: "0 auto 16px",
+                    borderRadius: 16,
+                    background: "#f8f6f3",
+                    border: `2px solid ${ACCENT_LIGHT}`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    position: "relative",
+                    overflow: "hidden",
+                  }}>
+                    {/* Simulated QR code pattern */}
+                    <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      {/* Corner markers */}
+                      <rect x="10" y="10" width="40" height="40" rx="4" fill={TEXT} />
+                      <rect x="18" y="18" width="24" height="24" rx="2" fill="#fff" />
+                      <rect x="22" y="22" width="16" height="16" rx="1" fill={TEXT} />
+                      <rect x="130" y="10" width="40" height="40" rx="4" fill={TEXT} />
+                      <rect x="138" y="18" width="24" height="24" rx="2" fill="#fff" />
+                      <rect x="142" y="22" width="16" height="16" rx="1" fill={TEXT} />
+                      <rect x="10" y="130" width="40" height="40" rx="4" fill={TEXT} />
+                      <rect x="18" y="138" width="24" height="24" rx="2" fill="#fff" />
+                      <rect x="22" y="142" width="16" height="16" rx="1" fill={TEXT} />
+                      {/* Random data dots */}
+                      {Array.from({ length: 64 }).map((_, i) => {
+                        const x = 60 + (i % 8) * 8;
+                        const y = 60 + Math.floor(i / 8) * 8;
+                        const fill = (i * 7 + 3) % 3 === 0 ? TEXT : "transparent";
+                        return fill === TEXT ? <rect key={i} x={x} y={y} width="6" height="6" rx="1" fill={fill} /> : null;
+                      })}
+                      {Array.from({ length: 48 }).map((_, i) => {
+                        const x = 60 + (i % 6) * 8;
+                        const y = 10 + Math.floor(i / 6) * 8;
+                        const fill = (i * 5 + 1) % 3 === 0 ? TEXT : "transparent";
+                        return fill === TEXT ? <rect key={`t${i}`} x={x} y={y} width="6" height="6" rx="1" fill={fill} /> : null;
+                      })}
+                      {Array.from({ length: 48 }).map((_, i) => {
+                        const x = 10 + (i % 6) * 8;
+                        const y = 60 + Math.floor(i / 6) * 8;
+                        const fill = (i * 3 + 2) % 3 === 0 ? TEXT : "transparent";
+                        return fill === TEXT ? <rect key={`l${i}`} x={x} y={y} width="6" height="6" rx="1" fill={fill} /> : null;
+                      })}
+                      {Array.from({ length: 48 }).map((_, i) => {
+                        const x = 130 + (i % 3) * 8;
+                        const y = 60 + Math.floor(i / 3) * 8;
+                        const fill = (i * 4 + 1) % 3 === 0 ? TEXT : "transparent";
+                        return fill === TEXT ? <rect key={`r${i}`} x={x} y={y} width="6" height="6" rx="1" fill={fill} /> : null;
+                      })}
+                      {Array.from({ length: 48 }).map((_, i) => {
+                        const x = 60 + (i % 6) * 8;
+                        const y = 130 + Math.floor(i / 6) * 8;
+                        const fill = (i * 6 + 2) % 3 === 0 ? TEXT : "transparent";
+                        return fill === TEXT ? <rect key={`b${i}`} x={x} y={y} width="6" height="6" rx="1" fill={fill} /> : null;
+                      })}
+                      {/* Center logo */}
+                      <rect x="76" y="76" width="28" height="28" rx="6" fill={ACCENT} />
+                      <text x="90" y="96" textAnchor="middle" fill="#fff" fontSize="16" fontWeight="700" fontFamily={font}>穿</text>
+                    </svg>
+                  </div>
+
+                  <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginBottom: 16, lineHeight: 1.5 }}>
+                    微信扫一扫 · 添加穿搭师企业微信
+                  </div>
+
+                  <button
+                    onClick={() => setShowStylistQR(false)}
+                    style={{
+                      width: "100%",
+                      padding: "12px",
+                      borderRadius: 24,
+                      border: "none",
+                      background: ACCENT,
+                      color: "#fff",
+                      fontFamily: font,
+                      fontSize: 14,
+                      fontWeight: 600,
+                      cursor: "pointer",
+                    }}
+                  >
+                    知道了
+                  </button>
+                </motion.div>
               </motion.div>
             )}
           </AnimatePresence>
