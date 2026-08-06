@@ -2071,53 +2071,11 @@ export default function App() {
                     position: "relative",
                     overflow: "hidden",
                   }}>
-                    {/* Simulated QR code pattern */}
-                    <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      {/* Corner markers */}
-                      <rect x="10" y="10" width="40" height="40" rx="4" fill={TEXT} />
-                      <rect x="18" y="18" width="24" height="24" rx="2" fill="#fff" />
-                      <rect x="22" y="22" width="16" height="16" rx="1" fill={TEXT} />
-                      <rect x="130" y="10" width="40" height="40" rx="4" fill={TEXT} />
-                      <rect x="138" y="18" width="24" height="24" rx="2" fill="#fff" />
-                      <rect x="142" y="22" width="16" height="16" rx="1" fill={TEXT} />
-                      <rect x="10" y="130" width="40" height="40" rx="4" fill={TEXT} />
-                      <rect x="18" y="138" width="24" height="24" rx="2" fill="#fff" />
-                      <rect x="22" y="142" width="16" height="16" rx="1" fill={TEXT} />
-                      {/* Random data dots */}
-                      {Array.from({ length: 64 }).map((_, i) => {
-                        const x = 60 + (i % 8) * 8;
-                        const y = 60 + Math.floor(i / 8) * 8;
-                        const fill = (i * 7 + 3) % 3 === 0 ? TEXT : "transparent";
-                        return fill === TEXT ? <rect key={i} x={x} y={y} width="6" height="6" rx="1" fill={fill} /> : null;
-                      })}
-                      {Array.from({ length: 48 }).map((_, i) => {
-                        const x = 60 + (i % 6) * 8;
-                        const y = 10 + Math.floor(i / 6) * 8;
-                        const fill = (i * 5 + 1) % 3 === 0 ? TEXT : "transparent";
-                        return fill === TEXT ? <rect key={`t${i}`} x={x} y={y} width="6" height="6" rx="1" fill={fill} /> : null;
-                      })}
-                      {Array.from({ length: 48 }).map((_, i) => {
-                        const x = 10 + (i % 6) * 8;
-                        const y = 60 + Math.floor(i / 6) * 8;
-                        const fill = (i * 3 + 2) % 3 === 0 ? TEXT : "transparent";
-                        return fill === TEXT ? <rect key={`l${i}`} x={x} y={y} width="6" height="6" rx="1" fill={fill} /> : null;
-                      })}
-                      {Array.from({ length: 48 }).map((_, i) => {
-                        const x = 130 + (i % 3) * 8;
-                        const y = 60 + Math.floor(i / 3) * 8;
-                        const fill = (i * 4 + 1) % 3 === 0 ? TEXT : "transparent";
-                        return fill === TEXT ? <rect key={`r${i}`} x={x} y={y} width="6" height="6" rx="1" fill={fill} /> : null;
-                      })}
-                      {Array.from({ length: 48 }).map((_, i) => {
-                        const x = 60 + (i % 6) * 8;
-                        const y = 130 + Math.floor(i / 6) * 8;
-                        const fill = (i * 6 + 2) % 3 === 0 ? TEXT : "transparent";
-                        return fill === TEXT ? <rect key={`b${i}`} x={x} y={y} width="6" height="6" rx="1" fill={fill} /> : null;
-                      })}
-                      {/* Center logo */}
-                      <rect x="76" y="76" width="28" height="28" rx="6" fill={ACCENT} />
-                      <text x="90" y="96" textAnchor="middle" fill="#fff" fontSize="16" fontWeight="700" fontFamily={font}>穿</text>
-                    </svg>
+                    <img
+                      src="/assets/stylist_qr.png"
+                      alt="企业微信二维码"
+                      style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 14, display: "block" }}
+                    />
                   </div>
 
                   <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginBottom: 16, lineHeight: 1.5 }}>
