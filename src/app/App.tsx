@@ -80,7 +80,7 @@ function Pill({ children, active, onClick }: { children: string; active?: boolea
 }
 
 // ─── HOME PAGE ────────────────────────────────────────────────────────────────
-function HomePage({ onGoProduct, onGoNote, onGoVipJoin, onGoTryOn }: { onGoProduct: () => void; onGoNote: (note: (typeof notesData)[0]) => void; onGoVipJoin: () => void; onGoTryOn: () => void }) {
+function HomePage({ onGoProduct, onGoNote, onGoVipJoin }: { onGoProduct: () => void; onGoNote: (note: (typeof notesData)[0]) => void; onGoVipJoin: () => void }) {
   return (
     <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%" }}>
       {/* Top bar */}
@@ -122,34 +122,12 @@ function HomePage({ onGoProduct, onGoNote, onGoVipJoin, onGoTryOn }: { onGoProdu
               <span key={t} style={{ background: "rgba(255,255,255,0.2)", color: "#fff", fontFamily: font, fontSize: 11, padding: "2px 9px", borderRadius: 8, backdropFilter: "blur(4px)" }}>{t}</span>
             ))}
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <button
-              onClick={onGoProduct}
-              style={{ background: ACCENT, color: "#fff", fontFamily: font, fontSize: 13, fontWeight: 600, padding: "9px 20px", borderRadius: 22, border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}
-            >
-              查看今日搭配 <ChevronRight size={14} />
-            </button>
-            <button
-              onClick={onGoTryOn}
-              style={{
-                background: "rgba(255,255,255,0.15)",
-                color: "#fff",
-                fontFamily: font,
-                fontSize: 13,
-                fontWeight: 600,
-                padding: "9px 16px",
-                borderRadius: 22,
-                border: "1.5px solid rgba(184,135,74,0.6)",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                backdropFilter: "blur(4px)",
-              }}
-            >
-              <Sparkles size={14} /> AI试衣
-            </button>
-          </div>
+          <button
+            onClick={onGoProduct}
+            style={{ background: ACCENT, color: "#fff", fontFamily: font, fontSize: 13, fontWeight: 600, padding: "9px 20px", borderRadius: 22, border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}
+          >
+            查看今日搭配 <ChevronRight size={14} />
+          </button>
         </div>
       </div>
 
@@ -945,7 +923,7 @@ function NoteDetailPage({ note, onBack }: { note: (typeof notesData)[0]; onBack:
 }
 
 // ─── PRODUCT DETAIL PAGE ──────────────────────────────────────────────────────
-function ProductPage({ look, onBack }: { look: { img: string; title: string; items: string; price: number } | null; onBack: () => void }) {
+function ProductPage({ look, onBack, onGoTryOn }: { look: { img: string; title: string; items: string; price: number } | null; onBack: () => void; onGoTryOn: () => void }) {
   const [added, setAdded] = useState(false);
   const img = look?.img ?? IMG.product;
   const title = look?.title ?? "高级感白领风";
@@ -965,6 +943,29 @@ function ProductPage({ look, onBack }: { look: { img: string; title: string; ite
         </button>
         <button style={{ position: "absolute", top: 16, right: 16, width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.25)", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(6px)" }}>
           <Heart size={16} color="#fff" />
+        </button>
+        <button
+          onClick={onGoTryOn}
+          style={{
+            position: "absolute",
+            bottom: 16,
+            right: 16,
+            background: `linear-gradient(135deg, ${ACCENT}, #d4a56a)`,
+            color: "#fff",
+            fontFamily: font,
+            fontSize: 12,
+            fontWeight: 600,
+            padding: "7px 14px",
+            borderRadius: 18,
+            border: "none",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            gap: 5,
+            boxShadow: "0 2px 10px rgba(184,135,74,0.5)",
+          }}
+        >
+          <Sparkles size={13} /> AI试衣
         </button>
       </div>
 
@@ -1946,7 +1947,7 @@ export default function App() {
                 transition={{ duration: 0.22, ease: "easeInOut" }}
                 style={{ position: "absolute", inset: 0 }}
               >
-                {activeTab === "home" && <HomePage onGoProduct={() => handleGoProduct()} onGoNote={handleGoNote} onGoVipJoin={() => setShowVipJoin(true)} onGoTryOn={() => handleGoTryOn({ img: IMG.look1, name: "高级感白领风" })} />}
+                {activeTab === "home" && <HomePage onGoProduct={() => handleGoProduct()} onGoNote={handleGoNote} onGoVipJoin={() => setShowVipJoin(true)} />}
                 {activeTab === "recommend" && <RecommendPage onGoProduct={handleGoProduct} onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title })} />}
                 {activeTab === "mine" && <MinePage
                   onGoOrders={handleGoOrders}
@@ -2138,7 +2139,7 @@ export default function App() {
                 style={{ position: "absolute", inset: 0, background: BG, zIndex: 20 }}
               >
                 {subPage === "live" && <LivePage onBack={handleBack} />}
-                {subPage === "product" && <ProductPage look={selectedLook} onBack={handleBack} />}
+                {subPage === "product" && <ProductPage look={selectedLook} onBack={handleBack} onGoTryOn={() => handleGoTryOn({ img: selectedLook?.img ?? IMG.product, name: selectedLook?.title ?? "高级感白领风" })} />}
                 {subPage === "tryon" && selectedTryOnItem && <TryOnPage item={selectedTryOnItem} onBack={handleBack} />}
                 {subPage === "note" && selectedNote && <NoteDetailPage note={selectedNote} onBack={handleBack} />}
                 {subPage === "orders" && <OrdersPage onBack={handleBack} initialTab={orderInitialTab} />}
