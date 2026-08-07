@@ -28,6 +28,9 @@ import {
   Crown,
   Zap,
   Gem,
+  Layers,
+  Ruler,
+  ThumbsUp,
 } from "lucide-react";
 
 type Tab = "home" | "recommend" | "mine";
@@ -485,6 +488,62 @@ const looks = [
   },
 ];
 
+// 每款服装补齐：平铺细节图、码数细节、买家真实评价
+type ProductDetail = {
+  flatImgs: string[];
+  lengthLabel: string;
+  sizeChart: { size: string; shoulder: string; bust: string; waist: string; length: string }[];
+  reviews: { user: string; initial: string; rating: number; size: string; content: string; date: string; likes: number }[];
+};
+
+const productDetails: Record<number, ProductDetail> = {
+  1: {
+    flatImgs: [IMG.wardrobe1, IMG.wardrobe2, IMG.wardrobe3],
+    lengthLabel: "裤长",
+    sizeChart: [
+      { size: "S", shoulder: "38", bust: "92", waist: "72", length: "98" },
+      { size: "M", shoulder: "39", bust: "96", waist: "76", length: "100" },
+      { size: "L", shoulder: "40", bust: "100", waist: "80", length: "102" },
+      { size: "XL", shoulder: "41", bust: "104", waist: "84", length: "104" },
+    ],
+    reviews: [
+      { user: "Mia", initial: "M", rating: 5, size: "M", content: "面料很有质感，白衬衫不透，阔腿裤垂感好，通勤穿特别有气场。身高165体重50，M码刚刚好。", date: "2026.07.22", likes: 36 },
+      { user: "安然", initial: "安", rating: 4, size: "L", content: "整体版型很正，西装裤偏长我162需要裁两厘米，但上身效果值得。", date: "2026.07.18", likes: 21 },
+      { user: "Lily妈", initial: "L", rating: 5, size: "S", content: "回购第二套送闺蜜，包装精致，董洁推荐果然靠谱，同事都问链接。", date: "2026.07.15", likes: 18 },
+    ],
+  },
+  2: {
+    flatImgs: [IMG.wardrobe4, IMG.wardrobe5, IMG.wardrobe6],
+    lengthLabel: "裙长",
+    sizeChart: [
+      { size: "S", shoulder: "37", bust: "88", waist: "68", length: "92" },
+      { size: "M", shoulder: "38", bust: "92", waist: "72", length: "94" },
+      { size: "L", shoulder: "39", bust: "96", waist: "76", length: "96" },
+      { size: "XL", shoulder: "40", bust: "100", waist: "80", length: "98" },
+    ],
+    reviews: [
+      { user: "糖糖", initial: "糖", rating: 5, size: "S", content: "丝绒裙太美了，灯光下很有光泽，约会穿被夸了一晚上，显瘦显白。", date: "2026.07.24", likes: 42 },
+      { user: "Vivian", initial: "V", rating: 5, size: "M", content: "西装挺括不显壮，小个子也能撑起来，袖长刚好，做工细节很到位。", date: "2026.07.20", likes: 27 },
+      { user: "阿May", initial: "M", rating: 4, size: "M", content: "皮包颜值在线，就是容量偏小放不下手机，介意的慎拍。", date: "2026.07.12", likes: 15 },
+    ],
+  },
+  3: {
+    flatImgs: [IMG.wardrobe1, IMG.wardrobe4, IMG.wardrobe2],
+    lengthLabel: "裤长",
+    sizeChart: [
+      { size: "S", shoulder: "36", bust: "86", waist: "66", length: "96" },
+      { size: "M", shoulder: "37", bust: "90", waist: "70", length: "98" },
+      { size: "L", shoulder: "38", bust: "94", waist: "74", length: "100" },
+      { size: "XL", shoulder: "39", bust: "98", waist: "78", length: "102" },
+    ],
+    reviews: [
+      { user: "旅行的鱼", initial: "鱼", rating: 5, size: "M", content: "度假穿太合适了，针织轻薄透气，草编帽拍照神器，旅拍出片率超高。", date: "2026.07.23", likes: 33 },
+      { user: "Coco", initial: "C", rating: 5, size: "L", content: "白色长裤凉快，海边走一天也不闷，洗了没透没变形，质量在线。", date: "2026.07.19", likes: 24 },
+      { user: "夏天", initial: "夏", rating: 4, size: "M", content: "针织衫稍微起球，其他都好，整体性价比高，会再买别的色。", date: "2026.07.10", likes: 12 },
+    ],
+  },
+};
+
 function RecommendPage({ onGoProduct, onGoTryOn }: { onGoProduct: (look: (typeof looks)[0]) => void; onGoTryOn: (look: (typeof looks)[0]) => void }) {
   const [activeScene, setActiveScene] = useState("通勤");
   const [likedItems, setLikedItems] = useState<Set<number>>(new Set());
@@ -923,11 +982,12 @@ function NoteDetailPage({ note, onBack }: { note: (typeof notesData)[0]; onBack:
 }
 
 // ─── PRODUCT DETAIL PAGE ──────────────────────────────────────────────────────
-function ProductPage({ look, onBack, onGoTryOn }: { look: { img: string; title: string; items: string; price: number } | null; onBack: () => void; onGoTryOn: () => void }) {
+function ProductPage({ look, onBack, onGoTryOn }: { look: { id?: number; img: string; title: string; items: string; price: number } | null; onBack: () => void; onGoTryOn: () => void }) {
   const [added, setAdded] = useState(false);
   const img = look?.img ?? IMG.product;
   const title = look?.title ?? "高级感白领风";
   const price = look?.price ?? 899;
+  const detail = productDetails[look?.id ?? 1] ?? productDetails[1];
 
   return (
     <div style={{ paddingBottom: 90, overflowY: "auto", height: "100%" }}>
@@ -1007,6 +1067,74 @@ function ProductPage({ look, onBack, onGoTryOn }: { look: { img: string; title: 
               <span key={t} style={{ background: "#f5f3f0", fontFamily: font, fontSize: 12, color: MUTED, padding: "4px 12px", borderRadius: 10 }}>{t}</span>
             ))}
           </div>
+        </div>
+
+        {/* 平铺细节图 */}
+        <div style={{ marginBottom: 20 }}>
+          <div style={{ fontFamily: font, fontSize: 15, fontWeight: 700, color: TEXT, marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}>
+            <Layers size={16} color={ACCENT} /> 平铺细节图
+          </div>
+          <div style={{ display: "flex", gap: 10, overflowX: "auto", paddingBottom: 4 }}>
+            {detail.flatImgs.map((src, i) => (
+              <img
+                key={i}
+                src={src}
+                alt={`平铺图${i + 1}`}
+                style={{ width: 112, height: 142, objectFit: "cover", borderRadius: 12, flexShrink: 0, border: `1px solid rgba(184,135,74,0.12)`, background: "#f5f3f0" }}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* 码数细节 */}
+        <div style={{ background: CARD, borderRadius: 16, padding: "14px 16px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", marginBottom: 20 }}>
+          <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: TEXT, marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}>
+            <Ruler size={16} color={ACCENT} /> 码数细节
+          </div>
+          <div style={{ display: "flex", background: ACCENT_LIGHT, borderRadius: 10, overflow: "hidden", fontFamily: font, fontSize: 11, color: "#7a5c35" }}>
+            {["尺码", "肩宽", "胸围", "腰围", detail.lengthLabel].map((h, i) => (
+              <div key={h} style={{ flex: 1, textAlign: "center", padding: "8px 2px", fontWeight: 600, borderRight: i < 4 ? "1px solid rgba(184,135,74,0.15)" : "none" }}>{h}</div>
+            ))}
+          </div>
+          {detail.sizeChart.map((row, i) => (
+            <div key={row.size} style={{ display: "flex", fontFamily: font, fontSize: 12, color: TEXT, borderBottom: i < detail.sizeChart.length - 1 ? "1px solid #f0ece6" : "none" }}>
+              {[row.size, row.shoulder, row.bust, row.waist, row.length].map((c, j) => (
+                <div key={j} style={{ flex: 1, textAlign: "center", padding: "9px 2px", borderRight: j < 4 ? "1px solid #f0ece6" : "none", fontWeight: j === 0 ? 600 : 400, color: j === 0 ? ACCENT : TEXT }}>{c}</div>
+              ))}
+            </div>
+          ))}
+          <div style={{ fontFamily: font, fontSize: 11, color: MUTED, marginTop: 10, lineHeight: 1.5 }}>＊ 以上为平铺手工测量数据，存在 1–2cm 误差，建议按平时尺码选择；试衣间已上线 AI 试衣可先预览上身效果。</div>
+        </div>
+
+        {/* 买家真实评价 */}
+        <div style={{ marginBottom: 10 }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+            <div style={{ fontFamily: font, fontSize: 15, fontWeight: 700, color: TEXT, display: "flex", alignItems: "center", gap: 6 }}>
+              <MessageCircle size={16} color={ACCENT} /> 买家真实评价
+              <span style={{ fontFamily: font, fontSize: 13, fontWeight: 400, color: MUTED }}>({detail.reviews.length})</span>
+            </div>
+            <span style={{ fontFamily: font, fontSize: 12, color: ACCENT, fontWeight: 600 }}>好评率 98%</span>
+          </div>
+          {detail.reviews.map((r, i) => (
+            <div key={i} style={{ background: CARD, borderRadius: 14, padding: "14px 16px", marginBottom: 10, boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+                <div style={{ width: 36, height: 36, borderRadius: "50%", background: ACCENT_LIGHT, color: ACCENT, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 14, fontFamily: font, flexShrink: 0 }}>{r.initial}</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontFamily: font, fontSize: 13, fontWeight: 600, color: TEXT }}>{r.user}</div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 3, marginTop: 2 }}>
+                    {[1, 2, 3, 4, 5].map(n => (
+                      <Star key={n} size={11} color={n <= r.rating ? ACCENT : "#e0d8cc"} fill={n <= r.rating ? ACCENT : "none"} />
+                    ))}
+                    <span style={{ fontFamily: font, fontSize: 11, color: MUTED, marginLeft: 4 }}>{r.size}码 · {r.date}</span>
+                  </div>
+                </div>
+              </div>
+              <div style={{ fontFamily: font, fontSize: 13, color: "#5a5048", lineHeight: 1.65 }}>{r.content}</div>
+              <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 9, fontFamily: font, fontSize: 12, color: MUTED }}>
+                <ThumbsUp size={13} /> {r.likes} 人觉得有用
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
