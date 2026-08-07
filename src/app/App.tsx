@@ -317,12 +317,13 @@ const wardrobeItems = [
 const notesData = [
   {
     img: IMG.look2,
-    title: "夏日通勤穿搭｜一周不重样",
+    title: "我保证我是天使 只是偶尔有点坏",
     likes: "2.3万",
     author: "穿搭灵感簿",
     body: "分享一周通勤穿搭灵感✨\n\n周一到周五，每天都有不同的搭配思路。这周主打简约通勤风，以基础款为主，通过配饰和色彩点缀提升整体质感。\n\n周一选了白色衬衫搭配高腰西裤，清爽干练；周三换上了柔和的针织开衫，温柔知性；周五则轻松一些，用宽松的亚麻衬衫收尾。\n\n关键单品推荐：\n• 垂感高腰西裤 — 修饰腿型第一名\n• 薄款醋酸衬衫 — 透气不闷热\n• 细带中跟凉鞋 — 舒适又拉长比例\n\n每一套都适合办公室穿着，同时下班后也能轻松过渡到晚间的聚会～",
     images: [IMG.look2, IMG.look1, IMG.look3],
     tags: ["通勤穿搭", "简约风", "一周搭配"],
+    link: "http://xhslink.cn/o/5MeQMyKGXrk",
   },
   {
     img: IMG.look1,
@@ -2039,6 +2040,10 @@ export default function App() {
     setSubPage("tryon");
   };
   const handleGoNote = (note: (typeof notesData)[0]) => {
+    if (note.link) {
+      window.open(note.link, "_blank");
+      return;
+    }
     setSelectedNote(note);
     setSubPage("note");
   };
