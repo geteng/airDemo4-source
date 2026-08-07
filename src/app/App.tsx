@@ -227,7 +227,7 @@ function HomePage({ onGoProduct, onGoNote, onGoVipJoin }: { onGoProduct: (look?:
                   padding: "2px 6px",
                   borderRadius: 4,
                 }}>
-                  9图
+                  {article.imageCount ? `${article.imageCount}图` : "9图"}
                 </div>
               </div>
               <div style={{ padding: "8px 10px 10px" }}>
@@ -316,32 +316,37 @@ const wardrobeItems = [
 
 const notesData = [
   {
-    img: IMG.look2,
+    img: import.meta.env.BASE_URL + "assets/notes/note1.jpg",
     title: "我保证我是天使 只是偶尔有点坏",
-    likes: "2.3万",
-    author: "穿搭灵感簿",
-    body: "分享一周通勤穿搭灵感✨\n\n周一到周五，每天都有不同的搭配思路。这周主打简约通勤风，以基础款为主，通过配饰和色彩点缀提升整体质感。\n\n周一选了白色衬衫搭配高腰西裤，清爽干练；周三换上了柔和的针织开衫，温柔知性；周五则轻松一些，用宽松的亚麻衬衫收尾。\n\n关键单品推荐：\n• 垂感高腰西裤 — 修饰腿型第一名\n• 薄款醋酸衬衫 — 透气不闷热\n• 细带中跟凉鞋 — 舒适又拉长比例\n\n每一套都适合办公室穿着，同时下班后也能轻松过渡到晚间的聚会～",
-    images: [IMG.look2, IMG.look1, IMG.look3],
-    tags: ["通勤穿搭", "简约风", "一周搭配"],
+    likes: "6138",
+    author: "弹性十足",
+    body: "我保证我是天使 只是偶尔有点坏\n\n#韩系 #自拍姿势 #红与黑的碰撞 #cleanfit简单出门 #ootd每日穿搭 #小黑裙 #黑色系穿搭",
+    images: [import.meta.env.BASE_URL + "assets/notes/note1.jpg"],
+    tags: ["韩系", "自拍姿势", "红与黑的碰撞", "cleanfit简单出门", "ootd每日穿搭", "小黑裙", "黑色系穿搭"],
     link: "http://xhslink.cn/o/5MeQMyKGXrk",
+    imageCount: "7",
   },
   {
-    img: IMG.look1,
-    title: "梨形身材的天菜！这三套绝了",
-    likes: "1.8万",
-    author: "是小陈呀",
-    body: "作为典型的梨形身材，选衣服真的踩了太多雷！😭\n\n经过多年摸索，总结出三个黄金法则：\n\n1️⃣ 上浅下深 — 视觉重心上移\n2️⃣ 高腰线 — 拉长腿部比例\n3️⃣ A字下摆 — 完美遮胯\n\n这三套是我近期最满意的搭配，每一套都扬长避短。尤其是那件米色高腰阔腿裤，版型真的太好了，穿上直接显高5cm！\n\n梨形姐妹们冲就完事了～",
-    images: [IMG.look1, IMG.look2, IMG.look3],
-    tags: ["梨形穿搭", "显瘦", "版型推荐"],
+    img: import.meta.env.BASE_URL + "assets/notes/note2.jpg",
+    title: "淡人韩系穿搭",
+    likes: "4182",
+    author: "弹性十足",
+    body: "淡人韩系穿搭\n\n#韩系 #自拍姿势 #cleanfit简单出门 #对镜拍 #喜欢一些对镜拍 #镜子里啥样我啥样 #对镜子拍照 #今天穿什么 #对着镜子自拍 #镜子里的自己",
+    images: [import.meta.env.BASE_URL + "assets/notes/note2.jpg"],
+    tags: ["韩系", "自拍姿势", "cleanfit简单出门", "对镜拍", "喜欢一些对镜拍", "镜子里啥样我啥样", "对镜子拍照", "今天穿什么", "对着镜子自拍", "镜子里的自己"],
+    link: "http://xhslink.cn/o/5MeQMyKGXrk",
+    imageCount: "7",
   },
   {
-    img: IMG.look3,
-    title: "董洁同款，普通人也能驾驭",
-    likes: "5.6万",
-    author: "Lily穿搭记",
-    body: "一直很喜欢董洁的穿搭风格，优雅又不失松弛感。\n\n这次扒了她的几套日常look，发现她的穿搭秘诀其实很简单：\n\n✨ 基础款为主，不超过三种颜色\n✨ 材质优选天然面料（棉麻、羊毛、真丝）\n✨ 配饰点到为止，不堆砌\n✨ 鞋子决定风格，平底乐福鞋是她的最爱\n\n我按照这个思路复刻了其中三套，惊喜地发现普通人穿也很好看！\n\n高级感不等于贵，选对款比选贵更重要～",
-    images: [IMG.look3, IMG.look2, IMG.look1],
-    tags: ["明星同款", "高级感", "日常穿搭"],
+    img: import.meta.env.BASE_URL + "assets/notes/note3.jpg",
+    title: "一周穿搭（double版）",
+    likes: "2.4万",
+    author: "不是山",
+    body: "一周穿搭（double版）\n\n14张穿搭图，日常通勤与周末休闲全覆盖，照着穿不出错。",
+    images: [import.meta.env.BASE_URL + "assets/notes/note3.jpg"],
+    tags: ["一周穿搭", "日常穿搭", "通勤穿搭", "休闲风"],
+    link: "http://xhslink.cn/o/6wyUJBW2D6K",
+    imageCount: "14",
   },
 ];
 
