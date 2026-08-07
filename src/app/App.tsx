@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type ReactNode } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Home,
@@ -82,6 +82,49 @@ function Pill({ children, active, onClick }: { children: string; active?: boolea
   );
 }
 
+// ─── HOME CAROUSEL DATA ───────────────────────────────────────────────────────
+const featuredProducts = [
+  { img: IMG.wardrobe1, name: "白色薄棉衬衫", price: 299, tag: "显瘦" },
+  { img: IMG.wardrobe2, name: "驼色羊绒大衣", price: 1299, tag: "爆款" },
+  { img: IMG.wardrobe3, name: "米色高腰阔腿裤", price: 459, tag: "百搭" },
+  { img: IMG.wardrobe4, name: "黑色西装外套", price: 699, tag: "通勤" },
+  { img: IMG.wardrobe5, name: "浅蓝牛仔外套", price: 399, tag: "减龄" },
+];
+const popularLooks = [
+  { img: IMG.look1, scene: "通勤", title: "高级感白领风" },
+  { img: IMG.look2, scene: "约会", title: "温柔法式风" },
+  { img: IMG.look3, scene: "旅行", title: "轻盈度假系" },
+  { img: IMG.product, scene: "聚会", title: "气质名媛风" },
+  { img: IMG.look2, scene: "日常", title: "极简都市风" },
+];
+const recommendedGoods = [
+  { img: IMG.wardrobe6, name: "真丝长款半裙", price: 559 },
+  { img: IMG.wardrobe2, name: "针织开衫", price: 359 },
+  { img: IMG.wardrobe3, name: "醋酸阔腿裤", price: 429 },
+  { img: IMG.wardrobe4, name: "醋酸西装裤", price: 389 },
+  { img: IMG.wardrobe5, name: "复古牛仔裤", price: 329 },
+];
+
+// ─── CAROUSEL SECTION ─────────────────────────────────────────────────────────
+function CarouselSection({ title, icon, children }: { title: string; icon?: ReactNode; children: ReactNode }) {
+  return (
+    <div style={{ margin: "0 20px 16px" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+          {icon}
+          <span style={{ fontFamily: font, fontSize: 15, fontWeight: 700, color: TEXT }}>{title}</span>
+        </div>
+        <span style={{ fontFamily: font, fontSize: 12, color: MUTED, display: "flex", alignItems: "center", gap: 1 }}>
+          查看全部 <ChevronRight size={13} />
+        </span>
+      </div>
+      <div style={{ display: "flex", gap: 10, overflowX: "auto", paddingBottom: 4, scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch" }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
 // ─── HOME PAGE ────────────────────────────────────────────────────────────────
 function HomePage({ onGoProduct, onGoNote, onGoVipJoin }: { onGoProduct: () => void; onGoNote: (note: (typeof notesData)[0]) => void; onGoVipJoin: () => void }) {
   return (
@@ -133,6 +176,49 @@ function HomePage({ onGoProduct, onGoNote, onGoVipJoin }: { onGoProduct: () => v
           </button>
         </div>
       </div>
+
+      {/* 今日推荐 — 三个推荐轮播 */}
+      <CarouselSection title="今日精选单品" icon={<ShoppingBag size={15} color={ACCENT} />}>
+        {featuredProducts.map((p, i) => (
+          <div key={i} onClick={onGoProduct} style={{ flexShrink: 0, width: 132, background: CARD, borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 10px rgba(0,0,0,0.05)", cursor: "pointer" }}>
+            <div style={{ height: 152, overflow: "hidden", position: "relative" }}>
+              <img src={p.img} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <div style={{ position: "absolute", top: 8, left: 8, background: ACCENT, color: "#fff", fontFamily: font, fontSize: 10, padding: "2px 7px", borderRadius: 8 }}>{p.tag}</div>
+            </div>
+            <div style={{ padding: "8px 10px 10px" }}>
+              <div style={{ fontFamily: font, fontSize: 12, fontWeight: 600, color: TEXT, lineHeight: 1.3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.name}</div>
+              <div style={{ fontFamily: font, fontSize: 13, color: ACCENT, fontWeight: 700, marginTop: 4 }}>¥{p.price}</div>
+            </div>
+          </div>
+        ))}
+      </CarouselSection>
+
+      <CarouselSection title="热门搭配推荐" icon={<Sparkles size={15} color={ACCENT} />}>
+        {popularLooks.map((l, i) => (
+          <div key={i} onClick={onGoProduct} style={{ flexShrink: 0, width: 150, height: 200, borderRadius: 14, overflow: "hidden", position: "relative", boxShadow: "0 2px 10px rgba(0,0,0,0.05)", cursor: "pointer" }}>
+            <img src={l.img} alt={l.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(28,26,23,0.72) 0%, rgba(28,26,23,0.05) 55%, transparent 100%)" }} />
+            <div style={{ position: "absolute", bottom: 10, left: 10, right: 10 }}>
+              <div style={{ fontFamily: font, fontSize: 11, color: ACCENT, fontWeight: 600 }}>{l.scene}</div>
+              <div style={{ fontFamily: font, fontSize: 13, color: "#fff", fontWeight: 700, marginTop: 1 }}>{l.title}</div>
+            </div>
+          </div>
+        ))}
+      </CarouselSection>
+
+      <CarouselSection title="为你精选好物" icon={<Gem size={15} color={ACCENT} />}>
+        {recommendedGoods.map((g, i) => (
+          <div key={i} onClick={onGoProduct} style={{ flexShrink: 0, width: 132, background: CARD, borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 10px rgba(0,0,0,0.05)", cursor: "pointer" }}>
+            <div style={{ height: 152, overflow: "hidden", position: "relative" }}>
+              <img src={g.img} alt={g.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            </div>
+            <div style={{ padding: "8px 10px 10px" }}>
+              <div style={{ fontFamily: font, fontSize: 12, fontWeight: 600, color: TEXT, lineHeight: 1.3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{g.name}</div>
+              <div style={{ fontFamily: font, fontSize: 13, color: ACCENT, fontWeight: 700, marginTop: 4 }}>¥{g.price}</div>
+            </div>
+          </div>
+        ))}
+      </CarouselSection>
 
       {/* 小红书种草文章 */}
       <div style={{ margin: "0 20px 16px" }}>
