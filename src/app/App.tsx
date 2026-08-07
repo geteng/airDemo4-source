@@ -132,17 +132,7 @@ function HomePage({ onGoProduct, onGoNote, onGoVipJoin }: { onGoProduct: (look?:
               <div style={{ position: "absolute", top: 14, left: 14 }}>
                 <span style={{ background: ACCENT, color: "#fff", fontFamily: font, fontSize: 11, fontWeight: 500, padding: "3px 10px", borderRadius: 10 }}>今日推荐</span>
               </div>
-              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 18px 16px" }}>
-                <div style={{ display: "flex", justifyContent: "center", gap: 6, marginBottom: 10 }}>
-                  {todaySlides.map((_, di) => (
-                    <button
-                      key={di}
-                      onClick={() => setSlideIndex(di)}
-                      aria-label={`切换到第 ${di + 1} 张`}
-                      style={{ width: slideIndex === di ? 18 : 6, height: 6, borderRadius: 3, border: "none", padding: 0, cursor: "pointer", background: slideIndex === di ? "#fff" : "rgba(255,255,255,0.5)", transition: "all 0.3s" }}
-                    />
-                  ))}
-                </div>
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 18px 42px" }}>
                 <div style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: "#fff", marginBottom: 4 }}>{s.title}</div>
                 <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
                   {s.tags.map(t => (
@@ -159,6 +149,17 @@ function HomePage({ onGoProduct, onGoNote, onGoVipJoin }: { onGoProduct: (look?:
             </div>
           ))}
         </motion.div>
+        {/* Dots indicator — fixed at the very bottom of the carousel */}
+        <div style={{ position: "absolute", bottom: 16, left: 0, right: 0, display: "flex", justifyContent: "center", gap: 6, zIndex: 2 }}>
+          {todaySlides.map((_, di) => (
+            <button
+              key={di}
+              onClick={() => setSlideIndex(di)}
+              aria-label={`切换到第 ${di + 1} 张`}
+              style={{ width: slideIndex === di ? 18 : 6, height: 6, borderRadius: 3, border: "none", padding: 0, cursor: "pointer", background: slideIndex === di ? "#fff" : "rgba(255,255,255,0.5)", transition: "all 0.3s" }}
+            />
+          ))}
+        </div>
       </div>
 
       {/* 小红书种草文章 */}
