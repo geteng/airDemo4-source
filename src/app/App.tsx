@@ -334,7 +334,7 @@ const notesData = [
     body: "淡人韩系穿搭\n\n#韩系 #自拍姿势 #cleanfit简单出门 #对镜拍 #喜欢一些对镜拍 #镜子里啥样我啥样 #对镜子拍照 #今天穿什么 #对着镜子自拍 #镜子里的自己",
     images: [import.meta.env.BASE_URL + "assets/notes/note2.jpg"],
     tags: ["韩系", "自拍姿势", "cleanfit简单出门", "对镜拍", "喜欢一些对镜拍", "镜子里啥样我啥样", "对镜子拍照", "今天穿什么", "对着镜子自拍", "镜子里的自己"],
-    link: "http://xhslink.cn/o/5MeQMyKGXrk",
+    link: "http://xhslink.cn/o/6wyUJBW2D6K",
     imageCount: "7",
   },
   {
@@ -345,7 +345,7 @@ const notesData = [
     body: "一周穿搭（double版）\n\n14张穿搭图，日常通勤与周末休闲全覆盖，照着穿不出错。",
     images: [import.meta.env.BASE_URL + "assets/notes/note3.jpg"],
     tags: ["一周穿搭", "日常穿搭", "通勤穿搭", "休闲风"],
-    link: "http://xhslink.cn/o/6wyUJBW2D6K",
+    link: "http://xhslink.cn/o/Iz4QUZH3Dv",
     imageCount: "14",
   },
 ];
