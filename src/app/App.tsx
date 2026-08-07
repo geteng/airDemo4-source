@@ -80,7 +80,7 @@ function Pill({ children, active, onClick }: { children: string; active?: boolea
 }
 
 // ─── HOME PAGE ────────────────────────────────────────────────────────────────
-function HomePage({ onGoProduct, onGoNote, onGoVipJoin }: { onGoProduct: () => void; onGoNote: (note: (typeof notesData)[0]) => void; onGoVipJoin: () => void }) {
+function HomePage({ onGoProduct, onGoNote, onGoVipJoin, onGoTryOn }: { onGoProduct: () => void; onGoNote: (note: (typeof notesData)[0]) => void; onGoVipJoin: () => void; onGoTryOn: () => void }) {
   return (
     <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%" }}>
       {/* Top bar */}
@@ -122,12 +122,34 @@ function HomePage({ onGoProduct, onGoNote, onGoVipJoin }: { onGoProduct: () => v
               <span key={t} style={{ background: "rgba(255,255,255,0.2)", color: "#fff", fontFamily: font, fontSize: 11, padding: "2px 9px", borderRadius: 8, backdropFilter: "blur(4px)" }}>{t}</span>
             ))}
           </div>
-          <button
-            onClick={onGoProduct}
-            style={{ background: ACCENT, color: "#fff", fontFamily: font, fontSize: 13, fontWeight: 600, padding: "9px 20px", borderRadius: 22, border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}
-          >
-            查看今日搭配 <ChevronRight size={14} />
-          </button>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <button
+              onClick={onGoProduct}
+              style={{ background: ACCENT, color: "#fff", fontFamily: font, fontSize: 13, fontWeight: 600, padding: "9px 20px", borderRadius: 22, border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}
+            >
+              查看今日搭配 <ChevronRight size={14} />
+            </button>
+            <button
+              onClick={onGoTryOn}
+              style={{
+                background: "rgba(255,255,255,0.15)",
+                color: "#fff",
+                fontFamily: font,
+                fontSize: 13,
+                fontWeight: 600,
+                padding: "9px 16px",
+                borderRadius: 22,
+                border: "1.5px solid rgba(184,135,74,0.6)",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: 5,
+                backdropFilter: "blur(4px)",
+              }}
+            >
+              <Sparkles size={14} /> AI试衣
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1924,7 +1946,7 @@ export default function App() {
                 transition={{ duration: 0.22, ease: "easeInOut" }}
                 style={{ position: "absolute", inset: 0 }}
               >
-                {activeTab === "home" && <HomePage onGoProduct={() => handleGoProduct()} onGoNote={handleGoNote} onGoVipJoin={() => setShowVipJoin(true)} />}
+                {activeTab === "home" && <HomePage onGoProduct={() => handleGoProduct()} onGoNote={handleGoNote} onGoVipJoin={() => setShowVipJoin(true)} onGoTryOn={() => handleGoTryOn({ img: IMG.look1, name: "高级感白领风" })} />}
                 {activeTab === "recommend" && <RecommendPage onGoProduct={handleGoProduct} onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title })} />}
                 {activeTab === "mine" && <MinePage
                   onGoOrders={handleGoOrders}
