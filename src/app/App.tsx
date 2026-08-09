@@ -1163,9 +1163,9 @@ function ProductPage({ look, onBack, onGoTryOn }: { look: { id?: number; img: st
                 alt={`平铺图${i + 1}`}
                 style={{
                   width: detail.flatImgs.length === 1 ? "100%" : 112,
-                  height: detail.flatImgs.length === 1 ? "auto" : 142,
-                  aspectRatio: detail.flatImgs.length === 1 ? "3/4" : undefined,
-                  objectFit: "cover",
+                  height: "auto",
+                  aspectRatio: undefined,
+                  objectFit: "contain",
                   borderRadius: 12,
                   flexShrink: 0,
                   border: `1px solid rgba(184,135,74,0.12)`,
