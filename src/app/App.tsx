@@ -90,9 +90,9 @@ function HomePage({ onGoProduct, onGoNote, onGoVipJoin }: { onGoProduct: (look?:
     return () => clearInterval(t);
   }, []);
   const todaySlides = [
-    { look: looks[0], title: "今天适合你的通勤穿搭", tags: ["显瘦通勤风", "165cm+", "轻熟风"] },
-    { look: looks[1], title: "约会也要温柔在线", tags: ["约会必备", "显白", "法式风"] },
-    { look: looks[2], title: "周末轻盈度假感", tags: ["透气舒适", "显高", "度假风"] },
+    { look: { id: 11, img: import.meta.env.BASE_URL + "assets/looks/11.png", scene: "通勤", title: "高级感白领风", items: "白衬衫 + 阔腿裤 + 高跟鞋", price: 899, liked: false }, title: "今天适合你的通勤穿搭", tags: ["显瘦通勤风", "165cm+", "轻熟风"] },
+    { look: { id: 12, img: import.meta.env.BASE_URL + "assets/looks/21.png", scene: "约会", title: "都市柔美格调", items: "黑色西装 + 丝绒裙 + 小皮包", price: 1260, liked: false }, title: "约会也要温柔在线", tags: ["约会必备", "显白", "法式风"] },
+    { look: { id: 13, img: import.meta.env.BASE_URL + "assets/looks/31.png", scene: "旅行", title: "轻盈度假系", items: "白色长裤 + 针织衫 + 草编帽", price: 680, liked: false }, title: "周末轻盈度假感", tags: ["透气舒适", "显高", "度假风"] },
   ];
   return (
     <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%" }}>
@@ -495,7 +495,7 @@ function WardrobePage({ onGoTryOn }: { onGoTryOn: (item: (typeof wardrobeItems)[
 const looks = [
   {
     id: 1,
-    img: IMG.look1,
+    img: import.meta.env.BASE_URL + "assets/looks/41.png",
     scene: "通勤",
     title: "高级感白领风",
     items: "白衬衫 + 阔腿裤 + 高跟鞋",
@@ -504,7 +504,7 @@ const looks = [
   },
   {
     id: 2,
-    img: IMG.look2,
+    img: import.meta.env.BASE_URL + "assets/looks/51.png",
     scene: "约会",
     title: "都市柔美格调",
     items: "黑色西装 + 丝绒裙 + 小皮包",
@@ -513,7 +513,7 @@ const looks = [
   },
   {
     id: 3,
-    img: IMG.look3,
+    img: import.meta.env.BASE_URL + "assets/looks/61.jpg",
     scene: "旅行",
     title: "轻盈度假系",
     items: "白色长裤 + 针织衫 + 草编帽",
@@ -531,8 +531,9 @@ type ProductDetail = {
 };
 
 const productDetails: Record<number, ProductDetail> = {
+  // 穿搭定制页：通勤 / 约会 / 旅行
   1: {
-    flatImgs: [IMG.wardrobe1, IMG.wardrobe2, IMG.wardrobe3],
+    flatImgs: [import.meta.env.BASE_URL + "assets/looks/42.png"],
     lengthLabel: "裤长",
     sizeChart: [
       { size: "S", shoulder: "38", bust: "92", waist: "72", length: "98" },
@@ -547,7 +548,7 @@ const productDetails: Record<number, ProductDetail> = {
     ],
   },
   2: {
-    flatImgs: [IMG.wardrobe4, IMG.wardrobe5, IMG.wardrobe6],
+    flatImgs: [import.meta.env.BASE_URL + "assets/looks/52.png"],
     lengthLabel: "裙长",
     sizeChart: [
       { size: "S", shoulder: "37", bust: "88", waist: "68", length: "92" },
@@ -562,7 +563,53 @@ const productDetails: Record<number, ProductDetail> = {
     ],
   },
   3: {
-    flatImgs: [IMG.wardrobe1, IMG.wardrobe4, IMG.wardrobe2],
+    flatImgs: [import.meta.env.BASE_URL + "assets/looks/62.png"],
+    lengthLabel: "裤长",
+    sizeChart: [
+      { size: "S", shoulder: "36", bust: "86", waist: "66", length: "96" },
+      { size: "M", shoulder: "37", bust: "90", waist: "70", length: "98" },
+      { size: "L", shoulder: "38", bust: "94", waist: "74", length: "100" },
+      { size: "XL", shoulder: "39", bust: "98", waist: "78", length: "102" },
+    ],
+    reviews: [
+      { user: "旅行的鱼", initial: "鱼", rating: 5, size: "M", content: "度假穿太合适了，针织轻薄透气，草编帽拍照神器，旅拍出片率超高。", date: "2026.07.23", likes: 33 },
+      { user: "Coco", initial: "C", rating: 5, size: "L", content: "白色长裤凉快，海边走一天也不闷，洗了没透没变形，质量在线。", date: "2026.07.19", likes: 24 },
+      { user: "夏天", initial: "夏", rating: 4, size: "M", content: "针织衫稍微起球，其他都好，整体性价比高，会再买别的色。", date: "2026.07.10", likes: 12 },
+    ],
+  },
+  // 首页轮播：第 1/2/3 屏（与穿搭定制页使用不同封面与平铺图）
+  11: {
+    flatImgs: [import.meta.env.BASE_URL + "assets/looks/12.png"],
+    lengthLabel: "裤长",
+    sizeChart: [
+      { size: "S", shoulder: "38", bust: "92", waist: "72", length: "98" },
+      { size: "M", shoulder: "39", bust: "96", waist: "76", length: "100" },
+      { size: "L", shoulder: "40", bust: "100", waist: "80", length: "102" },
+      { size: "XL", shoulder: "41", bust: "104", waist: "84", length: "104" },
+    ],
+    reviews: [
+      { user: "Mia", initial: "M", rating: 5, size: "M", content: "面料很有质感，白衬衫不透，阔腿裤垂感好，通勤穿特别有气场。身高165体重50，M码刚刚好。", date: "2026.07.22", likes: 36 },
+      { user: "安然", initial: "安", rating: 4, size: "L", content: "整体版型很正，西装裤偏长我162需要裁两厘米，但上身效果值得。", date: "2026.07.18", likes: 21 },
+      { user: "Lily妈", initial: "L", rating: 5, size: "S", content: "回购第二套送闺蜜，包装精致，董洁推荐果然靠谱，同事都问链接。", date: "2026.07.15", likes: 18 },
+    ],
+  },
+  12: {
+    flatImgs: [import.meta.env.BASE_URL + "assets/looks/22.png"],
+    lengthLabel: "裙长",
+    sizeChart: [
+      { size: "S", shoulder: "37", bust: "88", waist: "68", length: "92" },
+      { size: "M", shoulder: "38", bust: "92", waist: "72", length: "94" },
+      { size: "L", shoulder: "39", bust: "96", waist: "76", length: "96" },
+      { size: "XL", shoulder: "40", bust: "100", waist: "80", length: "98" },
+    ],
+    reviews: [
+      { user: "糖糖", initial: "糖", rating: 5, size: "S", content: "丝绒裙太美了，灯光下很有光泽，约会穿被夸了一晚上，显瘦显白。", date: "2026.07.24", likes: 42 },
+      { user: "Vivian", initial: "V", rating: 5, size: "M", content: "西装挺括不显壮，小个子也能撑起来，袖长刚好，做工细节很到位。", date: "2026.07.20", likes: 27 },
+      { user: "阿May", initial: "M", rating: 4, size: "M", content: "皮包颜值在线，就是容量偏小放不下手机，介意的慎拍。", date: "2026.07.12", likes: 15 },
+    ],
+  },
+  13: {
+    flatImgs: [import.meta.env.BASE_URL + "assets/looks/32.png"],
     lengthLabel: "裤长",
     sizeChart: [
       { size: "S", shoulder: "36", bust: "86", waist: "66", length: "96" },
@@ -1114,7 +1161,16 @@ function ProductPage({ look, onBack, onGoTryOn }: { look: { id?: number; img: st
                 key={i}
                 src={src}
                 alt={`平铺图${i + 1}`}
-                style={{ width: 112, height: 142, objectFit: "cover", borderRadius: 12, flexShrink: 0, border: `1px solid rgba(184,135,74,0.12)`, background: "#f5f3f0" }}
+                style={{
+                  width: detail.flatImgs.length === 1 ? "100%" : 112,
+                  height: detail.flatImgs.length === 1 ? "auto" : 142,
+                  aspectRatio: detail.flatImgs.length === 1 ? "3/4" : undefined,
+                  objectFit: "cover",
+                  borderRadius: 12,
+                  flexShrink: 0,
+                  border: `1px solid rgba(184,135,74,0.12)`,
+                  background: "#f5f3f0",
+                }}
               />
             ))}
           </div>
