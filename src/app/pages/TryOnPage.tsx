@@ -441,6 +441,7 @@ export function TryOnPage({
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
               style={{
                 width: "90%",
                 maxWidth: 380,
