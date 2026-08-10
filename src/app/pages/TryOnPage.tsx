@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Sparkles, Check, Share2, RefreshCw } from "lucide-react";
+import { X, Sparkles, Check, Share2 } from "lucide-react";
 import { ACCENT, ACCENT_LIGHT, CARD, TEXT, MUTED, BG, font } from "../constants";
 
 const TRYON_VIDEO_FALLBACK =
@@ -14,7 +14,6 @@ export function TryOnPage({
   onBack: () => void;
 }) {
   const tryonVideo = item.video ?? TRYON_VIDEO_FALLBACK;
-  const tryonSnapshot = `${tryonVideo}?x-tos-process=video/snapshot%2Ct_1`;
 
   const [stage, setStage] = useState<"analyzing" | "generating" | "result">("analyzing");
   const [progress, setProgress] = useState(0);
@@ -95,10 +94,22 @@ export function TryOnPage({
             }}>
               {stage === "result" ? (
                 <>
-                  <img
-                    src={tryonSnapshot}
-                    alt="AI试衣效果"
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  <video
+                    src={tryonVideo}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    onClick={() => setShowVideo(true)}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", cursor: "pointer" }}
+                  />
+                  <div
+                    onClick={() => setShowVideo(true)}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      cursor: "pointer",
+                    }}
                   />
                   <div style={{
                     position: "absolute",
