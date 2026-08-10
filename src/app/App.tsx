@@ -175,7 +175,11 @@ export default function App() {
               }}
             >
               <Headphones size={18} color="#322302" />
-              <span style={{ writingMode: "vertical-rl", fontSize: 11, letterSpacing: 1, userSelect: "none" }}>穿搭师</span>
+              <span style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, fontSize: 11, lineHeight: 1.2, letterSpacing: 1, userSelect: "none" }}>
+                <span>咨询</span>
+                <span>穿搭</span>
+                <span>老师</span>
+              </span>
             </motion.button>
           )}
 
