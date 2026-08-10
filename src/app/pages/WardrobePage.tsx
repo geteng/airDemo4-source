@@ -87,7 +87,7 @@ export function WardrobePage({
                   zIndex: 5,
                 }}
               >
-                <Sparkles size={11} /> AI试衣
+                <Sparkles size={11} /> 我试试
               </button>
             </div>
             <div style={{ padding: "10px 12px 12px" }}>

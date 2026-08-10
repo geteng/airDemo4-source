@@ -4,9 +4,9 @@ import { ArrowLeft, RefreshCw, Share2, Sparkles, X } from "lucide-react";
 import { ACCENT, ACCENT_LIGHT, BG, CARD, font, MUTED, TEXT } from "../constants";
 
 const TRYON_VIDEO =
-  "https://test-assets.tos-cn-shanghai.volces.com/videos/20260724_144306_b62fc67f.mp4";
+  "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/1.m4v";
 const TRYON_SNAPSHOT =
-  "https://test-assets.tos-cn-shanghai.volces.com/videos/20260724_144306_b62fc67f.mp4?x-tos-process=video/snapshot%2Ct_1";
+  "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/1.m4v?x-tos-process=video/snapshot%2Ct_1";
 
 export function TryOnPage({
   item,
@@ -93,7 +93,7 @@ export function TryOnPage({
               </div>
               <div style={{ flex: 1, background: CARD, borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
                 <div style={{ height: 200, background: "#f0ebe3", overflow: "hidden" }}>
-                  <img src={TRYON_SNAPSHOT} alt="AI试衣效果" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  <img src={TRYON_SNAPSHOT} alt="我试试效果" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 </div>
                 <div style={{ padding: "10px 12px", textAlign: "center" }}>
                   <div style={{ fontFamily: font, fontSize: 12, color: MUTED }}>上身效果</div>

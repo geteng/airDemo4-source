@@ -76,7 +76,7 @@ export function ProductPage({
             boxShadow: "0 2px 10px rgba(184,135,74,0.5)",
           }}
         >
-          <Sparkles size={13} /> AI试衣
+          <Sparkles size={13} /> 我试试
         </button>
       </div>
 

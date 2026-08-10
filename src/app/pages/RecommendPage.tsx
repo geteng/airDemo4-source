@@ -61,7 +61,7 @@ export function RecommendPage({
                   onClick={(e) => { e.stopPropagation(); onGoTryOn(look); }}
                   style={{ position: "absolute", bottom: 8, right: 8, background: `linear-gradient(135deg, ${ACCENT}, #d4a56a)`, color: "#fff", fontFamily: font, fontSize: 11, fontWeight: 600, padding: "5px 10px", borderRadius: 14, border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 4, boxShadow: "0 2px 8px rgba(184,135,74,0.4)", zIndex: 5 }}
                 >
-                  <Sparkles size={11} /> AI试衣
+                  <Sparkles size={11} /> 我试试
                 </button>
               </div>
               <div style={{ padding: "10px 12px 12px" }}>
