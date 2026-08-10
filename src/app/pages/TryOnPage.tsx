@@ -68,7 +68,7 @@ export function TryOnPage({
         <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex" }}>
           <X size={22} color={TEXT} />
         </button>
-        <span style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: TEXT }}>AI 穿搭</span>
+        <span style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: TEXT }}>今日推荐搭配--我的上身效果</span>
       </div>
 
       <div style={{ flex: 1, overflowY: "auto", padding: "0 20px" }}>
@@ -77,7 +77,7 @@ export function TryOnPage({
           {/* Original item */}
           <div style={{ background: CARD, borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
             <div style={{ padding: "8px 10px", fontFamily: font, fontSize: 12, fontWeight: 600, color: MUTED, textAlign: "center" }}>
-              原单品
+              模特穿搭效果
             </div>
             <img src={item.img} alt={item.name} style={{ width: "100%", height: 180, objectFit: "cover" }} />
             <div style={{ padding: "8px 10px", fontFamily: font, fontSize: 11, color: MUTED, textAlign: "center" }}>
