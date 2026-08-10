@@ -462,7 +462,6 @@ export function TryOnPage({
               src={tryonVideo}
               autoPlay
               playsInline
-              controls
               loop
               style={{
                 width: "100%",
