@@ -215,6 +215,7 @@ export default function App() {
                     borderRadius: 24,
                     padding: "28px 24px 24px",
                     textAlign: "center",
+                    position: "relative",
                     boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
                   }}
                 >
@@ -254,10 +255,10 @@ export default function App() {
                   </div>
 
                   <div style={{ fontFamily: font, fontSize: 17, fontWeight: 700, color: TEXT, marginBottom: 4 }}>
-                    添加专属穿搭师
+                    咨询专属穿搭师
                   </div>
                   <div style={{ fontFamily: font, fontSize: 13, color: MUTED, marginBottom: 18 }}>
-                    扫码添加企业微信，获取1对1穿搭服务
+                    长按识别二维码，添加企业微信,获取1对1穿搭服务
                   </div>
 
                   {/* QR code placeholder */}
@@ -280,28 +281,6 @@ export default function App() {
                       style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 14, display: "block" }}
                     />
                   </div>
-
-                  <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginBottom: 16, lineHeight: 1.5 }}>
-                    微信扫一扫 · 添加穿搭师企业微信
-                  </div>
-
-                  <button
-                    onClick={() => setShowStylistQR(false)}
-                    style={{
-                      width: "100%",
-                      padding: "12px",
-                      borderRadius: 24,
-                      border: "none",
-                      background: ACCENT,
-                      color: "#fff",
-                      fontFamily: font,
-                      fontSize: 14,
-                      fontWeight: 600,
-                      cursor: "pointer",
-                    }}
-                  >
-                    知道了
-                  </button>
                 </motion.div>
               </motion.div>
             )}
