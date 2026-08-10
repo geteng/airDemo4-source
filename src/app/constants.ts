@@ -62,12 +62,12 @@ export const tabs: TabItem[] = [
 
 // ─── Mock 数据 ──────────────────────────────────────────────────────────────
 export const wardrobeItems: WardrobeItem[] = [
-  { id: 1, img: IMG.wardrobe1, name: "白色薄棉衬衫", date: "2026.3", times: 8 },
-  { id: 2, img: IMG.wardrobe2, name: "驼色羊绒大衣", date: "2025.11", times: 14 },
-  { id: 3, img: IMG.wardrobe3, name: "米色高腰阔腿裤", date: "2026.4", times: 6 },
-  { id: 4, img: IMG.wardrobe4, name: "黑色西装外套", date: "2026.2", times: 11 },
-  { id: 5, img: IMG.wardrobe5, name: "浅蓝牛仔外套", date: "2025.9", times: 5 },
-  { id: 6, img: IMG.wardrobe6, name: "白色Polo领针织", date: "2026.5", times: 3 },
+  { id: 1, img: IMG.wardrobe1, video: "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/1.mp4", name: "白色薄棉衬衫", date: "2026.3", times: 8 },
+  { id: 2, img: IMG.wardrobe2, video: "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/2.mp4", name: "驼色羊绒大衣", date: "2025.11", times: 14 },
+  { id: 3, img: IMG.wardrobe3, video: "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/3.mp4", name: "米色高腰阔腿裤", date: "2026.4", times: 6 },
+  { id: 4, img: IMG.wardrobe4, video: "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/4.mp4", name: "黑色西装外套", date: "2026.2", times: 11 },
+  { id: 5, img: IMG.wardrobe5, video: "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/5.mp4", name: "浅蓝牛仔外套", date: "2025.9", times: 5 },
+  { id: 6, img: IMG.wardrobe6, video: "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/6.mp4", name: "白色Polo领针织", date: "2026.5", times: 3 },
 ];
 
 export const notesData: NoteData[] = [

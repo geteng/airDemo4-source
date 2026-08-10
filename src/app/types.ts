@@ -29,6 +29,7 @@ export interface Look {
 export interface WardrobeItem {
   id: number;
   img: string;
+  video?: string;
   name: string;
   date: string;
   times: number;

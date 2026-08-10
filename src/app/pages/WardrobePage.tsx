@@ -64,6 +64,16 @@ export function WardrobePage({
           <div key={item.id} style={{ background: CARD, borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 10px rgba(0,0,0,0.06)" }}>
             <div style={{ height: 150, background: "#f0ebe3", overflow: "hidden", position: "relative" }}>
               <img src={item.img} alt={item.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              {item.video && (
+                <video
+                  src={item.video}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              )}
               {/* AI 试衣按钮 */}
               <button
                 onClick={(e) => { e.stopPropagation(); onGoTryOn(item); }}

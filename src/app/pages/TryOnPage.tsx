@@ -4,9 +4,9 @@ import { ArrowLeft, RefreshCw, Share2, Sparkles, X } from "lucide-react";
 import { ACCENT, ACCENT_LIGHT, BG, CARD, font, MUTED, TEXT } from "../constants";
 
 const TRYON_VIDEO =
-  "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/1.m4v";
+  "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/1.mp4";
 const TRYON_SNAPSHOT =
-  "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/1.m4v?x-tos-process=video/snapshot%2Ct_1";
+  "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/1.mp4?x-tos-process=video/snapshot%2Ct_1";
 
 export function TryOnPage({
   item,
@@ -101,7 +101,7 @@ export function TryOnPage({
                     onClick={() => setShowVideo(true)}
                     style={{ background: "none", border: "none", color: ACCENT, fontFamily: font, fontSize: 13, fontWeight: 600, cursor: "pointer", textDecoration: "underline", marginTop: 2, display: "inline-flex", alignItems: "center", gap: 4 }}
                   >
-                    上身效果（点击查看）
+                    上身效果（放大）
                   </button>
                 </div>
               </div>
