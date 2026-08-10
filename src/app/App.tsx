@@ -78,8 +78,8 @@ export default function App() {
   const handleGoFavorites = () => setSubPage("favorites");
   const handleGoCoupons = () => setSubPage("coupons");
   const handleGoRecords = () => setSubPage("records");
-  const handleGoWardrobe = () => setSubPage("wardrobe");
   const handleGoVip = () => setSubPage("vip");
+  const handleCallService = () => setShowCallDialog(true);
   const handleGoStylist = () => setSubPage("stylist");
 
   return (
@@ -140,8 +140,8 @@ export default function App() {
                   onGoFavorites={handleGoFavorites}
                   onGoCoupons={handleGoCoupons}
                   onGoRecords={handleGoRecords}
-                  onGoWardrobe={handleGoWardrobe}
                   onGoVip={handleGoVip}
+                  onCallService={handleCallService}
                 />}
               </motion.div>
             )}

@@ -1,17 +1,16 @@
 import {
-  ArrowRight,
-  Bell,
-  ChevronRight,
-  Heart,
-  Package,
-  Settings,
-  Shirt,
-  Sparkles,
-  Star,
-  Ticket,
-  User,
+  Package, Heart, Tag, Footprints, Headphones, Star,
+  Award, ChevronRight,
 } from "lucide-react";
-import { ACCENT, CARD, font, MUTED, TEXT } from "../constants";
+import { IMG } from "../constants";
+
+// ───「我的」页专用浅色主题（与参考实现一致）───
+const ACCENT = "#b8874a"; // 主题金棕色
+const ACCENT_LIGHT = "#f5ede0"; // 浅金底（图标容器）
+const CARD = "#ffffff"; // 卡片白
+const TEXT = "#1c1a17"; // 主文字
+const MUTED = "#9a8f82"; // 次要文字
+const font = "'Noto Sans SC', 'DM Sans', sans-serif";
 
 export function MinePage({
   onGoOrders,
@@ -19,92 +18,101 @@ export function MinePage({
   onGoCoupons,
   onGoRecords,
   onGoVip,
-  onGoWardrobe,
+  onCallService,
 }: {
-  onGoOrders: () => void;
+  onGoOrders: (tab?: string) => void;
   onGoFavorites: () => void;
   onGoCoupons: () => void;
   onGoRecords: () => void;
   onGoVip: () => void;
-  onGoWardrobe: () => void;
+  onCallService: () => void;
 }) {
-  const menuItems = [
-    { key: "orders", icon: Package, label: "我的订单", onClick: onGoOrders },
-    { key: "wardrobe", icon: Shirt, label: "我的衣橱", onClick: onGoWardrobe },
-    { key: "favorites", icon: Heart, label: "我的收藏", onClick: onGoFavorites },
-    { key: "coupons", icon: Ticket, label: "优惠券", onClick: onGoCoupons },
-    { key: "records", icon: Star, label: "穿搭日记", onClick: onGoRecords },
+  const orderStats = [
+    { v: "3", l: "待付款", tab: "pending_pay" },
+    { v: "1", l: "待发货", tab: "pending_ship" },
+    { v: "2", l: "待评价", tab: "pending_review" },
+    { v: "2", l: "退换货", tab: "refund" },
   ];
+
+  const menuItems = [
+    { icon: Package, label: "我的订单", desc: "查看所有订单", action: () => onGoOrders("all") },
+    { icon: Heart, label: "我的收藏", desc: "收藏的单品与搭配", action: onGoFavorites },
+    { icon: Tag, label: "我的优惠券", desc: "3张可用", action: onGoCoupons },
+    { icon: Footprints, label: "足迹", desc: "已记录 24 套", action: onGoRecords },
+    { icon: Headphones, label: "联系客服", desc: "7×12小时在线", action: onCallService },
+  ];
+
   return (
     <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%" }}>
-      {/* Header */}
-      <div style={{ padding: "16px 20px 12px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <span style={{ fontFamily: font, fontSize: 20, fontWeight: 700, color: TEXT }}>我的</span>
-        <div style={{ display: "flex", gap: 16 }}>
-          <Bell size={20} color={MUTED} />
-          <Settings size={20} color={MUTED} />
+      {/* Profile header */}
+      <div style={{ background: `linear-gradient(160deg, #3a2a18 0%, #6b4a28 100%)`, padding: "28px 20px 32px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <div style={{ width: 64, height: 64, borderRadius: "50%", overflow: "hidden", border: `2.5px solid ${ACCENT}` }}>
+            <img src={IMG.hero} alt="头像" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          </div>
+          <div>
+            <div style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: "#fff" }}>我的</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 4 }}>
+              <Star size={12} color={ACCENT} fill={ACCENT} />
+              <span style={{ fontFamily: font, fontSize: 12, color: "#d4b483", fontWeight: 500 }}>VIP 会员</span>
+              <span style={{ fontFamily: font, fontSize: 11, color: "rgba(255,255,255,0.4)" }}>· 有效期至 2027.3</span>
+            </div>
+          </div>
         </div>
-      </div>
 
-      {/* Profile card */}
-      <div style={{ margin: "0 20px 16px", background: CARD, borderRadius: 18, padding: "20px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <div style={{ width: 60, height: 60, borderRadius: "50%", overflow: "hidden", flexShrink: 0, border: `2px solid ${ACCENT}` }}>
-            <img src="https://images.unsplash.com/photo-1674457343601-85eacbf0f4b4?w=800&h=900&fit=crop&auto=format" alt="董洁" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-          </div>
-          <div style={{ flex: 1 }}>
-            <div style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: TEXT }}>董洁</div>
-            <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 2 }}>生活美学穿搭空间</div>
-          </div>
-          <button style={{ background: "none", border: "none", cursor: "pointer" }}>
-            <ChevronRight size={18} color={MUTED} />
-          </button>
-        </div>
-        {/* Stats */}
-        <div style={{ display: "flex", justifyContent: "space-around", marginTop: 18, paddingTop: 16, borderTop: `1px solid ${MUTED}` }}>
-          {[{ label: "收藏", value: "128" }, { label: "笔记", value: "36" }, { label: "订单", value: "12" }].map((s) => (
-            <div key={s.label} style={{ textAlign: "center" }}>
-              <div style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: ACCENT }}>{s.value}</div>
-              <div style={{ fontFamily: font, fontSize: 11, color: MUTED, marginTop: 2 }}>{s.label}</div>
+        {/* Stats - clickable, navigate to orders with tab */}
+        <div style={{ display: "flex", justifyContent: "space-around", marginTop: 24, padding: "16px 0", background: "rgba(255,255,255,0.08)", borderRadius: 14 }}>
+          {orderStats.map((s) => (
+            <div
+              key={s.l}
+              onClick={() => onGoOrders(s.tab)}
+              style={{ textAlign: "center", cursor: "pointer", transition: "opacity 0.2s" }}
+            >
+              <div style={{ fontFamily: font, fontSize: 20, fontWeight: 700, color: "#f5d9a8" }}>{s.v}</div>
+              <div style={{ fontFamily: font, fontSize: 11, color: "rgba(255,255,255,0.5)", marginTop: 2 }}>{s.l}</div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* VIP banner */}
-      <div onClick={onGoVip} style={{ margin: "0 20px 16px", background: `linear-gradient(135deg, #3a2a18 0%, #6b4a28 100%)`, borderRadius: 18, padding: "16px 18px", display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}>
-        <Sparkles size={22} color={ACCENT} />
-        <div style={{ flex: 1 }}>
-          <div style={{ fontFamily: font, fontSize: 15, fontWeight: 700, color: "#f5d9a8" }}>VIP 会员中心</div>
-          <div style={{ fontFamily: font, fontSize: 12, color: "#d4b483", marginTop: 2 }}>专属穿搭建议 + 全年免邮</div>
+      {/* VIP card - clickable */}
+      <div
+        onClick={onGoVip}
+        style={{ margin: "16px 20px", background: CARD, borderRadius: 18, padding: "16px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer" }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <Award size={22} color={ACCENT} />
+          <div>
+            <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: TEXT }}>VIP 专属权益</div>
+            <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 1 }}>每周穿搭建议 · 新品优先看</div>
+          </div>
         </div>
-        <ArrowRight size={16} color="#f5d9a8" />
+        <ChevronRight size={16} color={MUTED} />
       </div>
 
-      {/* Menu list */}
+      {/* Menu - clickable items */}
       <div style={{ margin: "0 20px", background: CARD, borderRadius: 18, overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
-        {menuItems.map((item, i) => {
-          const Icon = item.icon;
-          return (
-            <div key={item.key}>
-              {i > 0 && <div style={{ height: 1, background: MUTED, marginLeft: 18 }} />}
-              <button
-                onClick={item.onClick}
-                style={{ width: "100%", background: "none", border: "none", padding: "16px 18px", display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}
-              >
-                <Icon size={20} color={ACCENT} />
-                <span style={{ fontFamily: font, fontSize: 15, color: TEXT, flex: 1, textAlign: "left" }}>{item.label}</span>
-                <ChevronRight size={18} color={MUTED} />
-              </button>
+        {menuItems.map((item, i) => (
+          <div
+            key={item.label}
+            onClick={item.action}
+            style={{
+              display: "flex", alignItems: "center", gap: 14,
+              padding: "15px 18px",
+              borderBottom: i < menuItems.length - 1 ? `1px solid rgba(184,135,74,0.1)` : "none",
+              cursor: "pointer",
+            }}
+          >
+            <div style={{ width: 36, height: 36, borderRadius: 10, background: ACCENT_LIGHT, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <item.icon size={16} color={ACCENT} />
             </div>
-          );
-        })}
-      </div>
-
-      {/* Footer hint */}
-      <div style={{ margin: "24px 20px 0", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
-        <User size={14} color={MUTED} />
-        <span style={{ fontFamily: font, fontSize: 12, color: MUTED }}>董洁穿搭 · 让每一天都好看</span>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontFamily: font, fontSize: 14, fontWeight: 500, color: TEXT }}>{item.label}</div>
+              <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 1 }}>{item.desc}</div>
+            </div>
+            <ChevronRight size={16} color={MUTED} />
+          </div>
+        ))}
       </div>
     </div>
   );
