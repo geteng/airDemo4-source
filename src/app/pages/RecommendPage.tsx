@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Heart, Sparkles } from "lucide-react";
 import { ACCENT, ACCENT_LIGHT, CARD, font, looks, MUTED, TEXT } from "../constants";
 import type { Look } from "../types";
@@ -16,6 +16,17 @@ export function RecommendPage({
 
   const scenes = ["约会", "通勤", "旅行"];
   const sceneLooks = looks.filter((l) => l.scene === activeScene);
+
+  // 场景标签自动轮播：默认每 2 秒切换到下一个；用户手动点击某个 tab 后会重置计时。
+  useEffect(() => {
+    const t = setInterval(() => {
+      setActiveScene((cur) => {
+        const idx = scenes.indexOf(cur);
+        return scenes[(idx + 1) % scenes.length];
+      });
+    }, 2000);
+    return () => clearInterval(t);
+  }, [activeScene]);
 
   const toggleLike = (id: number) => {
     setLikedItems((prev) => {
