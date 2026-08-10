@@ -32,9 +32,9 @@ export function HomePage({
   return (
     <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%" }}>
       {/* Top bar */}
-      <div style={{ padding: "16px 20px 12px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      {/* <div style={{ padding: "16px 20px 12px", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <span style={{ fontFamily: font, fontSize: 15, fontWeight: 500, color: TEXT, letterSpacing: 2 }}>{STYLIST_NAME}</span>
-      </div>
+      </div> */}
 
       {/* Profile strip */}
       <div style={{ padding: "0 20px 20px", display: "flex", alignItems: "center", gap: 14 }}>

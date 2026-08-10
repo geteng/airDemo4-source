@@ -62,7 +62,7 @@ export function TryOnPage({
         <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex" }}>
           <X size={22} color={TEXT} />
         </button>
-        <span style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: TEXT }}>AI 虚拟试衣</span>
+        <span style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: TEXT }}>AI 穿搭</span>
       </div>
 
       <div style={{ flex: 1, overflowY: "auto", padding: "0 20px" }}>
@@ -222,7 +222,7 @@ export function TryOnPage({
                     alignItems: "center",
                     gap: 4,
                   }}
-                >（放大）
+                >（点击看全屏）
                 </button>
               ) : (
                 "等待生成..."
@@ -257,7 +257,7 @@ export function TryOnPage({
                   fontSize: 20,
                   fontWeight: 700,
                 }}>
-                  {Math.floor(82 + Math.random() * 15)}分
+                  {Math.floor(95 + Math.random() * 5)}分
                 </div>
               </div>
               <div style={{ display: "flex", gap: 8 }}>
