@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowLeft, Heart, Play, Share2, ShoppingBag, X } from "lucide-react";
-import { ACCENT, BG, CARD, font, MUTED, TEXT } from "../constants";
+import { ACCENT, BG, CARD, font, MUTED, STYLIST_NAME, TEXT } from "../constants";
 import type { Look } from "../types";
 
 export function LivePage({
@@ -39,7 +39,7 @@ export function LivePage({
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(28,26,23,0.7), transparent 50%)" }} />
         <div style={{ position: "absolute", bottom: 16, left: 16, right: 16 }}>
           <div style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: "#fff" }}>秋冬通勤穿搭分享</div>
-          <div style={{ fontFamily: font, fontSize: 13, color: "rgba(255,255,255,0.85)", marginTop: 4 }}>董洁 · 1.2万人在线</div>
+          <div style={{ fontFamily: font, fontSize: 13, color: "rgba(255,255,255,0.85)", marginTop: 4 }}>{STYLIST_NAME} · 1.2万人在线</div>
         </div>
         <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 64, height: 64, borderRadius: "50%", background: "rgba(255,255,255,0.25)", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)" }}>
           <Play size={28} color="#fff" fill="#fff" />

@@ -27,6 +27,9 @@ export const NAV_INACTIVE = "#8a6f4a";
 // ─── 字体 ─────────────────────────────────────────────────────────────────
 export const font = "'Noto Sans SC', 'DM Sans', sans-serif";
 
+// ─── 穿搭师名称（全局可改） ─────────────────────────────────────────────────
+export const STYLIST_NAME = "席霖";
+
 // ─── 图片资源 ────────────────────────────────────────────────────────────────
 export const IMG = {
   hero: "https://images.unsplash.com/photo-1674457343601-85eacbf0f4b4?w=800&h=900&fit=crop&auto=format",
@@ -194,7 +197,7 @@ export const productDetails: Record<number, ProductDetail> = {
     reviews: [
       { user: "Mia", initial: "M", rating: 5, size: "M", content: "面料很有质感，白衬衫不透，阔腿裤垂感好，通勤穿特别有气场。身高165体重50，M码刚刚好。", date: "2026.07.22", likes: 36 },
       { user: "安然", initial: "安", rating: 4, size: "L", content: "整体版型很正，西装裤偏长我162需要裁两厘米，但上身效果值得。", date: "2026.07.18", likes: 21 },
-      { user: "Lily妈", initial: "L", rating: 5, size: "S", content: "回购第二套送闺蜜，包装精致，董洁推荐果然靠谱，同事都问链接。", date: "2026.07.15", likes: 18 },
+      { user: "Lily妈", initial: "L", rating: 5, size: "S", content: `回购第二套送闺蜜，包装精致，${STYLIST_NAME}推荐果然靠谱，同事都问链接。`, date: "2026.07.15", likes: 18 },
     ],
   },
   2: {
@@ -240,7 +243,7 @@ export const productDetails: Record<number, ProductDetail> = {
     reviews: [
       { user: "Mia", initial: "M", rating: 5, size: "M", content: "面料很有质感，白衬衫不透，阔腿裤垂感好，通勤穿特别有气场。身高165体重50，M码刚刚好。", date: "2026.07.22", likes: 36 },
       { user: "安然", initial: "安", rating: 4, size: "L", content: "整体版型很正，西装裤偏长我162需要裁两厘米，但上身效果值得。", date: "2026.07.18", likes: 21 },
-      { user: "Lily妈", initial: "L", rating: 5, size: "S", content: "回购第二套送闺蜜，包装精致，董洁推荐果然靠谱，同事都问链接。", date: "2026.07.15", likes: 18 },
+      { user: "Lily妈", initial: "L", rating: 5, size: "S", content: `回购第二套送闺蜜，包装精致，${STYLIST_NAME}推荐果然靠谱，同事都问链接。`, date: "2026.07.15", likes: 18 },
     ],
   },
   12: {

@@ -20,6 +20,7 @@ import {
   IMG,
   MUTED,
   productDetails,
+  STYLIST_NAME,
   TEXT,
 } from "../constants";
 import type { Look } from "../types";
@@ -83,9 +84,9 @@ export function ProductPage({
         {/* Influencer badge */}
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
           <div style={{ width: 28, height: 28, borderRadius: "50%", overflow: "hidden", border: `1.5px solid ${ACCENT}` }}>
-            <img src={IMG.hero} alt="董洁" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <img src={IMG.hero} alt={STYLIST_NAME} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           </div>
-          <span style={{ fontFamily: font, fontSize: 13, fontWeight: 600, color: ACCENT }}>董洁推荐</span>
+          <span style={{ fontFamily: font, fontSize: 13, fontWeight: 600, color: ACCENT }}>{STYLIST_NAME}推荐</span>
           <Star size={12} color={ACCENT} fill={ACCENT} />
         </div>
 

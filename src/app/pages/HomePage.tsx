@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Award, Bell, Check, ChevronRight, Crown, ShoppingBag } from "lucide-react";
-import { ACCENT, CARD, font, MUTED, notesData, TEXT } from "../constants";
+import { Award, Check, ChevronRight, Crown } from "lucide-react";
+import { ACCENT, CARD, font, MUTED, notesData, STYLIST_NAME, TEXT } from "../constants";
 import type { Look, NoteData } from "../types";
 import { Pill } from "../components/Pill";
 
@@ -29,10 +29,8 @@ export function HomePage({
   return (
     <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%" }}>
       {/* Top bar */}
-      <div style={{ padding: "16px 20px 12px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <Bell size={20} color={MUTED} />
-        <span style={{ fontFamily: font, fontSize: 15, fontWeight: 500, color: TEXT, letterSpacing: 2 }}>董洁</span>
-        <ShoppingBag size={20} color={MUTED} />
+      <div style={{ padding: "16px 20px 12px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <span style={{ fontFamily: font, fontSize: 15, fontWeight: 500, color: TEXT, letterSpacing: 2 }}>{STYLIST_NAME}</span>
       </div>
 
       {/* Profile strip */}
@@ -43,11 +41,11 @@ export function HomePage({
           style={{ padding: 0, background: "none", border: "none", cursor: "pointer", lineHeight: 0, flexShrink: 0 }}
         >
           <div style={{ width: 56, height: 56, borderRadius: "50%", overflow: "hidden", border: `2px solid ${ACCENT}` }}>
-            <img src="https://images.unsplash.com/photo-1674457343601-85eacbf0f4b4?w=800&h=900&fit=crop&auto=format" alt="董洁" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <img src={import.meta.env.BASE_URL + "assets/stylist_avatar.png"} alt={STYLIST_NAME} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           </div>
         </button>
         <div>
-          <div style={{ fontFamily: font, fontSize: 16, fontWeight: 700, color: TEXT }}>董洁</div>
+          <div style={{ fontFamily: font, fontSize: 16, fontWeight: 700, color: TEXT }}>{STYLIST_NAME}</div>
           <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 2 }}>生活美学穿搭空间</div>
         </div>
         <div style={{ marginLeft: "auto", textAlign: "center" }}>
