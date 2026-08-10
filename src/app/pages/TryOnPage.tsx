@@ -391,106 +391,32 @@ export function TryOnPage({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4 }}
             onClick={() => setShowVideo(false)}
             style={{
               position: "fixed",
               inset: 0,
               zIndex: 1000,
-              background: "rgba(0,0,0,0.92)",
+              background: "#000",
               display: "flex",
-              flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            {/* Close button */}
-            <button
-              onClick={() => setShowVideo(false)}
+            <video
+              src={tryonVideo}
+              autoPlay
+              muted
+              playsInline
+              controls
+              loop
               style={{
-                position: "absolute",
-                top: 20,
-                right: 20,
-                background: "rgba(255,255,255,0.15)",
-                border: "none",
-                borderRadius: "50%",
-                width: 36,
-                height: 36,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-                zIndex: 10,
+                width: "100%",
+                height: "100%",
+                objectFit: "contain",
+                outline: "none",
               }}
-            >
-              <X size={18} color="#fff" />
-            </button>
-
-            {/* Video player UI badge */}
-            <div style={{
-              position: "absolute",
-              top: 24,
-              left: 24,
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-            }}>
-              <div style={{
-                width: 8,
-                height: 8,
-                borderRadius: "50%",
-                background: "#ff3b30",
-                boxShadow: "0 0 6px #ff3b30",
-              }} />
-              <span style={{
-                fontFamily: font,
-                fontSize: 12,
-                color: "rgba(255,255,255,0.7)",
-                fontWeight: 500,
-              }}>
-                REC · 04:00
-              </span>
-            </div>
-
-            {/* Center video player */}
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              onClick={(e) => e.stopPropagation()}
-              style={{
-                width: "90%",
-                maxWidth: 380,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <video
-                src={tryonVideo}
-                autoPlay
-                muted
-                playsInline
-                controls
-                loop
-                style={{
-                  width: "100%",
-                  borderRadius: 16,
-                  boxShadow: "0 10px 50px rgba(184,135,74,0.25)",
-                  outline: "none",
-                }}
-              />
-
-              {/* Product name */}
-              <div style={{ marginTop: 16, textAlign: "center" }}>
-                <div style={{ fontFamily: font, fontSize: 16, fontWeight: 700, color: "#fff", marginBottom: 4 }}>
-                  {item.name}
-                </div>
-                <div style={{ fontFamily: font, fontSize: 12, color: "rgba(255,255,255,0.5)" }}>
-                  虚拟试穿 · 上身效果展示
-                </div>
-              </div>
-            </motion.div>
+            />
           </motion.div>
         )}
       </AnimatePresence>
