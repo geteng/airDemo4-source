@@ -13,6 +13,7 @@ export type SubPage =
   | "coupons"
   | "records"
   | "vip"
+  | "stylist"
   | null;
 
 export interface Look {

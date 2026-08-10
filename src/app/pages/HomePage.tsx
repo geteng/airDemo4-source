@@ -9,10 +9,12 @@ export function HomePage({
   onGoProduct,
   onGoNote,
   onGoVipJoin,
+  onGoStylist,
 }: {
   onGoProduct: (look?: Look) => void;
   onGoNote: (note: NoteData) => void;
   onGoVipJoin: () => void;
+  onGoStylist: () => void;
 }) {
   const [slideIndex, setSlideIndex] = useState(0);
   useEffect(() => {
@@ -35,9 +37,15 @@ export function HomePage({
 
       {/* Profile strip */}
       <div style={{ padding: "0 20px 20px", display: "flex", alignItems: "center", gap: 14 }}>
-        <div style={{ width: 56, height: 56, borderRadius: "50%", overflow: "hidden", flexShrink: 0, border: `2px solid ${ACCENT}` }}>
-          <img src="https://images.unsplash.com/photo-1674457343601-85eacbf0f4b4?w=800&h=900&fit=crop&auto=format" alt="董洁" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-        </div>
+        <button
+          onClick={onGoStylist}
+          aria-label="查看形象顾问档案"
+          style={{ padding: 0, background: "none", border: "none", cursor: "pointer", lineHeight: 0, flexShrink: 0 }}
+        >
+          <div style={{ width: 56, height: 56, borderRadius: "50%", overflow: "hidden", border: `2px solid ${ACCENT}` }}>
+            <img src="https://images.unsplash.com/photo-1674457343601-85eacbf0f4b4?w=800&h=900&fit=crop&auto=format" alt="董洁" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          </div>
+        </button>
         <div>
           <div style={{ fontFamily: font, fontSize: 16, fontWeight: 700, color: TEXT }}>董洁</div>
           <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 2 }}>生活美学穿搭空间</div>

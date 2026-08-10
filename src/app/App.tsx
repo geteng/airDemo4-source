@@ -31,6 +31,7 @@ import { FavoritesPage } from "./pages/FavoritesPage";
 import { CouponsPage } from "./pages/CouponsPage";
 import { RecordsPage } from "./pages/RecordsPage";
 import { VipPage } from "./pages/VipPage";
+import { StylistProfilePage } from "./pages/StylistProfilePage";
 
 // ─── Bottom tab bar ──────────────────────────────────────────────────────────
 const tabs: {
@@ -79,6 +80,7 @@ export default function App() {
   const handleGoRecords = () => setSubPage("records");
   const handleGoWardrobe = () => setSubPage("wardrobe");
   const handleGoVip = () => setSubPage("vip");
+  const handleGoStylist = () => setSubPage("stylist");
 
   return (
     <div
@@ -131,7 +133,7 @@ export default function App() {
                 transition={{ duration: 0.22, ease: "easeInOut" }}
                 style={{ position: "absolute", inset: 0 }}
               >
-                {activeTab === "home" && <HomePage onGoProduct={handleGoProduct} onGoNote={handleGoNote} onGoVipJoin={() => setShowVipJoin(true)} />}
+                {activeTab === "home" && <HomePage onGoProduct={handleGoProduct} onGoNote={handleGoNote} onGoVipJoin={() => setShowVipJoin(true)} onGoStylist={handleGoStylist} />}
                 {activeTab === "recommend" && <RecommendPage onGoProduct={handleGoProduct} onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title })} />}
                 {activeTab === "mine" && <MinePage
                   onGoOrders={handleGoOrders}
@@ -332,6 +334,7 @@ export default function App() {
                 {subPage === "coupons" && <CouponsPage onBack={handleBack} />}
                 {subPage === "records" && <RecordsPage onBack={handleBack} />}
                 {subPage === "vip" && <VipPage onBack={handleBack} />}
+                {subPage === "stylist" && <StylistProfilePage onBack={handleBack} />}
               </motion.div>
             )}
           </AnimatePresence>
