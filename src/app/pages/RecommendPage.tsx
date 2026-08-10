@@ -12,10 +12,10 @@ export function RecommendPage({
   onGoProduct: (look: Look) => void;
   onGoTryOn: (look: Look) => void;
 }) {
-  const [activeScene, setActiveScene] = useState("通勤");
+  const [activeScene, setActiveScene] = useState("约会");
   const [likedItems, setLikedItems] = useState<Set<number>>(new Set());
 
-  const scenes = ["通勤", "约会", "旅行"];
+  const scenes = ["约会", "通勤", "旅行"];
   const sceneLooks = looks.filter((l) => l.scene === activeScene);
 
   const toggleLike = (id: number) => {

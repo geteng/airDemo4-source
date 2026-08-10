@@ -93,7 +93,7 @@ export function ProductPage({
         {/* Title & price */}
         <div style={{ fontFamily: font, fontSize: 22, fontWeight: 700, color: TEXT, marginBottom: 6 }}>{title}</div>
         <div style={{ fontFamily: font, fontSize: 13, color: MUTED, marginBottom: 16 }}>
-          {look?.items ?? "白衬衫 + 阔腿裤 + 高跟鞋"}
+          {look?.items ?? "红色连衣皮裙+ 红色高跟鞋"}
         </div>
         <div style={{ fontFamily: font, fontSize: 28, fontWeight: 700, color: ACCENT, marginBottom: 20 }}>
           ¥{price}
