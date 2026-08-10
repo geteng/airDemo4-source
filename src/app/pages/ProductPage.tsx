@@ -84,7 +84,7 @@ export function ProductPage({
         {/* Influencer badge */}
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
           <div style={{ width: 28, height: 28, borderRadius: "50%", overflow: "hidden", border: `1.5px solid ${ACCENT}` }}>
-            <img src={IMG.hero} alt={STYLIST_NAME} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <img src={import.meta.env.BASE_URL + "assets/stylist_avatar.png"} alt={STYLIST_NAME} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           </div>
           <span style={{ fontFamily: font, fontSize: 13, fontWeight: 600, color: ACCENT }}>{STYLIST_NAME}推荐</span>
           <Star size={12} color={ACCENT} fill={ACCENT} />

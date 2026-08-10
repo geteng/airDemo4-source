@@ -17,9 +17,9 @@ export function HomePage({
   onGoStylist: () => void;
 }) {
   const todaySlides = [
-    { look: { id: 11, img: import.meta.env.BASE_URL + "assets/looks/11.png", scene: "通勤", title: "高级感白领风", items: "红色连衣皮裙+ 红色高跟鞋", price: 899, liked: false }, title: "今天适合你的通勤穿搭", tags: ["显瘦通勤风", "165cm+", "轻熟风"] },
-    { look: { id: 12, img: import.meta.env.BASE_URL + "assets/looks/21.png", scene: "约会", title: "都市柔美格调", items: "红色西装 + 丝绒裙 + 高跟鞋", price: 1260, liked: false }, title: "约会也要温柔在线", tags: ["约会必备", "显白", "法式风"] },
-    { look: { id: 13, img: import.meta.env.BASE_URL + "assets/looks/31.png", scene: "旅行", title: "轻盈度假系", items: "皮裙套装 + 白色衬衣 + 高跟鞋", price: 680, liked: false }, title: "周末轻盈度假感", tags: ["透气舒适", "显高", "度假风"] },
+    { look: { id: 11, img: import.meta.env.BASE_URL + "assets/looks/11.png", scene: "通勤", title: "高级感白领风", items: "棕红色夹克+ 深棕色休闲裤+深色皮鞋", price: 899, liked: false }, title: "今天适合你的通勤穿搭", tags: ["显瘦通勤风", "165cm+", "轻熟风"] },
+    { look: { id: 12, img: import.meta.env.BASE_URL + "assets/looks/21.png", scene: "约会", title: "都市柔美格调", items: "小吊带 + 丝绒裙 + 高跟鞋", price: 1260, liked: false }, title: "约会也要温柔在线", tags: ["约会必备", "显白", "法式风"] },
+    { look: { id: 13, img: import.meta.env.BASE_URL + "assets/looks/31.png", scene: "旅行", title: "轻盈度假系", items: "深棕宽大衣 + 包臀裙 + 高跟鞋", price: 680, liked: false }, title: "周末轻盈度假感", tags: ["透气舒适", "显高", "度假风"] },
   ];
   const totalSlides = todaySlides.length;
   const [slideIndex, setSlideIndex] = useState(0);
@@ -139,20 +139,6 @@ export function HomePage({
             </div>
             <span style={{ fontFamily: font, fontSize: 15, fontWeight: 700, color: TEXT }}>种草笔记</span>
           </div>
-          <button style={{
-            background: "none",
-            border: "none",
-            color: ACCENT,
-            fontFamily: font,
-            fontSize: 12,
-            fontWeight: 500,
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            gap: 2,
-          }}>
-            更多 <ChevronRight size={14} />
-          </button>
         </div>
 
         <div style={{ display: "flex", gap: 10, overflowX: "auto", paddingBottom: 4 }}>
