@@ -14,23 +14,29 @@ export function TryOnPage({
   onBack: () => void;
 }) {
   const tryonVideo = item.video ?? TRYON_VIDEO_FALLBACK;
+  const tryonSnapshot = `${tryonVideo}?x-tos-process=video/snapshot%2Ct_1`;
 
   const [stage, setStage] = useState<"analyzing" | "generating" | "result">("analyzing");
   const [progress, setProgress] = useState(0);
   const [showVideo, setShowVideo] = useState(false);
+  const [smallPlaying, setSmallPlaying] = useState(false);
 
   const smallVideoRef = useRef<HTMLVideoElement | null>(null);
 
-  // 移动端（尤其 iOS Safari）在条件渲染挂载 video 时不会自动触发 autoplay，
-  // 必须显式调用 play()，并确保 muted 以满足自动播放策略。
+  const startSmallPlay = () => {
+    setSmallPlaying(true);
+  };
+
+  // 小窗口视频在 smallPlaying 变为 true 后才会挂载，
+  // 因此必须在其挂载完成后再显式调用 play()，避免点击无反应。
   useEffect(() => {
-    if (stage !== "result") return;
+    if (!smallPlaying) return;
     const v = smallVideoRef.current;
     if (!v) return;
     v.muted = true;
     const p = v.play();
     if (p && typeof p.catch === "function") p.catch(() => {});
-  }, [stage]);
+  }, [smallPlaying]);
 
   // Simulate AI processing
   useEffect(() => {
@@ -107,17 +113,64 @@ export function TryOnPage({
             }}>
               {stage === "result" ? (
                 <>
-                  <video
-                    ref={smallVideoRef}
-                    src={tryonVideo}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="auto"
-                    onClick={() => setShowVideo(true)}
-                    style={{ width: "100%", height: "100%", objectFit: "cover", cursor: "pointer" }}
-                  />
+                  {!smallPlaying ? (
+                    <div
+                      onClick={startSmallPlay}
+                      style={{ position: "absolute", inset: 0, cursor: "pointer" }}
+                    >
+                      <img
+                        src={tryonSnapshot}
+                        alt="AI试衣效果"
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      />
+                      <div style={{
+                        position: "absolute",
+                        top: 6,
+                        right: 6,
+                        background: "rgba(46,125,50,0.9)",
+                        color: "#fff",
+                        fontFamily: font,
+                        fontSize: 9,
+                        fontWeight: 600,
+                        padding: "2px 6px",
+                        borderRadius: 8,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 2,
+                      }}>
+                        <Check size={9} /> 完成
+                      </div>
+                      <div style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        width: 44,
+                        height: 44,
+                        borderRadius: "50%",
+                        background: "rgba(0,0,0,0.45)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </div>
+                  ) : (
+                    <video
+                      ref={smallVideoRef}
+                      src={tryonVideo}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="auto"
+                      onClick={() => setShowVideo(true)}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", cursor: "pointer" }}
+                    />
+                  )}
                   <div
                     onClick={() => setShowVideo(true)}
                     style={{
@@ -127,23 +180,6 @@ export function TryOnPage({
                       pointerEvents: "none",
                     }}
                   />
-                  <div style={{
-                    position: "absolute",
-                    top: 6,
-                    right: 6,
-                    background: "rgba(46,125,50,0.9)",
-                    color: "#fff",
-                    fontFamily: font,
-                    fontSize: 9,
-                    fontWeight: 600,
-                    padding: "2px 6px",
-                    borderRadius: 8,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 2,
-                  }}>
-                    <Check size={9} /> 完成
-                  </div>
                 </>
               ) : (
                 <div style={{
