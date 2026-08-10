@@ -3,18 +3,18 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, RefreshCw, Share2, Sparkles, X } from "lucide-react";
 import { ACCENT, ACCENT_LIGHT, BG, CARD, font, MUTED, TEXT } from "../constants";
 
-const TRYON_VIDEO =
+const TRYON_VIDEO_FALLBACK =
   "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/1.mp4";
-const TRYON_SNAPSHOT =
-  "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/1.mp4?x-tos-process=video/snapshot%2Ct_1";
 
 export function TryOnPage({
   item,
   onBack,
 }: {
-  item: { img: string; name: string };
+  item: { img: string; name: string; video?: string };
   onBack: () => void;
 }) {
+  const TRYON_VIDEO = item.video ?? TRYON_VIDEO_FALLBACK;
+  const TRYON_SNAPSHOT = `${TRYON_VIDEO}?x-tos-process=video/snapshot%2Ct_1`;
   const [stage, setStage] = useState<"analyzing" | "generating" | "result">("analyzing");
   const [showVideo, setShowVideo] = useState(false);
 

@@ -24,6 +24,7 @@ export interface Look {
   items: string;
   price: number;
   liked: boolean;
+  video?: string;
 }
 
 export interface WardrobeItem {

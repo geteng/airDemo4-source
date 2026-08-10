@@ -48,7 +48,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [subPage, setSubPage] = useState<SubPage>(null);
   const [selectedLook, setSelectedLook] = useState<Look | null>(null);
-  const [selectedTryOnItem, setSelectedTryOnItem] = useState<{ img: string; name: string } | null>(null);
+  const [selectedTryOnItem, setSelectedTryOnItem] = useState<{ img: string; name: string; video?: string } | null>(null);
   const [selectedNote, setSelectedNote] = useState<NoteData | null>(null);
   const [showStylistQR, setShowStylistQR] = useState(false);
   const [showCallDialog, setShowCallDialog] = useState(false);
@@ -61,7 +61,7 @@ export default function App() {
     if (look) setSelectedLook(look);
     setSubPage("product");
   };
-  const handleGoTryOn = (item: { img: string; name: string }) => {
+  const handleGoTryOn = (item: { img: string; name: string; video?: string }) => {
     setSelectedTryOnItem(item);
     setSubPage("tryon");
   };
@@ -124,7 +124,7 @@ export default function App() {
                 style={{ position: "absolute", inset: 0 }}
               >
                 {activeTab === "home" && <HomePage onGoProduct={handleGoProduct} onGoNote={handleGoNote} onGoVipJoin={() => setShowVipJoin(true)} onGoStylist={handleGoStylist} />}
-                {activeTab === "recommend" && <RecommendPage onGoProduct={handleGoProduct} onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title })} />}
+                {activeTab === "recommend" && <RecommendPage onGoProduct={handleGoProduct} onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title, video: look.video })} />}
                 {activeTab === "mine" && <MinePage
                   onGoOrders={handleGoOrders}
                   onGoFavorites={handleGoFavorites}
@@ -298,7 +298,7 @@ export default function App() {
                 style={{ position: "absolute", inset: 0, background: BG, zIndex: 20 }}
               >
                 {subPage === "live" && <LivePage onBack={handleBack} onGoProduct={handleGoProduct} />}
-                {subPage === "product" && <ProductPage look={selectedLook} onBack={handleBack} onGoTryOn={() => handleGoTryOn({ img: selectedLook?.img ?? IMG.product, name: selectedLook?.title ?? "高级感白领风" })} />}
+                {subPage === "product" && <ProductPage look={selectedLook} onBack={handleBack} onGoTryOn={() => handleGoTryOn({ img: selectedLook?.img ?? IMG.product, name: selectedLook?.title ?? "高级感白领风", video: selectedLook?.video })} />}
                 {subPage === "tryon" && selectedTryOnItem && <TryOnPage item={selectedTryOnItem} onBack={handleBack} />}
                 {subPage === "note" && selectedNote && <NoteDetailPage note={selectedNote} onBack={handleBack} />}
                 {subPage === "wardrobe" && <WardrobePage onGoTryOn={handleGoTryOn} />}

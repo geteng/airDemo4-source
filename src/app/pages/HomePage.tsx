@@ -17,9 +17,9 @@ export function HomePage({
   onGoStylist: () => void;
 }) {
   const todaySlides = [
-    { look: { id: 11, img: import.meta.env.BASE_URL + "assets/looks/11.png", scene: "通勤", title: "高级感白领风", items: "棕红色夹克+ 深棕色休闲裤+深色皮鞋", price: 899, liked: false }, title: "今天适合你的通勤穿搭", tags: ["显瘦通勤风", "165cm+", "轻熟风"] },
-    { look: { id: 12, img: import.meta.env.BASE_URL + "assets/looks/21.png", scene: "约会", title: "都市柔美格调", items: "小吊带 + 丝绒裙 + 高跟鞋", price: 1260, liked: false }, title: "约会也要温柔在线", tags: ["约会必备", "显白", "法式风"] },
-    { look: { id: 13, img: import.meta.env.BASE_URL + "assets/looks/31.png", scene: "旅行", title: "轻盈度假系", items: "深棕宽大衣 + 包臀裙 + 高跟鞋", price: 680, liked: false }, title: "周末轻盈度假感", tags: ["透气舒适", "显高", "度假风"] },
+    { look: { id: 11, img: import.meta.env.BASE_URL + "assets/looks/11.png", scene: "通勤", title: "高级感白领风", items: "棕红色夹克+ 深棕色休闲裤+深色皮鞋", price: 899, liked: false, video: "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/6.mp4" }, title: "今天适合你的通勤穿搭", tags: ["显瘦通勤风", "165cm+", "轻熟风"] },
+    { look: { id: 12, img: import.meta.env.BASE_URL + "assets/looks/21.png", scene: "约会", title: "都市柔美格调", items: "小吊带 + 丝绒裙 + 高跟鞋", price: 1260, liked: false, video: "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/2.mp4" }, title: "约会也要温柔在线", tags: ["约会必备", "显白", "法式风"] },
+    { look: { id: 13, img: import.meta.env.BASE_URL + "assets/looks/31.png", scene: "旅行", title: "轻盈度假系", items: "深棕宽大衣 + 包臀裙 + 高跟鞋", price: 680, liked: false, video: "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/4.mp4" }, title: "周末轻盈度假感", tags: ["透气舒适", "显高", "度假风"] },
   ];
   const totalSlides = todaySlides.length;
   const [slideIndex, setSlideIndex] = useState(0);
