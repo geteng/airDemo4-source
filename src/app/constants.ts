@@ -21,7 +21,7 @@ export const TEXT = "#f3ece2";
 export const MUTED = "#a89c8c";
 // 导航栏（米黄色底，其上元素用深色保证可读）
 export const NAV_BG = "#EDC297";
-export const NAV_ACTIVE = "#3a2a18";
+export const NAV_ACTIVE = "#322302";
 export const NAV_INACTIVE = "#8a6f4a";
 
 // ─── 字体 ─────────────────────────────────────────────────────────────────

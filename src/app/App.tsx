@@ -153,8 +153,8 @@ export default function App() {
                 position: "absolute",
                 right: 0,
                 top: "calc(50% - 30px)",
-                background: `linear-gradient(135deg, ${ACCENT}, #d4a56a)`,
-                color: "#fff",
+                background: "#EDC297",
+                color: "#322302",
                 border: "none",
                 borderRadius: 16,
                 padding: "12px 10px",
@@ -174,7 +174,7 @@ export default function App() {
                 userSelect: "none",
               }}
             >
-              <Headphones size={18} color="#fff" />
+              <Headphones size={18} color="#322302" />
               <span style={{ writingMode: "vertical-rl", fontSize: 11, letterSpacing: 1, userSelect: "none" }}>穿搭师</span>
             </motion.button>
           )}

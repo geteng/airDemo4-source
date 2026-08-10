@@ -68,7 +68,7 @@ export function HomePage({
               <img src={s.look.img} alt={s.look.title} style={{ width: "100%", height: 320, objectFit: "cover", display: "block" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(28,26,23,0.82) 0%, rgba(28,26,23,0.1) 55%, transparent 100%)" }} />
               <div style={{ position: "absolute", top: 14, left: 14 }}>
-                <span style={{ background: ACCENT, color: "#fff", fontFamily: font, fontSize: 11, fontWeight: 500, padding: "3px 10px", borderRadius: 10 }}>今日推荐</span>
+                <span style={{ background: "#EDC297", color: "#322302", fontFamily: font, fontSize: 11, fontWeight: 600, padding: "3px 10px", borderRadius: 10 }}>今日推荐</span>
               </div>
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 18px 42px" }}>
                 <div style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: "#fff", marginBottom: 4 }}>{s.title}</div>
@@ -79,7 +79,7 @@ export function HomePage({
                 </div>
                 <button
                   onClick={() => onGoProduct(s.look)}
-                  style={{ background: ACCENT, color: "#fff", fontFamily: font, fontSize: 13, fontWeight: 600, padding: "9px 20px", borderRadius: 22, border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}
+                  style={{ background: "#EDC297", color: "#322302", fontFamily: font, fontSize: 13, fontWeight: 600, padding: "9px 20px", borderRadius: 22, border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}
                 >
                   查看今日搭配 <ChevronRight size={14} />
                 </button>
