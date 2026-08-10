@@ -463,6 +463,11 @@ export function TryOnPage({
               autoPlay
               playsInline
               loop
+              onClick={(e) => {
+                const v = e.currentTarget;
+                if (v.paused) v.play();
+                else v.pause();
+              }}
               style={{
                 width: "100%",
                 height: "100%",
