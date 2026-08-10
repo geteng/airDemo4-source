@@ -28,7 +28,7 @@ export const NAV_INACTIVE = "#8a6f4a";
 export const font = "'Noto Sans SC', 'DM Sans', sans-serif";
 
 // ─── 穿搭师名称（全局可改） ─────────────────────────────────────────────────
-export const STYLIST_NAME = "席霖";
+export const STYLIST_NAME = "陈妍君";
 
 // ─── 图片资源 ────────────────────────────────────────────────────────────────
 export const IMG = {

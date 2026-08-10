@@ -52,7 +52,7 @@ export function HomePage({
           <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 2 }}>生活美学穿搭空间</div>
         </div>
         <div style={{ marginLeft: "auto", textAlign: "center" }}>
-          <div style={{ fontFamily: font, fontSize: 17, fontWeight: 700, color: ACCENT }}>20<span style={{ fontSize: 11, fontWeight: 400 }}>万</span></div>
+          <div style={{ fontFamily: font, fontSize: 17, fontWeight: 700, color: ACCENT }}>10<span style={{ fontSize: 11, fontWeight: 400 }}>万</span></div>
           <div style={{ fontFamily: font, fontSize: 11, color: MUTED }}>粉丝</div>
         </div>
       </div>
