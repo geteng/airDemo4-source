@@ -107,25 +107,25 @@ export const notesData: NoteData[] = [
 ];
 
 export const ordersData: OrderData[] = [
-  { id: "DD20260806001", status: "pending_pay", statusLabel: "待付款", img: IMG.look1, name: "高级感白领风套装", price: 899, date: "2026-08-06", items: "红色连衣皮裙+ 红色高跟鞋" },
-  { id: "DD20260805002", status: "pending_pay", statusLabel: "待付款", img: IMG.look2, name: "都市柔美格调", price: 1260, date: "2026-08-05", items: "红色西装 + 丝绒裙 + 高跟鞋" },
-  { id: "DD20260804003", status: "pending_pay", statusLabel: "待付款", img: IMG.wardrobe3, name: "米色高腰阔腿裤", price: 329, date: "2026-08-04", items: "米色阔腿裤" },
-  { id: "DD20260803004", status: "pending_ship", statusLabel: "待发货", img: IMG.look3, name: "轻盈度假系套装", price: 680, date: "2026-08-03", items: "皮裙套装 + 白色衬衣 + 高跟鞋" },
-  { id: "DD20260730005", status: "pending_review", statusLabel: "待评价", img: IMG.wardrobe1, name: "白色薄棉衬衫", price: 199, date: "2026-07-30", items: "白色衬衫" },
-  { id: "DD20260728006", status: "pending_review", statusLabel: "待评价", img: IMG.wardrobe4, name: "黑色西装外套", price: 599, date: "2026-07-28", items: "黑色西装外套" },
-  { id: "DD20260720007", status: "refund", statusLabel: "退换货", img: IMG.wardrobe5, name: "浅蓝牛仔外套", price: 359, date: "2026-07-20", items: "牛仔外套", refundStatus: "退款处理中" },
-  { id: "DD20260715008", status: "refund", statusLabel: "退换货", img: IMG.wardrobe6, name: "白色Polo领针织", price: 259, date: "2026-07-15", items: "针织衫", refundStatus: "已退款" },
-  { id: "DD20260710009", status: "done", statusLabel: "已完成", img: IMG.wardrobe2, name: "驼色羊绒大衣", price: 1299, date: "2026-07-10", items: "驼色大衣" },
-  { id: "DD20260705100", status: "done", statusLabel: "已完成", img: IMG.look3, name: "旅行轻装穿搭", price: 680, date: "2026-07-05", items: "白色长裤 + 针织衫" },
+  { id: "DD20260806001", status: "pending_pay", statusLabel: "待付款", img: IMG.look1, name: "银色抹胸缎面礼服造型套装", price: 899, date: "2026-08-06", items: "抹胸长款缎面礼服裙+ 渐变黑长款手套" },
+  { id: "DD20260805002", status: "pending_pay", statusLabel: "待付款", img: IMG.look2, name: "宝蓝廓形西装套装造型", price: 1260, date: "2026-08-05", items: "阔肩宝蓝色西装 + 同面料阔腿西裤" },
+  { id: "DD20260804003", status: "pending_pay", statusLabel: "待付款", img: IMG.wardrobe3, name: "蕾丝 V 领白上衣", price: 329, date: "2026-08-04", items: "蕾丝 V 领白上衣、小波点衬衫、碎花印花衬衣" },
+  { id: "DD20260803004", status: "pending_ship", statusLabel: "待发货", img: IMG.look3, name: "浅燕麦短款西装两件套休闲通勤", price: 680, date: "2026-08-03", items: "短款翻领小西装 + 白色短款抹胸内搭 + 同面料高腰阔腿西裤" },
+  { id: "DD20260730005", status: "pending_review", statusLabel: "待评价", img: IMG.wardrobe1, name: "温柔肌理感针织衣", price: 199, date: "2026-07-30", items: "蛇纹印花吊带、浅棕坑条针织" },
+  { id: "DD20260728006", status: "pending_review", statusLabel: "待评价", img: IMG.wardrobe4, name: "中性简约穿搭", price: 599, date: "2026-07-28", items: "深灰工装衬衫、焦糖长款风衣、白打底、浅蓝水洗牛仔外套" },
+  { id: "DD20260720007", status: "refund", statusLabel: "退换货", img: IMG.wardrobe5, name: "纯白塑料衣架单品", price: 359, date: "2026-07-20", items: "哑光白色宽肩", refundStatus: "退款处理中" },
+  { id: "DD20260715008", status: "refund", statusLabel: "退换货", img: IMG.wardrobe6, name: "基础款白短袖衬衫", price: 259, date: "2026-07-15", items: "基础款翻领短袖白衬衫，宽松微落肩版型", refundStatus: "已退款" },
+  { id: "DD20260710009", status: "done", statusLabel: "已完成", img: IMG.wardrobe2, name: "暖色系日常", price: 1299, date: "2026-07-10", items: "米白棉麻衬衫、焦糖橘红针织上衣、米杏休闲阔腿裤" },
+  { id: "DD20260705100", status: "done", statusLabel: "已完成", img: IMG.look3, name: "浅燕麦短款西装两件套休闲通勤", price: 680, date: "2026-07-05", items: "短款翻领小西装 + 白色短款抹胸内搭 + 同面料高腰阔腿西裤" },
 ];
 
 export const favoritesData: FavoriteData[] = [
-  { id: 1, img: IMG.look1, name: "高级感白领风", price: 899, type: "搭配" },
-  { id: 2, img: IMG.look2, name: "都市柔美格调", price: 1260, type: "搭配" },
-  { id: 3, img: IMG.wardrobe1, name: "白色薄棉衬衫", price: 199, type: "单品" },
-  { id: 4, img: IMG.wardrobe2, name: "驼色羊绒大衣", price: 1299, type: "单品" },
-  { id: 5, img: IMG.look3, name: "轻盈度假系", price: 680, type: "搭配" },
-  { id: 6, img: IMG.wardrobe4, name: "黑色西装外套", price: 599, type: "单品" },
+  { id: 1, img: IMG.look1, name: "银色抹胸缎面礼服造型套装", price: 899, type: "搭配" },
+  { id: 2, img: IMG.look2, name: "宝蓝廓形西装套装造型", price: 1260, type: "搭配" },
+  { id: 3, img: IMG.wardrobe1, name: "温柔肌理感针织衣", price: 199, type: "单品" },
+  { id: 4, img: IMG.wardrobe2, name: "暖色系日常", price: 1299, type: "单品" },
+  { id: 5, img: IMG.look3, name: "浅燕麦短款西装两件套休闲通勤", price: 680, type: "搭配" },
+  { id: 6, img: IMG.wardrobe4, name: "中性简约穿搭", price: 599, type: "单品" },
 ];
 
 export const couponsData: CouponData[] = [
@@ -137,11 +137,11 @@ export const couponsData: CouponData[] = [
 ];
 
 export const recordsData: RecordData[] = [
-  { id: 1, date: "2026-08-06", img: IMG.look1, title: "高级感白领风", scene: "通勤", weather: "晴 28°C", note: "今天穿了白衬衫搭配阔腿裤，干练又不失优雅" },
-  { id: 2, date: "2026-08-05", img: IMG.look2, title: "都市柔美格调", scene: "约会", weather: "多云 26°C", note: "黑色西装搭配丝绒裙，晚上约会很合适" },
-  { id: 3, date: "2026-08-03", img: IMG.look3, title: "轻盈度假系", scene: "旅行", weather: "晴 32°C", note: "周末去海边，穿了轻盈的度假风搭配" },
-  { id: 4, date: "2026-08-01", img: IMG.wardrobe4, title: "黑色西装穿搭", scene: "通勤", weather: "阴 25°C", note: "黑色西装外套搭配白T，简约利落" },
-  { id: 5, date: "2026-07-28", img: IMG.wardrobe2, title: "驼色大衣造型", scene: "日常", weather: "雨 20°C", note: "下雨天穿了驼色大衣，温暖又有型" },
+  { id: 1, date: "2026-08-06", img: IMG.look1, title: "银色抹胸缎面礼服造型套装", scene: "约会", weather: "晴 28°C", note: "今天穿了白衬衫搭配阔腿裤，干练又不失优雅" },
+  { id: 2, date: "2026-08-05", img: IMG.look2, title: "宝蓝廓形西装套装造型", scene: "约会", weather: "多云 26°C", note: "黑色西装搭配丝绒裙，晚上约会很合适" },
+  { id: 3, date: "2026-08-03", img: IMG.look3, title: "浅燕麦短款西装两件套休闲通勤", scene: "旅行", weather: "晴 32°C", note: "周末去海边，穿了轻盈的度假风搭配" },
+  { id: 4, date: "2026-08-01", img: IMG.wardrobe4, title: "中性简约穿搭", scene: "通勤", weather: "阴 25°C", note: "黑色西装外套搭配白T，简约利落" },
+  { id: 5, date: "2026-07-28", img: IMG.wardrobe2, title: "暖色系日常", scene: "日常", weather: "雨 20°C", note: "下雨天穿了驼色大衣，温暖又有型" },
 ];
 
 export const vipBenefits: VipBenefit[] = [
