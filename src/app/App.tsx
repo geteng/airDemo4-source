@@ -110,16 +110,6 @@ export default function App() {
           flexDirection: "column",
         }}
       >
-        {/* Status bar */}
-        <div style={{ background: BG, padding: "10px 24px 4px", display: "flex", justifyContent: "space-between", alignItems: "center", flexShrink: 0, zIndex: 10 }}>
-          <span style={{ fontFamily: font, fontSize: 12, fontWeight: 600, color: TEXT }}>9:41</span>
-          <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
-            <div style={{ width: 15, height: 8, borderRadius: 2, border: `1.5px solid ${TEXT}`, position: "relative" }}>
-              <div style={{ position: "absolute", inset: 1.5, right: "auto", width: "65%", background: TEXT, borderRadius: 1 }} />
-            </div>
-          </div>
-        </div>
-
         {/* Page content */}
         <div ref={dragConstraintsRef} style={{ flex: 1, overflow: "hidden", position: "relative" }}>
           {/* Tab pages */}

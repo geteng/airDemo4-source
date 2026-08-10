@@ -43,7 +43,7 @@ export function MinePage({
   ];
 
   return (
-    <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%" }}>
+    <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%", background: "#f7f4f0" }}>
       {/* Profile header */}
       <div style={{ background: `linear-gradient(160deg, #3a2a18 0%, #6b4a28 100%)`, padding: "28px 20px 32px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
