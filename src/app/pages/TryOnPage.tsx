@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, RefreshCw, Share2, Sparkles, X } from "lucide-react";
-import { ACCENT, ACCENT_LIGHT, BG, CARD, font, MUTED, TEXT } from "../constants";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, Sparkles, Check, Share2, RefreshCw } from "lucide-react";
+import { ACCENT, ACCENT_LIGHT, CARD, TEXT, MUTED, BG, font } from "../constants";
 
 const TRYON_VIDEO_FALLBACK =
   "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/1.mp4";
@@ -13,100 +13,205 @@ export function TryOnPage({
   item: { img: string; name: string; video?: string };
   onBack: () => void;
 }) {
-  const TRYON_VIDEO = item.video ?? TRYON_VIDEO_FALLBACK;
-  const TRYON_SNAPSHOT = `${TRYON_VIDEO}?x-tos-process=video/snapshot%2Ct_1`;
+  const tryonVideo = item.video ?? TRYON_VIDEO_FALLBACK;
+  const tryonSnapshot = `${tryonVideo}?x-tos-process=video/snapshot%2Ct_1`;
+
   const [stage, setStage] = useState<"analyzing" | "generating" | "result">("analyzing");
+  const [progress, setProgress] = useState(0);
   const [showVideo, setShowVideo] = useState(false);
 
+  // Simulate AI processing
   useEffect(() => {
-    setStage("analyzing");
+    const t1 = setTimeout(() => setStage("generating"), 1500);
+    return () => clearTimeout(t1);
+  }, []);
+
+  useEffect(() => {
+    if (stage !== "generating") return;
     let cancelled = false;
-    const t1 = setTimeout(() => {
-      if (cancelled) return;
-      setStage("generating");
-    }, 1800);
-    const t2 = setTimeout(() => {
-      if (cancelled) return;
-      setStage("result");
-    }, 4200);
-    return () => {
-      cancelled = true;
-      clearTimeout(t1);
-      clearTimeout(t2);
-    };
-  }, [item]);
+    const interval = setInterval(() => {
+      setProgress(p => {
+        if (cancelled) return p;
+        if (p >= 100) {
+          clearInterval(interval);
+          if (!cancelled) setStage("result");
+          return 100;
+        }
+        return p + Math.random() * 6;
+      });
+    }, 120);
+    return () => { cancelled = true; clearInterval(interval); };
+  }, [stage]);
 
   return (
-    <div style={{ paddingBottom: 90, overflowY: "auto", height: "100%" }}>
-      {/* Top bar */}
-      <div style={{ position: "sticky", top: 0, zIndex: 10, padding: "16px 20px 12px", display: "flex", alignItems: "center", justifyContent: "space-between", background: BG, borderBottom: "1px solid rgba(184,135,74,0.12)" }}>
-        <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer" }}>
-          <ArrowLeft size={22} color={TEXT} />
+    <div style={{ height: "100%", display: "flex", flexDirection: "column", background: BG }}>
+      {/* Header */}
+      <div style={{ padding: "16px 20px 14px", display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
+        <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex" }}>
+          <X size={22} color={TEXT} />
         </button>
-        <span style={{ fontFamily: font, fontSize: 16, fontWeight: 700, color: TEXT }}>AI 虚拟试衣</span>
-        <Sparkles size={20} color={ACCENT} />
+        <span style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: TEXT }}>AI 虚拟试衣</span>
       </div>
 
-      <div style={{ padding: "20px 20px 0" }}>
-        {/* Loading / progress */}
-        {stage !== "result" && (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} style={{ background: CARD, borderRadius: 18, padding: "24px 20px", textAlign: "center", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
-            <div style={{ position: "relative", width: 80, height: 80, margin: "0 auto 20px" }}>
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-                style={{ position: "absolute", inset: 0, border: `3px solid ${ACCENT_LIGHT}`, borderTopColor: ACCENT, borderRadius: "50%" }}
-              />
-              <Sparkles size={28} color={ACCENT} style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
+      <div style={{ flex: 1, overflowY: "auto", padding: "0 20px" }}>
+        {/* Two-panel comparison */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 20 }}>
+          {/* Original item */}
+          <div style={{ background: CARD, borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
+            <div style={{ padding: "8px 10px", fontFamily: font, fontSize: 12, fontWeight: 600, color: MUTED, textAlign: "center" }}>
+              原单品
             </div>
-            <div style={{ fontFamily: font, fontSize: 16, fontWeight: 700, color: TEXT, marginBottom: 6 }}>
-              {stage === "analyzing" ? "正在分析身材数据..." : "正在生成试衣效果..."}
+            <img src={item.img} alt={item.name} style={{ width: "100%", height: 180, objectFit: "cover" }} />
+            <div style={{ padding: "8px 10px", fontFamily: font, fontSize: 11, color: MUTED, textAlign: "center" }}>
+              {item.name}
             </div>
-            <div style={{ fontFamily: font, fontSize: 13, color: MUTED, marginBottom: 18 }}>
-              {stage === "analyzing" ? "AI 正在识别肩宽、腰线等 12 项身材特征" : "基于你的身型与单品质感合成上身预览"}
-            </div>
-            {/* progress bar */}
-            <div style={{ height: 6, background: ACCENT_LIGHT, borderRadius: 3, overflow: "hidden" }}>
-              <motion.div
-                initial={{ width: "8%" }}
-                animate={{ width: stage === "analyzing" ? "45%" : "90%" }}
-                transition={{ duration: 1.6, ease: "easeInOut" }}
-                style={{ height: "100%", background: ACCENT, borderRadius: 3 }}
-              />
-            </div>
-          </motion.div>
-        )}
+          </div>
 
-        {/* Result */}
+          {/* AI result */}
+          <div style={{
+            background: CARD,
+            borderRadius: 16,
+            overflow: "hidden",
+            boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+          }}>
+            <div style={{
+              padding: "8px 10px",
+              fontFamily: font,
+              fontSize: 12,
+              fontWeight: 600,
+              color: ACCENT,
+              textAlign: "center",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 4,
+            }}>
+              <Sparkles size={12} /> 我的上身效果
+            </div>
+            <div style={{
+              height: 180,
+              position: "relative",
+              overflow: "hidden",
+            }}>
+              {stage === "result" ? (
+                <>
+                  <img
+                    src={tryonSnapshot}
+                    alt="AI试衣效果"
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                  <div style={{
+                    position: "absolute",
+                    top: 6,
+                    right: 6,
+                    background: "rgba(46,125,50,0.9)",
+                    color: "#fff",
+                    fontFamily: font,
+                    fontSize: 9,
+                    fontWeight: 600,
+                    padding: "2px 6px",
+                    borderRadius: 8,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                  }}>
+                    <Check size={9} /> 完成
+                  </div>
+                </>
+              ) : (
+                <div style={{
+                  width: "100%", height: "100%",
+                  background: `linear-gradient(180deg, ${ACCENT_LIGHT} 0%, rgba(184,135,74,0.05) 100%)`,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 10,
+                }}>
+                  {/* Animated processing dots */}
+                  <div style={{ display: "flex", gap: 4 }}>
+                    {[0, 1, 2].map(i => (
+                      <motion.div
+                        key={i}
+                        animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1.2, 0.8] }}
+                        transition={{
+                          duration: 1.2,
+                          repeat: Infinity,
+                          delay: i * 0.2,
+                          ease: "easeInOut",
+                        }}
+                        style={{
+                          width: 6,
+                          height: 6,
+                          borderRadius: "50%",
+                          background: ACCENT,
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <span style={{
+                    fontFamily: font,
+                    fontSize: 11,
+                    color: ACCENT,
+                    fontWeight: 500,
+                  }}>
+                    {stage === "analyzing" ? "分析款式中..." : "AI 生成中..."}
+                  </span>
+                  {stage === "generating" && (
+                    <div style={{
+                      width: "70%",
+                      height: 3,
+                      background: "rgba(184,135,74,0.15)",
+                      borderRadius: 2,
+                      overflow: "hidden",
+                    }}>
+                      <div style={{
+                        height: "100%",
+                        width: `${Math.min(progress, 100)}%`,
+                        background: `linear-gradient(90deg, ${ACCENT}, #d4a56a)`,
+                        borderRadius: 2,
+                        transition: "width 0.1s ease-out",
+                      }} />
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+            <div style={{ padding: "8px 10px", fontFamily: font, fontSize: 11, color: ACCENT, textAlign: "center", fontWeight: 500 }}>
+              {stage === "result" ? (
+                <button
+                  onClick={() => setShowVideo(true)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    color: ACCENT,
+                    fontFamily: font,
+                    fontSize: 11,
+                    fontWeight: 600,
+                    padding: 0,
+                    textDecoration: "underline",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 4,
+                  }}
+                >（放大）
+                </button>
+              ) : (
+                "等待生成..."
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* AI recommendations */}
         {stage === "result" && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-            {/* Comparison */}
-            <div style={{ display: "flex", gap: 12, marginBottom: 20 }}>
-              <div style={{ flex: 1, background: CARD, borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
-                <div style={{ height: 200, background: "#f0ebe3", overflow: "hidden" }}>
-                  <img src={item.img} alt={item.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                </div>
-                <div style={{ padding: "10px 12px", textAlign: "center" }}>
-                  <div style={{ fontFamily: font, fontSize: 12, color: MUTED }}>原单品</div>
-                  <div style={{ fontFamily: font, fontSize: 13, fontWeight: 600, color: TEXT, marginTop: 2 }}>{item.name}</div>
-                </div>
-              </div>
-              <div style={{ flex: 1, background: CARD, borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
-                <div style={{ height: 200, background: "#f0ebe3", overflow: "hidden" }}>
-                  <img src={TRYON_SNAPSHOT} alt="我试试效果" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                </div>
-                <div style={{ padding: "10px 12px", textAlign: "center" }}>
-                  <div style={{ fontFamily: font, fontSize: 12, color: MUTED }}>上身效果</div>
-                  <button
-                    onClick={() => setShowVideo(true)}
-                    style={{ background: "none", border: "none", color: ACCENT, fontFamily: font, fontSize: 13, fontWeight: 600, cursor: "pointer", textDecoration: "underline", marginTop: 2, display: "inline-flex", alignItems: "center", gap: 4 }}
-                  >
-                    上身效果（放大）
-                  </button>
-                </div>
-              </div>
-            </div>
-
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 24 }}
+          >
             {/* Score card */}
             <div style={{
               background: `linear-gradient(135deg, ${ACCENT}, #9c6b34)`,
@@ -131,48 +236,49 @@ export function TryOnPage({
               <div style={{ display: "flex", gap: 8 }}>
                 {["版型匹配", "颜色协调", "风格统一"].map(tag => (
                   <span key={tag} style={{
-                    background: "rgba(255,255,255,0.2)",
-                    borderRadius: 10,
-                    padding: "4px 10px",
+                    background: "rgba(255,255,255,0.18)",
                     fontFamily: font,
                     fontSize: 11,
-                  }}>{tag}</span>
+                    padding: "3px 9px",
+                    borderRadius: 10,
+                  }}>
+                    ✓ {tag}
+                  </span>
                 ))}
               </div>
-
-              {/* 分享按钮 */}
-              <button
-                onClick={() => {
-                  const toast = document.createElement("div");
-                  toast.textContent = "已复制分享链接 ✅";
-                  toast.style.cssText = `position:fixed;left:50%;bottom:120px;transform:translateX(-50%);background:rgba(0,0,0,0.8);color:#fff;padding:10px 20px;border-radius:24px;font-family:${font};font-size:14px;z-index:9999;`;
-                  document.body.appendChild(toast);
-                  setTimeout(() => toast.remove(), 2000);
-                }}
-                style={{
-                  marginTop: 16,
-                  width: "100%",
-                  background: "rgba(255,255,255,0.18)",
-                  border: "1.5px dashed rgba(255,255,255,0.6)",
-                  borderRadius: 14,
-                  padding: "10px",
-                  color: "#fff",
-                  fontFamily: font,
-                  fontSize: 14,
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 6,
-                }}
-              >
-                <Share2 size={16} /> 分享试衣效果
-              </button>
             </div>
 
+            {/* Share button */}
+            <button
+              onClick={() => {
+                const el = document.createElement("div");
+                el.style.cssText = "position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#333;color:#fff;padding:12px 28px;border-radius:24px;font-size:14px;font-weight:600;z-index:9999;font-family:system-ui;";
+                el.textContent = "已复制分享链接 ✅";
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 2000);
+              }}
+              style={{
+                width: "100%",
+                padding: "12px",
+                borderRadius: 14,
+                border: `1.5px dashed ${ACCENT}`,
+                background: ACCENT_LIGHT,
+                color: ACCENT,
+                fontFamily: font,
+                fontSize: 14,
+                fontWeight: 600,
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 8,
+              }}
+            >
+              <Share2 size={16} /> 分享给穿搭师点评
+            </button>
+
             {/* Why it works */}
-            <div style={{ background: CARD, borderRadius: 16, padding: "16px 18px", marginTop: 14, boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
+            <div style={{ background: CARD, borderRadius: 16, padding: "16px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
               <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: TEXT, marginBottom: 10 }}>
                 <Sparkles size={14} color={ACCENT} style={{ display: "inline", verticalAlign: "middle", marginRight: 6 }} />
                 为什么适合你
@@ -205,7 +311,7 @@ export function TryOnPage({
             </div>
 
             {/* Recommended pairing */}
-            <div style={{ background: CARD, borderRadius: 16, padding: "16px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", marginBottom: 8, marginTop: 14 }}>
+            <div style={{ background: CARD, borderRadius: 16, padding: "16px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", marginBottom: 8 }}>
               <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: TEXT, marginBottom: 12 }}>
                 推荐搭配
               </div>
@@ -214,7 +320,7 @@ export function TryOnPage({
                   { label: "高腰阔腿裤", color: "#d4c5b2" },
                   { label: "简约高跟鞋", color: "#c9b896" },
                   { label: "质感手提包", color: "#8c6d4a" },
-                ].map((pair) => (
+                ].map(pair => (
                   <div key={pair.label} style={{
                     flexShrink: 0,
                     background: pair.color,
@@ -246,31 +352,7 @@ export function TryOnPage({
             </div>
 
             {/* Matching items */}
-            <div style={{ marginTop: 14 }}>
-              <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: TEXT, marginBottom: 10 }}>可搭配单品</div>
-              <div style={{ display: "flex", gap: 10, overflowX: "auto" }}>
-                {[1, 2, 3].map((i) => (
-                  <div key={i} style={{ flexShrink: 0, width: 100, background: CARD, borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 10px rgba(0,0,0,0.05)" }}>
-                    <div style={{ height: 100, background: "#f0ebe3", overflow: "hidden" }}>
-                      <img src={item.img} alt="搭配" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                    </div>
-                    <div style={{ padding: "6px 8px" }}>
-                      <div style={{ fontFamily: font, fontSize: 11, color: TEXT, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>推荐单品 {i}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
             {/* Actions */}
-            <div style={{ display: "flex", gap: 12, marginTop: 24, marginBottom: 8 }}>
-              <button onClick={onBack} style={{ flex: 1, background: ACCENT_LIGHT, border: "none", borderRadius: 14, padding: "13px", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, cursor: "pointer" }}>
-                <X size={16} color={ACCENT} /> <span style={{ fontFamily: font, fontSize: 14, color: ACCENT, fontWeight: 600 }}>返回</span>
-              </button>
-              <button onClick={() => setStage("analyzing")} style={{ flex: 1, background: ACCENT, border: "none", borderRadius: 14, padding: "13px", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, cursor: "pointer" }}>
-                <RefreshCw size={16} color="#fff" /> <span style={{ fontFamily: font, fontSize: 14, color: "#fff", fontWeight: 600 }}>重新试衣</span>
-              </button>
-            </div>
           </motion.div>
         )}
       </div>
@@ -282,26 +364,104 @@ export function TryOnPage({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
             onClick={() => setShowVideo(false)}
-            style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.95)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center" }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 1000,
+              background: "rgba(0,0,0,0.92)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
+            {/* Close button */}
             <button
-              onClick={(e) => { e.stopPropagation(); setShowVideo(false); }}
-              style={{ position: "absolute", top: 40, right: 20, background: "rgba(255,255,255,0.15)", border: "none", borderRadius: "50%", width: 40, height: 40, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}
+              onClick={() => setShowVideo(false)}
+              style={{
+                position: "absolute",
+                top: 20,
+                right: 20,
+                background: "rgba(255,255,255,0.15)",
+                border: "none",
+                borderRadius: "50%",
+                width: 36,
+                height: 36,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                zIndex: 10,
+              }}
             >
-              <X size={20} color="#fff" />
+              <X size={18} color="#fff" />
             </button>
-            <video
-              src={TRYON_VIDEO}
-              autoPlay
-              loop
-              playsInline
-              controls
-              style={{ maxWidth: "100%", maxHeight: "85%", borderRadius: 12 }}
-            />
-            <div style={{ position: "absolute", bottom: 50, left: 0, right: 0, textAlign: "center", color: "#fff", fontFamily: font, fontSize: 14 }}>
-              {item.name} · AI 上身效果
+
+            {/* Video player UI badge */}
+            <div style={{
+              position: "absolute",
+              top: 24,
+              left: 24,
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+            }}>
+              <div style={{
+                width: 8,
+                height: 8,
+                borderRadius: "50%",
+                background: "#ff3b30",
+                boxShadow: "0 0 6px #ff3b30",
+              }} />
+              <span style={{
+                fontFamily: font,
+                fontSize: 12,
+                color: "rgba(255,255,255,0.7)",
+                fontWeight: 500,
+              }}>
+                REC · 04:00
+              </span>
             </div>
+
+            {/* Center video player */}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              style={{
+                width: "90%",
+                maxWidth: 380,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <video
+                src={tryonVideo}
+                autoPlay
+                playsInline
+                controls
+                loop
+                style={{
+                  width: "100%",
+                  borderRadius: 16,
+                  boxShadow: "0 10px 50px rgba(184,135,74,0.25)",
+                  outline: "none",
+                }}
+              />
+
+              {/* Product name */}
+              <div style={{ marginTop: 16, textAlign: "center" }}>
+                <div style={{ fontFamily: font, fontSize: 16, fontWeight: 700, color: "#fff", marginBottom: 4 }}>
+                  {item.name}
+                </div>
+                <div style={{ fontFamily: font, fontSize: 12, color: "rgba(255,255,255,0.5)" }}>
+                  虚拟试穿 · 上身效果展示
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
