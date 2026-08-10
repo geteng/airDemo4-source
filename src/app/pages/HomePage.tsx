@@ -16,16 +16,19 @@ export function HomePage({
   onGoVipJoin: () => void;
   onGoStylist: () => void;
 }) {
-  const [slideIndex, setSlideIndex] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => setSlideIndex((i) => (i + 1) % 3), 3500);
-    return () => clearInterval(t);
-  }, []);
   const todaySlides = [
     { look: { id: 11, img: import.meta.env.BASE_URL + "assets/looks/11.png", scene: "通勤", title: "高级感白领风", items: "白衬衫 + 阔腿裤 + 高跟鞋", price: 899, liked: false }, title: "今天适合你的通勤穿搭", tags: ["显瘦通勤风", "165cm+", "轻熟风"] },
     { look: { id: 12, img: import.meta.env.BASE_URL + "assets/looks/21.png", scene: "约会", title: "都市柔美格调", items: "黑色西装 + 丝绒裙 + 小皮包", price: 1260, liked: false }, title: "约会也要温柔在线", tags: ["约会必备", "显白", "法式风"] },
     { look: { id: 13, img: import.meta.env.BASE_URL + "assets/looks/31.png", scene: "旅行", title: "轻盈度假系", items: "白色长裤 + 针织衫 + 草编帽", price: 680, liked: false }, title: "周末轻盈度假感", tags: ["透气舒适", "显高", "度假风"] },
   ];
+  const totalSlides = todaySlides.length;
+  const [slideIndex, setSlideIndex] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  useEffect(() => {
+    if (dragging) return;
+    const t = setInterval(() => setSlideIndex((i) => (i + 1) % totalSlides), 3500);
+    return () => clearInterval(t);
+  }, [dragging, totalSlides]);
   return (
     <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%" }}>
       {/* Top bar */}
@@ -57,18 +60,35 @@ export function HomePage({
       {/* Today's recommendation auto-carousel */}
       <div style={{ margin: "0 20px 16px", borderRadius: 20, overflow: "hidden", position: "relative", boxShadow: "0 4px 24px rgba(0,0,0,0.08)" }}>
         <motion.div
-          style={{ display: "flex" }}
+          style={{ display: "flex", cursor: "grab" }}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.18}
+          onDragStart={() => setDragging(true)}
+          onDragEnd={(_, info) => {
+            const threshold = 60;
+            if (info.offset.x < -threshold || info.velocity.x < -400) {
+              setSlideIndex((i) => (i + 1) % totalSlides);
+            } else if (info.offset.x > threshold || info.velocity.x > 400) {
+              setSlideIndex((i) => (i - 1 + totalSlides) % totalSlides);
+            }
+            setDragging(false);
+          }}
           animate={{ x: `-${slideIndex * 100}%` }}
           transition={{ type: "spring", stiffness: 90, damping: 18 }}
         >
           {todaySlides.map((s, i) => (
-            <div key={i} style={{ flex: "0 0 100%", position: "relative", height: 320 }}>
-              <img src={s.look.img} alt={s.look.title} style={{ width: "100%", height: 320, objectFit: "cover", display: "block" }} />
+            <div
+              key={i}
+              onClick={() => onGoProduct(s.look)}
+              style={{ flex: "0 0 100%", position: "relative", height: 320, cursor: "pointer" }}
+            >
+              <img src={s.look.img} alt={s.look.title} style={{ width: "100%", height: 320, objectFit: "cover", display: "block", pointerEvents: "none" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(28,26,23,0.82) 0%, rgba(28,26,23,0.1) 55%, transparent 100%)" }} />
               <div style={{ position: "absolute", top: 14, left: 14 }}>
                 <span style={{ background: "#EDC297", color: "#322302", fontFamily: font, fontSize: 11, fontWeight: 600, padding: "3px 10px", borderRadius: 10 }}>今日推荐</span>
               </div>
-              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 18px 42px" }}>
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 18px 42px", pointerEvents: "none" }}>
                 <div style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: "#fff", marginBottom: 4 }}>{s.title}</div>
                 <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
                   {s.tags.map((t) => (
@@ -76,7 +96,7 @@ export function HomePage({
                   ))}
                 </div>
                 <button
-                  onClick={() => onGoProduct(s.look)}
+                  onClick={(e) => { e.stopPropagation(); onGoProduct(s.look); }}
                   style={{ background: "#EDC297", color: "#322302", fontFamily: font, fontSize: 13, fontWeight: 600, padding: "9px 20px", borderRadius: 22, border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}
                 >
                   查看今日搭配 <ChevronRight size={14} />
