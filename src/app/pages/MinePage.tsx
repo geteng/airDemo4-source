@@ -11,7 +11,7 @@ import {
   Ticket,
   User,
 } from "lucide-react";
-import { ACCENT, BG, CARD, font, MUTED, TEXT } from "../constants";
+import { ACCENT, CARD, font, MUTED, TEXT } from "../constants";
 
 export function MinePage({
   onGoOrders,
@@ -61,7 +61,7 @@ export function MinePage({
           </button>
         </div>
         {/* Stats */}
-        <div style={{ display: "flex", justifyContent: "space-around", marginTop: 18, paddingTop: 16, borderTop: `1px solid ${BG}` }}>
+        <div style={{ display: "flex", justifyContent: "space-around", marginTop: 18, paddingTop: 16, borderTop: `1px solid ${MUTED}` }}>
           {[{ label: "收藏", value: "128" }, { label: "笔记", value: "36" }, { label: "订单", value: "12" }].map((s) => (
             <div key={s.label} style={{ textAlign: "center" }}>
               <div style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: ACCENT }}>{s.value}</div>
@@ -87,7 +87,7 @@ export function MinePage({
           const Icon = item.icon;
           return (
             <div key={item.key}>
-              {i > 0 && <div style={{ height: 1, background: BG, marginLeft: 18 }} />}
+              {i > 0 && <div style={{ height: 1, background: MUTED, marginLeft: 18 }} />}
               <button
                 onClick={item.onClick}
                 style={{ width: "100%", background: "none", border: "none", padding: "16px 18px", display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}

@@ -15,7 +15,7 @@ import {
   X,
   Zap,
 } from "lucide-react";
-import { ACCENT, ACCENT_LIGHT, BG, CARD, font, IMG, MUTED, TEXT } from "./constants";
+import { ACCENT, ACCENT_LIGHT, BG, CARD, font, IMG, MUTED, NAV_ACTIVE, NAV_BG, NAV_INACTIVE, TEXT } from "./constants";
 import type { Look, NoteData, SubPage, Tab } from "./types";
 
 import { HomePage } from "./pages/HomePage";
@@ -215,7 +215,7 @@ export default function App() {
                   onClick={(e) => e.stopPropagation()}
                   style={{
                     width: 300,
-                    background: "#fff",
+                    background: CARD,
                     borderRadius: 24,
                     padding: "28px 24px 24px",
                     textAlign: "center",
@@ -364,7 +364,7 @@ export default function App() {
                   onClick={(e) => e.stopPropagation()}
                   style={{
                     width: 280,
-                    background: "#fff",
+                    background: CARD,
                     borderRadius: 20,
                     padding: "24px 24px 20px",
                     textAlign: "center",
@@ -467,7 +467,7 @@ export default function App() {
                   onClick={(e) => e.stopPropagation()}
                   style={{
                     width: "100%",
-                    background: "#fff",
+                    background: CARD,
                     borderRadius: "24px 24px 0 0",
                     padding: "0 0 20px",
                     maxHeight: "88%",
@@ -592,7 +592,7 @@ export default function App() {
                   </div>
 
                   {/* CTA */}
-                  <div style={{ padding: "0 20px", position: "sticky", bottom: 0, background: "#fff", paddingBottom: 4 }}>
+                  <div style={{ padding: "0 20px", position: "sticky", bottom: 0, background: CARD, paddingBottom: 4 }}>
                     <button
                       onClick={() => setShowVipJoin(false)}
                       style={{
@@ -619,11 +619,12 @@ export default function App() {
           <div
             style={{
               flexShrink: 0,
-              background: CARD,
-              borderTop: `1px solid rgba(184,135,74,0.12)`,
+              background: NAV_BG,
+              borderTop: `1px solid rgba(58,42,24,0.15)`,
               display: "flex",
               paddingBottom: 8,
               zIndex: 30,
+              boxShadow: "0 -6px 24px rgba(0,0,0,0.25)",
             }}
           >
             {tabs.map(({ id, label, Icon }) => {
@@ -641,15 +642,15 @@ export default function App() {
                     animate={{ scale: active ? 1.1 : 1 }}
                     transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   >
-                    <Icon size={22} color={active ? ACCENT : MUTED} />
+                    <Icon size={22} color={active ? NAV_ACTIVE : NAV_INACTIVE} />
                   </motion.div>
-                  <span style={{ fontFamily: font, fontSize: 10, color: active ? ACCENT : MUTED, fontWeight: active ? 600 : 400 }}>
+                  <span style={{ fontFamily: font, fontSize: 10, color: active ? NAV_ACTIVE : NAV_INACTIVE, fontWeight: active ? 700 : 400 }}>
                     {label}
                   </span>
                   {active && (
                     <motion.div
                       layoutId="tab-indicator"
-                      style={{ width: 4, height: 4, borderRadius: "50%", background: ACCENT }}
+                      style={{ width: 4, height: 4, borderRadius: "50%", background: NAV_ACTIVE }}
                     />
                   )}
                 </button>

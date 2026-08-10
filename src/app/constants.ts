@@ -13,12 +13,16 @@ import type {
 } from "./types";
 
 // ─── 主题色 ──────────────────────────────────────────────────────────────────
-export const ACCENT = "#b8874a";
-export const ACCENT_LIGHT = "#f5ede0";
-export const BG = "#faf8f5";
-export const CARD = "#ffffff";
-export const TEXT = "#1c1a17";
-export const MUTED = "#9a8f82";
+export const ACCENT = "#d4a56a";
+export const ACCENT_LIGHT = "#2a2118";
+export const BG = "#131210";
+export const CARD = "#1e1b17";
+export const TEXT = "#f3ece2";
+export const MUTED = "#a89c8c";
+// 导航栏（米黄色底，其上元素用深色保证可读）
+export const NAV_BG = "#EDC297";
+export const NAV_ACTIVE = "#3a2a18";
+export const NAV_INACTIVE = "#8a6f4a";
 
 // ─── 字体 ─────────────────────────────────────────────────────────────────
 export const font = "'Noto Sans SC', 'DM Sans', sans-serif";
