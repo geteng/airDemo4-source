@@ -29,6 +29,14 @@ export function HomePage({
     const t = setInterval(() => setSlideIndex((i) => (i + 1) % totalSlides), 3500);
     return () => clearInterval(t);
   }, [dragging, totalSlides]);
+
+  // 种草笔记每 2 秒循环切换一次位置
+  const totalNotes = notesData.length;
+  const [notesOffset, setNotesOffset] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setNotesOffset((i) => (i + 1) % totalNotes), 2000);
+    return () => clearInterval(t);
+  }, [totalNotes]);
   return (
     <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%" }}>
       {/* Top bar */}
@@ -142,9 +150,13 @@ export function HomePage({
         </div>
 
         <div style={{ display: "flex", gap: 10, overflowX: "auto", paddingBottom: 4 }}>
-          {notesData.map((article, i) => (
-            <div
-              key={i}
+          {notesData.map((_, i) => {
+            const article = notesData[(i + notesOffset) % totalNotes];
+            return (
+            <motion.div
+              key={article.title}
+              layout
+              transition={{ type: "spring", stiffness: 120, damping: 20 }}
               onClick={() => onGoNote(article)}
               style={{
               flexShrink: 0,
@@ -203,8 +215,9 @@ export function HomePage({
                   </span>
                 </div>
               </div>
-            </div>
-          ))}
+            </motion.div>
+            );
+          })}
         </div>
       </div>
 
