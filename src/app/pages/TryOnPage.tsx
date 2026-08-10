@@ -392,7 +392,6 @@ export function TryOnPage({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            onClick={() => setShowVideo(false)}
             style={{
               position: "fixed",
               inset: 0,
@@ -403,10 +402,29 @@ export function TryOnPage({
               justifyContent: "center",
             }}
           >
+            <button
+              onClick={() => setShowVideo(false)}
+              style={{
+                position: "absolute",
+                top: 20,
+                right: 20,
+                background: "rgba(255,255,255,0.15)",
+                border: "none",
+                borderRadius: "50%",
+                width: 40,
+                height: 40,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                zIndex: 10,
+              }}
+            >
+              <X size={20} color="#fff" />
+            </button>
             <video
               src={tryonVideo}
               autoPlay
-              muted
               playsInline
               controls
               loop
