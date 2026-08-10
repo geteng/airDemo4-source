@@ -15,7 +15,7 @@ import type {
 // ─── 主题色 ──────────────────────────────────────────────────────────────────
 export const ACCENT = "#d4a56a";
 export const ACCENT_LIGHT = "#2a2118";
-export const BG = "#131210";
+export const BG = "#1E1A12";
 export const CARD = "#1e1b17";
 export const TEXT = "#f3ece2";
 export const MUTED = "#a89c8c";
