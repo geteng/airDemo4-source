@@ -512,48 +512,48 @@ export default function App() {
                         onClick={() => setVipPlan("month")}
                         style={{
                           flex: 1, borderRadius: 16, padding: "14px 10px", textAlign: "center",
-                          border: vipPlan === "month" ? `2px solid ${ACCENT}` : "2px solid #eee",
-                          background: vipPlan === "month" ? ACCENT_LIGHT : "#fafafa",
+                          border: vipPlan === "month" ? `2px solid ${ACCENT}` : "2px solid #e3ddd2",
+                          background: vipPlan === "month" ? ACCENT_LIGHT : "#f3efe8",
                           cursor: "pointer", transition: "all 0.2s", position: "relative",
                         }}
                       >
-                        <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginBottom: 4 }}>月卡</div>
-                        <div style={{ fontFamily: font, fontSize: 22, fontWeight: 700, color: TEXT }}>¥29</div>
-                        <div style={{ fontFamily: font, fontSize: 10, color: MUTED, marginTop: 2 }}>¥29/月</div>
+                        <div style={{ fontFamily: font, fontSize: 12, color: vipPlan === "month" ? MUTED : "#8a7a64", marginBottom: 4 }}>月卡</div>
+                        <div style={{ fontFamily: font, fontSize: 22, fontWeight: 700, color: vipPlan === "month" ? TEXT : "#2c2419" }}>¥29</div>
+                        <div style={{ fontFamily: font, fontSize: 10, color: vipPlan === "month" ? MUTED : "#8a7a64", marginTop: 2 }}>¥29/月</div>
                       </div>
                       {/* Season */}
                       <div
                         onClick={() => setVipPlan("season")}
                         style={{
                           flex: 1, borderRadius: 16, padding: "14px 10px", textAlign: "center",
-                          border: vipPlan === "season" ? `2px solid ${ACCENT}` : "2px solid #eee",
-                          background: vipPlan === "season" ? ACCENT_LIGHT : "#fafafa",
+                          border: vipPlan === "season" ? `2px solid ${ACCENT}` : "2px solid #e3ddd2",
+                          background: vipPlan === "season" ? ACCENT_LIGHT : "#f3efe8",
                           cursor: "pointer", transition: "all 0.2s", position: "relative",
                         }}
                       >
                         {vipPlan === "season" && (
                           <span style={{ position: "absolute", top: -8, left: "50%", transform: "translateX(-50%)", background: ACCENT, color: "#fff", fontSize: 9, fontWeight: 600, padding: "2px 8px", borderRadius: 8, fontFamily: font, whiteSpace: "nowrap" }}>超值</span>
                         )}
-                        <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginBottom: 4 }}>季卡</div>
-                        <div style={{ fontFamily: font, fontSize: 22, fontWeight: 700, color: TEXT }}>¥79</div>
-                        <div style={{ fontFamily: font, fontSize: 10, color: MUTED, marginTop: 2 }}>¥26.3/月</div>
+                        <div style={{ fontFamily: font, fontSize: 12, color: vipPlan === "season" ? MUTED : "#8a7a64", marginBottom: 4 }}>季卡</div>
+                        <div style={{ fontFamily: font, fontSize: 22, fontWeight: 700, color: vipPlan === "season" ? TEXT : "#2c2419" }}>¥79</div>
+                        <div style={{ fontFamily: font, fontSize: 10, color: vipPlan === "season" ? MUTED : "#8a7a64", marginTop: 2 }}>¥26.3/月</div>
                       </div>
                       {/* Year */}
                       <div
                         onClick={() => setVipPlan("year")}
                         style={{
                           flex: 1, borderRadius: 16, padding: "14px 10px", textAlign: "center",
-                          border: vipPlan === "year" ? `2px solid ${ACCENT}` : "2px solid #eee",
-                          background: vipPlan === "year" ? ACCENT_LIGHT : "#fafafa",
+                          border: vipPlan === "year" ? `2px solid ${ACCENT}` : "2px solid #e3ddd2",
+                          background: vipPlan === "year" ? ACCENT_LIGHT : "#f3efe8",
                           cursor: "pointer", transition: "all 0.2s", position: "relative",
                         }}
                       >
                         {vipPlan === "year" && (
                           <span style={{ position: "absolute", top: -8, left: "50%", transform: "translateX(-50%)", background: `linear-gradient(90deg, ${ACCENT}, #d4a56a)`, color: "#fff", fontSize: 9, fontWeight: 600, padding: "2px 8px", borderRadius: 8, fontFamily: font, whiteSpace: "nowrap" }}>省 60 元</span>
                         )}
-                        <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginBottom: 4 }}>年卡</div>
-                        <div style={{ fontFamily: font, fontSize: 22, fontWeight: 700, color: TEXT }}>¥288</div>
-                        <div style={{ fontFamily: font, fontSize: 10, color: MUTED, marginTop: 2 }}>¥24/月</div>
+                        <div style={{ fontFamily: font, fontSize: 12, color: vipPlan === "year" ? MUTED : "#8a7a64", marginBottom: 4 }}>年卡</div>
+                        <div style={{ fontFamily: font, fontSize: 22, fontWeight: 700, color: vipPlan === "year" ? TEXT : "#2c2419" }}>¥288</div>
+                        <div style={{ fontFamily: font, fontSize: 10, color: vipPlan === "year" ? MUTED : "#8a7a64", marginTop: 2 }}>¥24/月</div>
                       </div>
                     </div>
                   </div>
