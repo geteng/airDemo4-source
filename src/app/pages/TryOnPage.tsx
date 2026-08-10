@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Sparkles, Check, Share2 } from "lucide-react";
 import { ACCENT, ACCENT_LIGHT, CARD, TEXT, MUTED, BG, font } from "../constants";
@@ -18,6 +18,19 @@ export function TryOnPage({
   const [stage, setStage] = useState<"analyzing" | "generating" | "result">("analyzing");
   const [progress, setProgress] = useState(0);
   const [showVideo, setShowVideo] = useState(false);
+
+  const smallVideoRef = useRef<HTMLVideoElement | null>(null);
+
+  // 移动端（尤其 iOS Safari）在条件渲染挂载 video 时不会自动触发 autoplay，
+  // 必须显式调用 play()，并确保 muted 以满足自动播放策略。
+  useEffect(() => {
+    if (stage !== "result") return;
+    const v = smallVideoRef.current;
+    if (!v) return;
+    v.muted = true;
+    const p = v.play();
+    if (p && typeof p.catch === "function") p.catch(() => {});
+  }, [stage]);
 
   // Simulate AI processing
   useEffect(() => {
@@ -95,11 +108,13 @@ export function TryOnPage({
               {stage === "result" ? (
                 <>
                   <video
+                    ref={smallVideoRef}
                     src={tryonVideo}
                     autoPlay
                     muted
                     loop
                     playsInline
+                    preload="auto"
                     onClick={() => setShowVideo(true)}
                     style={{ width: "100%", height: "100%", objectFit: "cover", cursor: "pointer" }}
                   />
@@ -109,6 +124,7 @@ export function TryOnPage({
                       position: "absolute",
                       inset: 0,
                       cursor: "pointer",
+                      pointerEvents: "none",
                     }}
                   />
                   <div style={{
@@ -453,6 +469,7 @@ export function TryOnPage({
               <video
                 src={tryonVideo}
                 autoPlay
+                muted
                 playsInline
                 controls
                 loop
