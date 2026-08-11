@@ -124,7 +124,7 @@ export default function App() {
                 style={{ position: "absolute", inset: 0 }}
               >
                 {activeTab === "home" && <HomePage onGoProduct={handleGoProduct} onGoNote={handleGoNote} onGoVipJoin={() => setShowVipJoin(true)} onGoStylist={handleGoStylist} />}
-                {activeTab === "recommend" && <RecommendPage onGoProduct={handleGoProduct} onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title, video: look.video })} />}
+                {activeTab === "recommend" && <RecommendPage onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title, video: look.video })} />}
                 {activeTab === "mine" && <MinePage
                   onGoOrders={handleGoOrders}
                   onGoFavorites={handleGoFavorites}

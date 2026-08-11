@@ -190,6 +190,7 @@ export const productDetails: Record<number, ProductDetail> = {
   // 穿搭定制页：通勤 / 约会 / 旅行
   1: {
     flatImgs: [import.meta.env.BASE_URL + "assets/looks/42.png"],
+    reasons: ["修饰肩型，西装垫肩显宽肩高挑", "高腰阔腿裤拉长轴线，强调腰线比例", "白衬衫挺括不透，通勤百搭不出错"],
     lengthLabel: "裤长",
     sizeChart: [
       { size: "S", shoulder: "38", bust: "92", waist: "72", length: "98" },
@@ -205,6 +206,7 @@ export const productDetails: Record<number, ProductDetail> = {
   },
   2: {
     flatImgs: [import.meta.env.BASE_URL + "assets/looks/52.png"],
+    reasons: ["丝绒光泽感强，灯光下更显白显瘦", "收腰 A 字裙摆遮胯，约会穿很上镜", "西装短外套中和柔美，气场与温柔兼得"],
     lengthLabel: "裙长",
     sizeChart: [
       { size: "S", shoulder: "37", bust: "88", waist: "68", length: "92" },
@@ -220,6 +222,7 @@ export const productDetails: Record<number, ProductDetail> = {
   },
   3: {
     flatImgs: [import.meta.env.BASE_URL + "assets/looks/62.png"],
+    reasons: ["针织轻薄透气，海边度假整天不闷热", "草编帽提升拍照出片率，遮阳又减龄", "白色长裤清爽凉快，洗涤不易变形"],
     lengthLabel: "裤长",
     sizeChart: [
       { size: "S", shoulder: "36", bust: "86", waist: "66", length: "96" },
@@ -236,6 +239,7 @@ export const productDetails: Record<number, ProductDetail> = {
   // 首页轮播：第 1/2/3 屏（与穿搭定制页使用不同封面与平铺图）
   11: {
     flatImgs: [import.meta.env.BASE_URL + "assets/looks/12.png"],
+    reasons: ["廓形西装修饰肩背，通勤利落有精神", "直筒西裤显腿直，小个子也能穿出气场", "垂感面料抗皱好打理，久坐不出褶"],
     lengthLabel: "裤长",
     sizeChart: [
       { size: "S", shoulder: "38", bust: "92", waist: "72", length: "98" },
@@ -251,6 +255,7 @@ export const productDetails: Record<number, ProductDetail> = {
   },
   12: {
     flatImgs: [import.meta.env.BASE_URL + "assets/looks/22.png"],
+    reasons: ["吊带裙叠穿西装，层次丰富不单调", "高腰线设计拉高视觉重心，显比例", "金属配饰点缀，约会氛围感拉满"],
     lengthLabel: "裙长",
     sizeChart: [
       { size: "S", shoulder: "37", bust: "88", waist: "68", length: "92" },
@@ -266,6 +271,7 @@ export const productDetails: Record<number, ProductDetail> = {
   },
   13: {
     flatImgs: [import.meta.env.BASE_URL + "assets/looks/32.png"],
+    reasons: ["亚麻混纺透气，夏天穿不贴身不闷汗", "阔腿短裤清爽显腿长，度假松弛感拉满", "草编托特容量大，出海带娃一包搞定"],
     lengthLabel: "裤长",
     sizeChart: [
       { size: "S", shoulder: "36", bust: "86", waist: "66", length: "96" },

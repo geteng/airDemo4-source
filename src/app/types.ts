@@ -95,6 +95,7 @@ export interface VipBenefit {
 
 export interface ProductDetail {
   flatImgs: string[];
+  reasons: string[];
   lengthLabel: string;
   sizeChart: {
     size: string;
