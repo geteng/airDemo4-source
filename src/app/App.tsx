@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Award,
@@ -58,6 +58,27 @@ export default function App() {
   const [orderInitialTab, setOrderInitialTab] = useState<string>("all");
   const dragConstraintsRef = useRef<HTMLDivElement>(null);
 
+  // 真机（微信/移动浏览器）键盘收起后，100vh 可能停留在被键盘压缩的高度，
+  // 导致底部 tab 溢出屏幕。改用可视窗口高度动态填充根容器。
+  const [viewportH, setViewportH] = useState<number>(() =>
+    typeof window !== "undefined" ? window.innerHeight : 0
+  );
+  useEffect(() => {
+    const update = () => setViewportH(window.innerHeight);
+    window.addEventListener("resize", update);
+    window.addEventListener("orientationchange", update);
+    window.visualViewport?.addEventListener("resize", update);
+    // 键盘收起后 innerHeight 会恢复，focus 时也重新测量一次
+    window.addEventListener("focus", update);
+    update();
+    return () => {
+      window.removeEventListener("resize", update);
+      window.removeEventListener("orientationchange", update);
+      window.visualViewport?.removeEventListener("resize", update);
+      window.removeEventListener("focus", update);
+    };
+  }, []);
+
   const handleGoProduct = (look?: Look) => {
     if (look) setSelectedLook(look);
     setSubPage("product");
@@ -89,7 +110,7 @@ export default function App() {
     <div
       style={{
         width: "100%",
-        height: "100vh",
+        height: viewportH ? `${viewportH}px` : "100vh",
         background: "#e8e3dc",
         display: "flex",
         alignItems: "center",
