@@ -597,7 +597,7 @@ export default function App() {
             )}
           </AnimatePresence>
         </div>
-        {subPage === null && (
+        {(subPage === null || subPage === "product") && (
           <div
             style={{
               flexShrink: 0,
