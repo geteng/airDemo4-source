@@ -47,7 +47,7 @@ export function StylistProfilePage({ onBack }: { onBack: () => void }) {
         style={{ padding: "0 16px 32px" }}
       >
         <img
-          src={import.meta.env.BASE_URL + "assets/stylist_profile.png"}
+          src={import.meta.env.BASE_URL + "assets/stylist_profile.jpg"}
           alt="形象顾问档案"
           style={{ width: "100%", display: "block", borderRadius: 16 }}
         />
