@@ -635,7 +635,7 @@ export default function App() {
               return (
                 <button
                   key={id}
-                  onClick={() => setActiveTab(id)}
+                  onClick={() => { setActiveTab(id); setSubPage(null); }}
                   style={{
                     flex: 1, display: "flex", flexDirection: "column", alignItems: "center",
                     gap: 3, padding: "10px 0 4px", background: "none", border: "none", cursor: "pointer",
