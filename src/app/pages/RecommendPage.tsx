@@ -40,8 +40,8 @@ export function RecommendPage({
   return (
     <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%" }}>
       <div style={{ padding: "16px 20px 14px" }}>
-        <span style={{ fontFamily: font, fontSize: 20, fontWeight: 700, color: TEXT }}>穿搭定制</span>
-        <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 2 }}>为你精选的穿搭方案</div>
+        <span style={{ fontFamily: font, fontSize: 20, fontWeight: 700, color: TEXT }}>老师为您定制穿搭</span>
+        <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 2 }}>为您精选的穿搭方案</div>
       </div>
 
       {/* Scene tabs */}

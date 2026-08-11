@@ -2,15 +2,7 @@ import {
   Package, Heart, Tag, Footprints, Headphones, Star,
   Award, ChevronRight,
 } from "lucide-react";
-import { IMG } from "../constants";
-
-// ───「我的」页专用浅色主题（与参考实现一致）───
-const ACCENT = "#b8874a"; // 主题金棕色
-const ACCENT_LIGHT = "#f5ede0"; // 浅金底（图标容器）
-const CARD = "#ffffff"; // 卡片白
-const TEXT = "#1c1a17"; // 主文字
-const MUTED = "#9a8f82"; // 次要文字
-const font = "'Noto Sans SC', 'DM Sans', sans-serif";
+import { ACCENT, ACCENT_LIGHT, BG, CARD, font, IMG, MUTED, TEXT } from "../constants";
 
 export function MinePage({
   onGoOrders,
@@ -43,7 +35,7 @@ export function MinePage({
   ];
 
   return (
-    <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%", background: "#f7f4f0" }}>
+    <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%", background: BG }}>
       {/* Profile header */}
       <div style={{ background: `linear-gradient(160deg, #3a2a18 0%, #6b4a28 100%)`, padding: "28px 20px 32px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
@@ -78,7 +70,7 @@ export function MinePage({
       {/* VIP card - clickable */}
       <div
         onClick={onGoVip}
-        style={{ margin: "16px 20px", background: CARD, borderRadius: 18, padding: "16px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer" }}
+        style={{ margin: "16px 20px", background: CARD, borderRadius: 18, padding: "16px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.25)", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer" }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <Award size={22} color={ACCENT} />
@@ -99,7 +91,7 @@ export function MinePage({
             style={{
               display: "flex", alignItems: "center", gap: 14,
               padding: "15px 18px",
-              borderBottom: i < menuItems.length - 1 ? `1px solid rgba(184,135,74,0.1)` : "none",
+              borderBottom: i < menuItems.length - 1 ? `1px solid rgba(255,255,255,0.08)` : "none",
               cursor: "pointer",
             }}
           >
