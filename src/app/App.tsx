@@ -164,7 +164,7 @@ export default function App() {
           </AnimatePresence>
 
           {/* Floating stylist button - only on home and recommend tabs, draggable */}
-          {subPage === null && (activeTab === "home" || activeTab === "recommend") && (
+          {((subPage === null && (activeTab === "home" || activeTab === "recommend")) || subPage === "product") && (
             <motion.button
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -193,7 +193,7 @@ export default function App() {
                 alignItems: "center",
                 gap: 4,
                 boxShadow: "0 4px 16px rgba(184,135,74,0.35)",
-                zIndex: 15,
+                zIndex: 30,
                 width: 48,
                 touchAction: "none",
                 WebkitTouchCallout: "none",
@@ -635,7 +635,7 @@ export default function App() {
               return (
                 <button
                   key={id}
-                  onClick={() => setActiveTab(id)}
+                  onClick={() => { setActiveTab(id); setSubPage(null); }}
                   style={{
                     flex: 1, display: "flex", flexDirection: "column", alignItems: "center",
                     gap: 3, padding: "10px 0 4px", background: "none", border: "none", cursor: "pointer",
