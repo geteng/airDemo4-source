@@ -145,12 +145,11 @@ export const recordsData: RecordData[] = [
 ];
 
 export const vipBenefits: VipBenefit[] = [
+  { icon: "💬", title: "专属搭配问答", desc: "1对1穿搭顾问，随时解答搭配疑问" },
   { icon: "👗", title: "每周专属穿搭建议", desc: "专业穿搭师每周为你定制 3 套搭配方案" },
   { icon: "🛍️", title: "新品优先体验", desc: "每季新品提前 7 天优先选购" },
-  { icon: "💬", title: "专属搭配问答", desc: "1对1穿搭顾问，随时解答搭配疑问" },
-  { icon: "🎁", title: "生日双倍积分", desc: "生日月消费积分双倍累计" },
+  { icon: "🎁", title: "消费积分", desc: "订单转积分双倍累计" },
   { icon: "🚚", title: "全年免邮", desc: "所有订单全年免运费" },
-  { icon: "↩️", title: "30天无理由退换", desc: "VIP 专享 30 天无理由退换货服务" },
 ];
 
 export const looks: Look[] = [
