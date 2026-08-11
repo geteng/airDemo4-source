@@ -1,6 +1,6 @@
 import {
   Package, Heart, Tag, Footprints, Headphones,
-  Award, ChevronRight, User, Shirt,
+  Award, ChevronRight, User, ShoppingBag,
 } from "lucide-react";
 import { ACCENT, ACCENT_LIGHT, BG, CARD, font, IMG, MUTED, TEXT } from "../constants";
 
@@ -73,14 +73,14 @@ export function MinePage({
       >
         <div
           onClick={onGoStyleProfile}
-          style={{ padding: "16px 18px", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer" }}
+          style={{ padding: "15px 18px", display: "flex", alignItems: "center", gap: 14, cursor: "pointer" }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <User size={22} color={ACCENT} />
-            <div>
-              <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: TEXT }}>个人穿搭画像</div>
-              <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 1 }}>身材 · 风格 · 衣橱缺口</div>
-            </div>
+          <div style={{ width: 36, height: 36, borderRadius: 10, background: ACCENT_LIGHT, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <User size={16} color={ACCENT} />
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: font, fontSize: 14, fontWeight: 500, color: TEXT }}>个人穿搭画像</div>
+            <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 1 }}>身材 · 风格 · 衣橱缺口</div>
           </div>
           <ChevronRight size={16} color={MUTED} />
         </div>
@@ -89,7 +89,7 @@ export function MinePage({
           style={{ padding: "15px 18px", display: "flex", alignItems: "center", gap: 14, borderTop: `1px solid rgba(255,255,255,0.08)`, cursor: "pointer" }}
         >
           <div style={{ width: 36, height: 36, borderRadius: 10, background: ACCENT_LIGHT, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <Shirt size={16} color={ACCENT} />
+            <ShoppingBag size={16} color={ACCENT} />
           </div>
           <div style={{ flex: 1 }}>
             <div style={{ fontFamily: font, fontSize: 14, fontWeight: 500, color: TEXT }}>个人衣橱</div>
@@ -102,14 +102,14 @@ export function MinePage({
       {/* VIP card - clickable */}
       <div
         onClick={onGoVip}
-        style={{ margin: "16px 20px", background: CARD, borderRadius: 18, padding: "16px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.25)", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer" }}
+        style={{ margin: "16px 20px", background: CARD, borderRadius: 18, padding: "15px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.25)", display: "flex", alignItems: "center", gap: 14, cursor: "pointer" }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <Award size={22} color={ACCENT} />
-          <div>
-            <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: TEXT }}>VIP 专属权益</div>
-            <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 1 }}>每周穿搭建议 · 新品优先看</div>
-          </div>
+        <div style={{ width: 36, height: 36, borderRadius: 10, background: ACCENT_LIGHT, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <Award size={16} color={ACCENT} />
+        </div>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontFamily: font, fontSize: 14, fontWeight: 500, color: TEXT }}>VIP 专属权益</div>
+          <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 1 }}>每周穿搭建议 · 新品优先看</div>
         </div>
         <ChevronRight size={16} color={MUTED} />
       </div>
