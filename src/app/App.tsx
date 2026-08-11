@@ -32,6 +32,7 @@ import { CouponsPage } from "./pages/CouponsPage";
 import { RecordsPage } from "./pages/RecordsPage";
 import { VipPage } from "./pages/VipPage";
 import { StylistProfilePage } from "./pages/StylistProfilePage";
+import { StyleProfilePage } from "./pages/StyleProfilePage";
 
 // ─── Bottom tab bar ──────────────────────────────────────────────────────────
 const tabs: {
@@ -79,6 +80,7 @@ export default function App() {
   const handleGoCoupons = () => setSubPage("coupons");
   const handleGoRecords = () => setSubPage("records");
   const handleGoVip = () => setSubPage("vip");
+  const handleGoStyleProfile = () => setSubPage("styleProfile");
   const handleCallService = () => setShowCallDialog(true);
   const handleGoStylist = () => setSubPage("stylist");
 
@@ -132,6 +134,7 @@ export default function App() {
                   onGoRecords={handleGoRecords}
                   onGoVip={handleGoVip}
                   onCallService={handleCallService}
+                  onGoStyleProfile={handleGoStyleProfile}
                 />}
               </motion.div>
             )}
@@ -307,6 +310,7 @@ export default function App() {
                 {subPage === "coupons" && <CouponsPage onBack={handleBack} />}
                 {subPage === "records" && <RecordsPage onBack={handleBack} />}
                 {subPage === "vip" && <VipPage onBack={handleBack} />}
+                {subPage === "styleProfile" && <StyleProfilePage onBack={handleBack} />}
                 {subPage === "stylist" && <StylistProfilePage onBack={handleBack} />}
               </motion.div>
             )}

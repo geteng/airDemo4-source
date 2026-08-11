@@ -1,6 +1,6 @@
 import {
   Package, Heart, Tag, Footprints, Headphones,
-  Award, ChevronRight,
+  Award, ChevronRight, User,
 } from "lucide-react";
 import { ACCENT, ACCENT_LIGHT, BG, CARD, font, IMG, MUTED, TEXT } from "../constants";
 
@@ -11,6 +11,7 @@ export function MinePage({
   onGoRecords,
   onGoVip,
   onCallService,
+  onGoStyleProfile,
 }: {
   onGoOrders: (tab?: string) => void;
   onGoFavorites: () => void;
@@ -18,6 +19,7 @@ export function MinePage({
   onGoRecords: () => void;
   onGoVip: () => void;
   onCallService: () => void;
+  onGoStyleProfile: () => void;
 }) {
   const orderStats = [
     { v: "3", l: "待付款", tab: "pending_pay" },
@@ -61,6 +63,21 @@ export function MinePage({
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Style profile card - clickable */}
+      <div
+        onClick={onGoStyleProfile}
+        style={{ margin: "16px 20px 0", background: CARD, borderRadius: 18, padding: "16px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.25)", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer" }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <User size={22} color={ACCENT} />
+          <div>
+            <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: TEXT }}>个人穿搭画像</div>
+            <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 1 }}>身材 · 风格 · 衣橱缺口</div>
+          </div>
+        </div>
+        <ChevronRight size={16} color={MUTED} />
       </div>
 
       {/* VIP card - clickable */}

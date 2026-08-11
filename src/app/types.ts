@@ -14,6 +14,7 @@ export type SubPage =
   | "records"
   | "vip"
   | "stylist"
+  | "styleProfile"
   | null;
 
 export interface Look {
