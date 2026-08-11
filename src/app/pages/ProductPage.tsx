@@ -41,7 +41,7 @@ export function ProductPage({
   const detail = productDetails[look?.id ?? 1] ?? productDetails[1];
 
   return (
-    <div style={{ paddingBottom: 90, overflowY: "auto", height: "100%" }}>
+    <div style={{ paddingBottom: 20, overflowY: "auto", height: "100%" }}>
       {/* Hero image */}
       <div style={{ position: "relative" }}>
         <img src={img} alt={title} style={{ width: "100%", height: 400, objectFit: "cover", display: "block" }} />
@@ -196,22 +196,22 @@ export function ProductPage({
             </div>
           ))}
         </div>
-      </div>
 
-      {/* Fixed bottom CTA */}
-      <div style={{ position: "fixed", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "100%", maxWidth: 430, padding: "12px 20px 20px", background: BG, borderTop: `1px solid rgba(184,135,74,0.12)` }}>
-        <button
-          onClick={() => setAdded(true)}
-          style={{
-            width: "100%", padding: "14px", borderRadius: 26, border: "none",
-            background: added ? "#2e7d32" : ACCENT,
-            color: "#fff", fontFamily: font, fontSize: 15, fontWeight: 700,
-            cursor: "pointer", transition: "background 0.3s",
-            display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-          }}
-        >
-          {added ? <><Check size={16} /> 已加入购物车</> : <><ShoppingBag size={16} /> 立即购买</>}
-        </button>
+        {/* Bottom CTA */}
+        <div style={{ marginTop: 10, padding: "12px 0 10px" }}>
+          <button
+            onClick={() => setAdded(true)}
+            style={{
+              width: "100%", padding: "14px", borderRadius: 26, border: "none",
+              background: added ? "#2e7d32" : ACCENT,
+              color: "#fff", fontFamily: font, fontSize: 15, fontWeight: 700,
+              cursor: "pointer", transition: "background 0.3s",
+              display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+            }}
+          >
+            {added ? <><Check size={16} /> 已加入购物车</> : <><ShoppingBag size={16} /> 立即购买</>}
+          </button>
+        </div>
       </div>
     </div>
   );
