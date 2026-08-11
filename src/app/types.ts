@@ -35,6 +35,7 @@ export interface WardrobeItem {
   name: string;
   date: string;
   times: number;
+  purpose?: string;
 }
 
 export interface NoteData {

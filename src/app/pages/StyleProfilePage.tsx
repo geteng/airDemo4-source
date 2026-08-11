@@ -156,7 +156,7 @@ export function StyleProfilePage({ onBack }: { onBack: () => void }) {
             >
               <div style={{ width: 72, flexShrink: 0, fontSize: 14, fontWeight: 600, color: MUTED }}>{item.label}</div>
               <div style={{ flex: 1, fontSize: 14, color: TEXT, wordBreak: "break-all" }}>
-                {item.value || <span style={{ color: MUTED }}>点击完善</span>}
+                {item.value || <span style={{ color: MUTED }}>点击右侧对号进行完善</span>}
               </div>
               <button
                 onClick={() => openEdit(i)}
