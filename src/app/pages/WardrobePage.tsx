@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Camera } from "lucide-react";
+import { Camera, ChevronLeft } from "lucide-react";
 import {
   ACCENT,
   ACCENT_LIGHT,
@@ -49,8 +49,10 @@ const lookItems: WardrobeItem[] = [
 
 export function WardrobePage({
   onGoTryOn,
+  onBack,
 }: {
   onGoTryOn: (item: WardrobeItem) => void;
+  onBack: () => void;
 }) {
   const [activeCategory, setActiveCategory] = useState("全部");
   const categories = ["全部", "通勤", "内搭", "休闲"];
@@ -63,7 +65,13 @@ export function WardrobePage({
 
   return (
     <div style={{ paddingBottom: 80, overflowY: "auto", height: "100%" }}>
-      <div style={{ padding: "16px 20px 14px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div style={{ padding: "16px 20px 14px", display: "flex", alignItems: "center", gap: 8 }}>
+        <button
+          onClick={onBack}
+          style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", padding: 2 }}
+        >
+          <ChevronLeft size={22} color={TEXT} />
+        </button>
         <span style={{ fontFamily: font, fontSize: 20, fontWeight: 700, color: TEXT }}>我的衣橱</span>
       </div>
 
