@@ -33,7 +33,6 @@ export function MinePage({
   const menuItems = [
     { icon: Package, label: "我的订单", desc: "查看所有订单", action: () => onGoOrders("all") },
     { icon: Heart, label: "我的收藏", desc: "收藏的单品与搭配", action: onGoFavorites },
-    { icon: Shirt, label: "个人衣橱", desc: "我的单品与搭配", action: onGoWardrobe },
     { icon: Tag, label: "我的优惠券", desc: "3张可用", action: onGoCoupons },
     // { icon: Footprints, label: "足迹", desc: "已记录 24 套", action: onGoRecords },
     { icon: Headphones, label: "联系客服", desc: "7×12小时在线", action: onCallService },
@@ -68,19 +67,36 @@ export function MinePage({
         </div>
       </div>
 
-      {/* Style profile card - clickable */}
+      {/* Style profile card - clickable, contains 个人衣橱 */}
       <div
-        onClick={onGoStyleProfile}
-        style={{ margin: "16px 20px 0", background: CARD, borderRadius: 18, padding: "16px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.25)", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer" }}
+        style={{ margin: "16px 20px 0", background: CARD, borderRadius: 18, boxShadow: "0 2px 12px rgba(0,0,0,0.25)", overflow: "hidden" }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <User size={22} color={ACCENT} />
-          <div>
-            <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: TEXT }}>个人穿搭画像</div>
-            <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 1 }}>身材 · 风格 · 衣橱缺口</div>
+        <div
+          onClick={onGoStyleProfile}
+          style={{ padding: "16px 18px", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer" }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <User size={22} color={ACCENT} />
+            <div>
+              <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: TEXT }}>个人穿搭画像</div>
+              <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 1 }}>身材 · 风格 · 衣橱缺口</div>
+            </div>
           </div>
+          <ChevronRight size={16} color={MUTED} />
         </div>
-        <ChevronRight size={16} color={MUTED} />
+        <div
+          onClick={onGoWardrobe}
+          style={{ padding: "15px 18px", display: "flex", alignItems: "center", gap: 14, borderTop: `1px solid rgba(255,255,255,0.08)`, cursor: "pointer" }}
+        >
+          <div style={{ width: 36, height: 36, borderRadius: 10, background: ACCENT_LIGHT, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Shirt size={16} color={ACCENT} />
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: font, fontSize: 14, fontWeight: 500, color: TEXT }}>个人衣橱</div>
+            <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 1 }}>我的单品与搭配</div>
+          </div>
+          <ChevronRight size={16} color={MUTED} />
+        </div>
       </div>
 
       {/* VIP card - clickable */}
