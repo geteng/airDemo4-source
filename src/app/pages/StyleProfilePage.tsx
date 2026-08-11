@@ -42,7 +42,7 @@ function Wheel({
   const handleScroll = () => {
     const el = ref.current;
     if (!el) return;
-    const idx = Math.round((el.scrollTop - pad) / itemH);
+    const idx = Math.round(el.scrollTop / itemH);
     const v = Math.max(RANGE.min, Math.min(RANGE.max, RANGE.min + idx));
     if (v !== value) onChange(v);
   };
