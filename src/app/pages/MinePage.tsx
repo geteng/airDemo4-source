@@ -1,6 +1,6 @@
 import {
   Package, Heart, Tag, Footprints, Headphones,
-  Award, ChevronRight, User,
+  Award, ChevronRight, User, Shirt,
 } from "lucide-react";
 import { ACCENT, ACCENT_LIGHT, BG, CARD, font, IMG, MUTED, TEXT } from "../constants";
 
@@ -12,6 +12,7 @@ export function MinePage({
   onGoVip,
   onCallService,
   onGoStyleProfile,
+  onGoWardrobe,
 }: {
   onGoOrders: (tab?: string) => void;
   onGoFavorites: () => void;
@@ -20,6 +21,7 @@ export function MinePage({
   onGoVip: () => void;
   onCallService: () => void;
   onGoStyleProfile: () => void;
+  onGoWardrobe: () => void;
 }) {
   const orderStats = [
     { v: "3", l: "待付款", tab: "pending_pay" },
@@ -31,6 +33,7 @@ export function MinePage({
   const menuItems = [
     { icon: Package, label: "我的订单", desc: "查看所有订单", action: () => onGoOrders("all") },
     { icon: Heart, label: "我的收藏", desc: "收藏的单品与搭配", action: onGoFavorites },
+    { icon: Shirt, label: "个人衣橱", desc: "我的单品与搭配", action: onGoWardrobe },
     { icon: Tag, label: "我的优惠券", desc: "3张可用", action: onGoCoupons },
     { icon: Footprints, label: "足迹", desc: "已记录 24 套", action: onGoRecords },
     { icon: Headphones, label: "联系客服", desc: "7×12小时在线", action: onCallService },

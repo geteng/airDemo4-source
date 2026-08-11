@@ -81,6 +81,7 @@ export default function App() {
   const handleGoRecords = () => setSubPage("records");
   const handleGoVip = () => setSubPage("vip");
   const handleGoStyleProfile = () => setSubPage("styleProfile");
+  const handleGoWardrobe = () => setSubPage("wardrobe");
   const handleCallService = () => setShowCallDialog(true);
   const handleGoStylist = () => setSubPage("stylist");
 
@@ -135,6 +136,7 @@ export default function App() {
                   onGoVip={handleGoVip}
                   onCallService={handleCallService}
                   onGoStyleProfile={handleGoStyleProfile}
+                  onGoWardrobe={handleGoWardrobe}
                 />}
               </motion.div>
             )}
