@@ -5,17 +5,17 @@ import {
   ACCENT_LIGHT,
   CARD,
   font,
-  IMG,
   MUTED,
   TEXT,
 } from "../constants";
 import type { WardrobeItem } from "../types";
 
-// 常用搭配 mock 数据
+// 我的衣橱单品 mock 数据
+const BASE = import.meta.env.BASE_URL; // 适配 vite base: /airDemo_cjy/
 const lookItems: WardrobeItem[] = [
   {
     id: 1,
-    img: IMG.wardrobe1,
+    img: `${BASE}assets/wardrobe/white-shirt.png`,
     name: "白衬衫",
     date: "",
     times: 0,
@@ -23,23 +23,23 @@ const lookItems: WardrobeItem[] = [
   },
   {
     id: 2,
-    img: IMG.wardrobe4,
+    img: `${BASE}assets/wardrobe/black-pants.png`,
     name: "黑色西裤",
     date: "",
     times: 0,
-    purpose: "通勒/下装",
+    purpose: "通勤/下装",
   },
   {
     id: 3,
-    img: IMG.wardrobe3,
+    img: `${BASE}assets/wardrobe/jeans.png`,
     name: "蓝色牛仔裤",
     date: "",
     times: 0,
     purpose: "休闲/下装",
   },
-   {
+  {
     id: 4,
-    img: IMG.wardrobe2,
+    img: `${BASE}assets/wardrobe/black-suit.png`,
     name: "黑色西装休闲外套",
     date: "",
     times: 0,
@@ -48,10 +48,8 @@ const lookItems: WardrobeItem[] = [
 ];
 
 export function WardrobePage({
-  onGoTryOn,
   onBack,
 }: {
-  onGoTryOn: (item: WardrobeItem) => void;
   onBack: () => void;
 }) {
   const [activeCategory, setActiveCategory] = useState("全部");

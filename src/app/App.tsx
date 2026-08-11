@@ -306,7 +306,7 @@ export default function App() {
                 {subPage === "product" && <ProductPage look={selectedLook} onBack={handleBack} onGoTryOn={() => handleGoTryOn({ img: selectedLook?.img ?? IMG.product, name: selectedLook?.title ?? "高级感白领风", video: selectedLook?.video })} />}
                 {subPage === "tryon" && selectedTryOnItem && <TryOnPage item={selectedTryOnItem} onBack={handleBack} />}
                 {subPage === "note" && selectedNote && <NoteDetailPage note={selectedNote} onBack={handleBack} />}
-                {subPage === "wardrobe" && <WardrobePage onGoTryOn={handleGoTryOn} onBack={handleBack} />}
+                {subPage === "wardrobe" && <WardrobePage onBack={handleBack} />}
                 {subPage === "orders" && <OrdersPage onBack={handleBack} initialTab={orderInitialTab} />}
                 {subPage === "favorites" && <FavoritesPage onBack={handleBack} />}
                 {subPage === "coupons" && <CouponsPage onBack={handleBack} />}
