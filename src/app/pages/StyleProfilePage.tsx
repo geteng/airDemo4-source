@@ -9,7 +9,7 @@ interface ProfileItem {
 
 const initialProfile: ProfileItem[] = [
   { label: "身材", value: "158cm/60kg 微胖 M码" },
-  { label: "三维", value: "" },
+  { label: "三围", value: "" },
   { label: "风格", value: "偏通勤简约 偶尔休闲" },
   { label: "颜色偏好", value: "黑白蓝为主 没买过亮色" },
   { label: "消费力", value: "400-800元" },
@@ -17,9 +17,9 @@ const initialProfile: ProfileItem[] = [
   { label: "敏感点", value: "微胖需显瘦 不选紧身" },
 ];
 
-const BODY3_INDEX = 1; // 身材三维 在 profile 中的下标
+const BODY3_INDEX = 1; // 身材三围 在 profile 中的下标
 
-// 三维滚轮范围（厘米）
+// 三围滚轮范围（厘米）
 const RANGE = { min: 50, max: 130 };
 
 // 单行滚轮：可滚动选数字，snap 到每行，读取滚动位置得到选中值
@@ -225,7 +225,7 @@ export function StyleProfilePage({ onBack }: { onBack: () => void }) {
             {editingIndex === BODY3_INDEX ? (
               <>
                 <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginBottom: 14 }}>
-                  滚动选择三维（单位：cm）
+                  滚动选择三围（单位：cm）
                 </div>
                 {/* 滚轮上方标签 */}
                 <div style={{ display: "flex", justifyContent: "center", gap: 4, marginBottom: 6 }}>
