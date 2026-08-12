@@ -17,7 +17,7 @@ export const TRACK_CONFIG = {
   // 上报接口地址
   reportApi: isDevEnv ? "/api/track" : "https://gtt666.cn/api/track",
   // 应用标识（与文档 aid 对照表对应：airDemo5 / airDemo_xi / airDemo_cjy / airDemo4）
-  aid: "airDemo_cjy",
+  aid: "airDemo_xi",
   // 是否在控制台打印事件（便于本地调试验证）
   debug: true,
 };
