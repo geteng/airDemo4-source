@@ -34,4 +34,14 @@ export default defineConfig({
 
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
+
+  server: {
+    // 本地开发代理：/api 转发到线上上报服务，避免 sendBeacon 跨域凭证(CORS)问题
+    proxy: {
+      '/api': {
+        target: 'https://gtt666.cn',
+        changeOrigin: true,
+      },
+    },
+  },
 })
