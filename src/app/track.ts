@@ -3,6 +3,7 @@
  * - 匿名用户唯一标识（localStorage 持久化，代替登录 uid）
  * - 上报方式：navigator.sendBeacon，降级 fetch(keepalive)
  * - 事件类型：page_view / page_leave / click_button / click_element / tab_switch / click_nav / click_buy / click_vip_plan / click_vip_subscribe / scroll_depth / error_event 等
+ * - 上报体(文档 2.1)：aid(应用标识) / uid(匿名用户ID,顶层) / event / eventMsg(事件描述,顶层) / url / referrer / timestamp / userAgent / screen / extra
  */
 
 // ========== 配置区 ==========
@@ -54,21 +55,25 @@ export function getAnonymousId(): string {
 }
 
 // ========== 行为上报 ==========
+// eventMsg：事件详情文案（文档 2.1 顶层字段），用于记录该事件具体描述，如「点击试穿按钮」
 export function trackEvent(
   eventName: string,
-  extra: Record<string, unknown> = {}
+  extra: Record<string, unknown> = {},
+  eventMsg = ""
 ): void {
   try {
-    // 请求体与文档 2.1 一致：aid 为应用标识，匿名用户唯一标识放在 extra.uid
+    // 请求体与文档 2.1 一致：aid 应用标识、uid 匿名用户标识(顶层)、eventMsg 事件描述(顶层)、extra 附加数据
     const payload = {
       aid: TRACK_CONFIG.aid,
+      uid: getAnonymousId(),
       event: eventName,
       url: location.href,
       referrer: document.referrer,
       timestamp: Date.now(),
       userAgent: navigator.userAgent,
       screen: `${window.screen.width}x${window.screen.height}`,
-      extra: { uid: getAnonymousId(), ...extra },
+      eventMsg: eventMsg || "",
+      extra: { ...extra },
     };
 
     if (TRACK_CONFIG.debug) {
@@ -116,7 +121,7 @@ export function reportPageLeave(extra: Record<string, unknown> = {}): void {
   const staySecond = Math.round((Date.now() - pageEnterTime) / 1000);
   // 埋点【page_leave】：位置=App.tsx 全局监听 pagehide/beforeunload/visibilitychange(hidden)；
   // 用途=统计页面停留时长(秒)，extra.stay_second=停留秒数，防重复上报
-  trackEvent("page_leave", { stay_second: staySecond, ...extra });
+  trackEvent("page_leave", { stay_second: staySecond, ...extra }, "页面离开，记录停留时长（秒）");
 }
 
 // ========== 滚动深度 ==========
@@ -140,6 +145,6 @@ export function trackScrollDepth(
     reportedDepths.add(milestone);
     // 埋点【scroll_depth】：位置=各页面滚动容器 onScrollCapture 调用；用途=统计滚动深度里程碑
     // (25/50/75/100%)，extra.depth=里程碑百分比、ratio=精确比例，每个里程碑仅上报一次
-    trackEvent("scroll_depth", { depth: milestone, ratio: Number(ratio.toFixed(2)) });
+    trackEvent("scroll_depth", { depth: milestone, ratio: Number(ratio.toFixed(2)) }, `滚动深度达到 ${milestone}%`);
   }
 }

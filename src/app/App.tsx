@@ -84,8 +84,8 @@ export default function App() {
   // ─── 埋点：全局 PV / 点击 / 异常 / 停留时长 ───────────────────────────────
   useEffect(() => {
     initStayDuration();
-    // 埋点【page_view】：位置=App 挂载(首次进入首页)；用途=统计首页初始 PV，extra.page="home"
-    trackEvent("page_view", { page: "home" });
+    // 埋点【page_view】：位置=App 挂载(首次进入首页)；用途=统计首页初始 PV
+    trackEvent("page_view", { page: "home" }, "页面加载：进入首页(home)");
 
     // 全局点击记录：真实按钮 → click_button；卡片/图片等 → click_element
     const handleDocClick = (e: MouseEvent) => {
@@ -98,8 +98,8 @@ export default function App() {
         const name =
           btn.getAttribute("data-track") ||
           (btn.textContent || "").trim().replace(/\s+/g, " ").slice(0, 24);
-        // 埋点【click_button】：位置=document 全局点击委托(命中 button/a/role=button，底部 Tab 除外)；用途=统计所有真实按钮点击，extra.element=按钮文案
-        if (name) trackEvent("click_button", { element: name });
+        // 埋点【click_button】：位置=document 全局点击委托(命中 button/a/role=button，底部 Tab 除外)；用途=统计所有真实按钮点击
+        if (name) trackEvent("click_button", { element: name }, `按钮点击：${name}`);
       } else {
         // 非按钮元素（div 卡片、图片等）：向上最多取 3 层文本
         let el: HTMLElement | null = t;
@@ -109,25 +109,25 @@ export default function App() {
           if (name) break;
           el = el.parentElement;
         }
-        // 埋点【click_element】：位置=document 全局点击委托(div 卡片/图片等非按钮元素)；用途=统计卡片/图片等点击，extra.element=文本、tag=标签
-        if (name) trackEvent("click_element", { element: name, tag: t.tagName });
+        // 埋点【click_element】：位置=document 全局点击委托(div 卡片/图片等非按钮元素)；用途=统计卡片/图片等点击
+        if (name) trackEvent("click_element", { element: name, tag: t.tagName }, `元素点击：${name}（${t.tagName}）`);
       }
     };
     document.addEventListener("click", handleDocClick);
 
     // 异常事件：资源加载失败 / 未捕获错误
-    // 埋点【error_event】：位置=window error 监听(捕获阶段)；用途=统计图片/脚本等资源加载失败，extra.type="resource_error"、source=标签、detail=错误信息
+    // 埋点【error_event】：位置=window error 监听(捕获阶段)；用途=统计图片/脚本等资源加载失败
     const handleError = (e: Event) => {
       const src = (e.target as HTMLElement | null)?.tagName || "";
       trackEvent("error_event", {
         type: "resource_error",
         source: src,
         detail: (e as ErrorEvent).message || "",
-      });
+      }, `资源加载失败：${src}`);
     };
-    // 埋点【error_event】：位置=window unhandledrejection 监听；用途=统计 Promise 未捕获异常，extra.type="unhandled_rejection"
+    // 埋点【error_event】：位置=window unhandledrejection 监听；用途=统计 Promise 未捕获异常
     const handleUnhandledRejection = (e: PromiseRejectionEvent) => {
-      trackEvent("error_event", { type: "unhandled_rejection", detail: String(e.reason) });
+      trackEvent("error_event", { type: "unhandled_rejection", detail: String(e.reason) }, `未捕获 Promise 异常：${String(e.reason)}`);
     };
     window.addEventListener("error", handleError, true);
     window.addEventListener("unhandledrejection", handleUnhandledRejection);
@@ -158,26 +158,26 @@ export default function App() {
       return;
     }
     if (subPage === null) {
-      // 埋点【page_view】：位置=Tab 切换 useEffect；用途=统计各 Tab 页面 PV(首次已由 mount 上报故跳过)，extra.page=tab id
-      trackEvent("page_view", { page: activeTab });
+      // 埋点【page_view】：位置=Tab 切换 useEffect；用途=统计各 Tab 页面 PV(首次已由 mount 上报故跳过)
+      trackEvent("page_view", { page: activeTab }, `Tab 页面访问：${activeTab}`);
     }
   }, [activeTab, subPage]);
 
   const handleGoProduct = (look?: Look) => {
-    // 埋点【click_nav】：位置=首页「查看今日搭配」/推荐卡片 → 进入搭配详情页；用途=统计详情页跳转，extra.page="product"
-    trackEvent("click_nav", { page: "product", product: look?.title || "" });
+    // 埋点【click_nav】：位置=首页「查看今日搭配」/推荐卡片 → 进入搭配详情页；用途=统计详情页跳转
+    trackEvent("click_nav", { page: "product", product: look?.title || "" }, `跳转搭配详情：${look?.title || ""}`);
     if (look) setSelectedLook(look);
     setSubPage("product");
   };
   const handleGoTryOn = (item: { img: string; name: string; video?: string }) => {
-    // 埋点【click_nav】：位置=推荐页「AI 试衣」卡片 → 进入 AI 虚拟试衣；用途=统计试衣页跳转，extra.page="tryon"
-    trackEvent("click_nav", { page: "tryon", item: item.name });
+    // 埋点【click_nav】：位置=推荐页「AI 试衣」卡片 → 进入 AI 虚拟试衣；用途=统计试衣页跳转
+    trackEvent("click_nav", { page: "tryon", item: item.name }, `跳转 AI 试衣：${item.name}`);
     setSelectedTryOnItem(item);
     setSubPage("tryon");
   };
   const handleGoNote = (note: NoteData) => {
-    // 埋点【click_nav】：位置=首页种草笔记卡片 → 打开笔记；用途=统计笔记打开/外链跳转，extra.page="note"
-    trackEvent("click_nav", { page: "note", note: note.title });
+    // 埋点【click_nav】：位置=首页种草笔记卡片 → 打开笔记；用途=统计笔记打开/外链跳转
+    trackEvent("click_nav", { page: "note", note: note.title }, `打开种草笔记：${note.title}`);
     if (note.link) {
       window.open(note.link, "_blank");
       return;
@@ -186,20 +186,20 @@ export default function App() {
     setSubPage("note");
   };
   const handleBack = () => {
-    // 埋点【click_nav】：位置=各次级页面顶部返回按钮；用途=统计返回行为及来源，extra.page="back"
-    trackEvent("click_nav", { page: "back", from: subPage });
+    // 埋点【click_nav】：位置=各次级页面顶部返回按钮；用途=统计返回行为及来源
+    trackEvent("click_nav", { page: "back", from: subPage }, `返回上一页（来自：${subPage ?? "未知"}）`);
     setSubPage(null);
   };
   // 以下 9 个为「我的」页各入口：点击均上报 click_nav 并进入对应子页面
-  const handleGoOrders = (tab?: string) => { /* 埋点【click_nav】：我的页「我的订单」入口；extra.page="orders" */ trackEvent("click_nav", { page: "orders", tab: tab || "all" }); setOrderInitialTab(tab || "all"); setSubPage("orders"); };
-  const handleGoFavorites = () => { /* 埋点【click_nav】：我的页「我的收藏」入口；extra.page="favorites" */ trackEvent("click_nav", { page: "favorites" }); setSubPage("favorites"); };
-  const handleGoCoupons = () => { /* 埋点【click_nav】：我的页「优惠券」入口；extra.page="coupons" */ trackEvent("click_nav", { page: "coupons" }); setSubPage("coupons"); };
-  const handleGoRecords = () => { /* 埋点【click_nav】：我的页「服务记录」入口；extra.page="records" */ trackEvent("click_nav", { page: "records" }); setSubPage("records"); };
-  const handleGoVip = () => { /* 埋点【click_nav】：我的页「我的会员」入口；extra.page="vip" */ trackEvent("click_nav", { page: "vip" }); setSubPage("vip"); };
-  const handleGoStyleProfile = () => { /* 埋点【click_nav】：我的页「个人穿搭画像」入口；extra.page="styleProfile" */ trackEvent("click_nav", { page: "styleProfile" }); setSubPage("styleProfile"); };
-  const handleGoWardrobe = () => { /* 埋点【click_nav】：我的页「个人衣橱」入口；extra.page="wardrobe" */ trackEvent("click_nav", { page: "wardrobe" }); setSubPage("wardrobe"); };
-  const handleCallService = () => { /* 埋点【click_nav】：我的页「拨打客服」按钮 → 弹出拨打确认弹窗；extra.page="call_dialog" */ trackEvent("click_nav", { page: "call_dialog" }); setShowCallDialog(true); };
-  const handleGoStylist = () => { /* 埋点【click_nav】：首页/我的页「咨询穿搭老师」入口 → 进入咨询页；extra.page="stylist" */ trackEvent("click_nav", { page: "stylist" }); setSubPage("stylist"); };
+  const handleGoOrders = (tab?: string) => { /* 埋点【click_nav】：我的页「我的订单」入口 */ trackEvent("click_nav", { page: "orders", tab: tab || "all" }, `跳转我的订单（tab=${tab || "all"}）`); setOrderInitialTab(tab || "all"); setSubPage("orders"); };
+  const handleGoFavorites = () => { /* 埋点【click_nav】：我的页「我的收藏」入口 */ trackEvent("click_nav", { page: "favorites" }, "跳转我的收藏"); setSubPage("favorites"); };
+  const handleGoCoupons = () => { /* 埋点【click_nav】：我的页「优惠券」入口 */ trackEvent("click_nav", { page: "coupons" }, "跳转优惠券"); setSubPage("coupons"); };
+  const handleGoRecords = () => { /* 埋点【click_nav】：我的页「服务记录」入口 */ trackEvent("click_nav", { page: "records" }, "跳转服务记录"); setSubPage("records"); };
+  const handleGoVip = () => { /* 埋点【click_nav】：我的页「我的会员」入口 */ trackEvent("click_nav", { page: "vip" }, "跳转我的会员"); setSubPage("vip"); };
+  const handleGoStyleProfile = () => { /* 埋点【click_nav】：我的页「个人穿搭画像」入口 */ trackEvent("click_nav", { page: "styleProfile" }, "跳转个人穿搭画像"); setSubPage("styleProfile"); };
+  const handleGoWardrobe = () => { /* 埋点【click_nav】：我的页「个人衣橱」入口 */ trackEvent("click_nav", { page: "wardrobe" }, "跳转个人衣橱"); setSubPage("wardrobe"); };
+  const handleCallService = () => { /* 埋点【click_nav】：我的页「拨打客服」按钮 → 弹出拨打确认弹窗 */ trackEvent("click_nav", { page: "call_dialog" }, "点击拨打客服（弹确认框）"); setShowCallDialog(true); };
+  const handleGoStylist = () => { /* 埋点【click_nav】：首页/我的页「咨询穿搭老师」入口 → 进入咨询页 */ trackEvent("click_nav", { page: "stylist" }, "跳转咨询穿搭老师"); setSubPage("stylist"); };
 
   return (
     <div
@@ -251,7 +251,7 @@ export default function App() {
                 transition={{ duration: 0.22, ease: "easeInOut" }}
                 style={{ position: "absolute", inset: 0 }}
               >
-                {activeTab === "home" && <HomePage onGoProduct={handleGoProduct} onGoNote={handleGoNote} onGoVipJoin={() => { /* 埋点【click_nav】：首页「加入会员」横幅 → 弹出 VIP 开通弹窗；extra.page="vip_join" */ trackEvent("click_nav", { page: "vip_join" }); setShowVipJoin(true); }} onGoStylist={handleGoStylist} />}
+                {activeTab === "home" && <HomePage onGoProduct={handleGoProduct} onGoNote={handleGoNote} onGoVipJoin={() => { /* 埋点【click_nav】：首页「加入会员」横幅 → 弹出 VIP 开通弹窗 */ trackEvent("click_nav", { page: "vip_join" }, "首页加入会员横幅（弹 VIP 弹窗）"); setShowVipJoin(true); }} onGoStylist={handleGoStylist} />}
                 {activeTab === "recommend" && <RecommendPage onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title, video: look.video })} />}
                 {activeTab === "mine" && <MinePage
                   onGoOrders={handleGoOrders}
@@ -278,7 +278,7 @@ export default function App() {
               dragMomentum={false}
               whileDrag={{ scale: 1.12, boxShadow: "0 8px 28px rgba(184,135,74,0.5)" }}
               whileTap={{ scale: 0.95 }}
-              onTap={() => { /* 埋点【click_nav】：右侧「咨询穿搭老师」浮窗 → 弹出二维码弹窗；extra.page="stylist_qr" */ trackEvent("click_nav", { page: "stylist_qr" }); setShowStylistQR(true); }}
+              onTap={() => { /* 埋点【click_nav】：右侧「咨询穿搭老师」浮窗 → 弹出二维码弹窗 */ trackEvent("click_nav", { page: "stylist_qr" }, "点击咨询穿搭老师浮窗（弹二维码）"); setShowStylistQR(true); }}
               style={{
                 position: "absolute",
                 right: 0,
@@ -504,7 +504,7 @@ export default function App() {
 
                   <div style={{ display: "flex", gap: 10 }}>
                     <button
-                      onClick={() => { /* 埋点【click_button】：拨打确认弹窗「取消」按钮；extra.element="取消拨打" */ trackEvent("click_button", { element: "取消拨打" }); setShowCallDialog(false); }}
+                      onClick={() => { /* 埋点【click_button】：拨打确认弹窗「取消」按钮 */ trackEvent("click_button", { element: "取消拨打" }, "拨打弹窗：取消"); setShowCallDialog(false); }}
                       style={{
                         flex: 1,
                         padding: "11px",
@@ -521,7 +521,7 @@ export default function App() {
                       取消
                     </button>
                     <button
-                      onClick={() => { /* 埋点【click_nav】：拨打确认弹窗「立即拨打」按钮；extra.page="call_phone" */ trackEvent("click_nav", { page: "call_phone", phone: "400-888-6688" }); setShowCallDialog(false); }}
+                      onClick={() => { /* 埋点【click_nav】：拨打确认弹窗「立即拨打」按钮 */ trackEvent("click_nav", { page: "call_phone", phone: "400-888-6688" }, "拨打弹窗：立即拨打 400-888-6688"); setShowCallDialog(false); }}
                       style={{
                         flex: 1,
                         padding: "11px",
@@ -592,7 +592,7 @@ export default function App() {
                     position: "relative",
                   }}>
                     <button
-                      onClick={() => { /* 埋点【click_button】：VIP 开通弹窗右上角「关闭」按钮；extra.element="关闭VIP弹窗" */ trackEvent("click_button", { element: "关闭VIP弹窗" }); setShowVipJoin(false); }}
+                      onClick={() => { /* 埋点【click_button】：VIP 开通弹窗右上角「关闭」按钮 */ trackEvent("click_button", { element: "关闭VIP弹窗" }, "VIP 弹窗：关闭"); setShowVipJoin(false); }}
                       style={{
                         position: "absolute", top: 14, right: 16,
                         width: 28, height: 28, borderRadius: "50%",
@@ -621,10 +621,10 @@ export default function App() {
                   <div style={{ padding: "20px 20px 16px" }}>
                     <div style={{ fontFamily: font, fontSize: 14, fontWeight: 700, color: TEXT, marginBottom: 12 }}>选择套餐</div>
                     <div style={{ display: "flex", gap: 10 }}>
-                      {/* 埋点【click_vip_plan】：VIP 弹窗选择「月卡」套餐；extra.plan="month" */}
+                      {/* 埋点【click_vip_plan】：VIP 弹窗选择「月卡」套餐 */}
                       {/* Month */}
                       <div
-                        onClick={() => { trackEvent("click_vip_plan", { plan: "month" }); setVipPlan("month"); }}
+                        onClick={() => { trackEvent("click_vip_plan", { plan: "month" }, "选择 VIP 月卡"); setVipPlan("month"); }}
                         style={{
                           flex: 1, borderRadius: 16, padding: "14px 10px", textAlign: "center",
                           border: vipPlan === "month" ? `2px solid ${ACCENT}` : "2px solid #e3ddd2",
@@ -636,10 +636,10 @@ export default function App() {
                         <div style={{ fontFamily: font, fontSize: 22, fontWeight: 700, color: vipPlan === "month" ? TEXT : "#2c2419" }}>¥29</div>
                         <div style={{ fontFamily: font, fontSize: 10, color: vipPlan === "month" ? MUTED : "#8a7a64", marginTop: 2 }}>¥29/月</div>
                       </div>
-                      {/* 埋点【click_vip_plan】：VIP 弹窗选择「季卡」套餐；extra.plan="season" */}
+                      {/* 埋点【click_vip_plan】：VIP 弹窗选择「季卡」套餐 */}
                       {/* Season */}
                       <div
-                        onClick={() => { trackEvent("click_vip_plan", { plan: "season" }); setVipPlan("season"); }}
+                        onClick={() => { trackEvent("click_vip_plan", { plan: "season" }, "选择 VIP 季卡"); setVipPlan("season"); }}
                         style={{
                           flex: 1, borderRadius: 16, padding: "14px 10px", textAlign: "center",
                           border: vipPlan === "season" ? `2px solid ${ACCENT}` : "2px solid #e3ddd2",
@@ -654,10 +654,10 @@ export default function App() {
                         <div style={{ fontFamily: font, fontSize: 22, fontWeight: 700, color: vipPlan === "season" ? TEXT : "#2c2419" }}>¥79</div>
                         <div style={{ fontFamily: font, fontSize: 10, color: vipPlan === "season" ? MUTED : "#8a7a64", marginTop: 2 }}>¥26.3/月</div>
                       </div>
-                      {/* 埋点【click_vip_plan】：VIP 弹窗选择「年卡」套餐；extra.plan="year" */}
+                      {/* 埋点【click_vip_plan】：VIP 弹窗选择「年卡」套餐 */}
                       {/* Year */}
                       <div
-                        onClick={() => { trackEvent("click_vip_plan", { plan: "year" }); setVipPlan("year"); }}
+                        onClick={() => { trackEvent("click_vip_plan", { plan: "year" }, "选择 VIP 年卡"); setVipPlan("year"); }}
                         style={{
                           flex: 1, borderRadius: 16, padding: "14px 10px", textAlign: "center",
                           border: vipPlan === "year" ? `2px solid ${ACCENT}` : "2px solid #e3ddd2",
@@ -704,7 +704,7 @@ export default function App() {
                   {/* CTA */}
                   <div style={{ padding: "0 20px", position: "sticky", bottom: 0, background: CARD, paddingBottom: 4 }}>
                     <button
-                      onClick={() => { /* 埋点【click_vip_subscribe】：VIP 弹窗底部「立即开通」按钮；extra.plan=当前选中套餐 */ trackEvent("click_vip_subscribe", { plan: vipPlan }); setShowVipJoin(false); }}
+                      onClick={() => { /* 埋点【click_vip_subscribe】：VIP 弹窗底部「立即开通」按钮 */ trackEvent("click_vip_subscribe", { plan: vipPlan }, `VIP 立即开通（套餐=${vipPlan}）`); setShowVipJoin(false); }}
                       style={{
                         width: "100%", padding: "14px", borderRadius: 24,
                         border: "none",
@@ -743,7 +743,7 @@ export default function App() {
                 <button
                   key={id}
                   data-tab={id}
-                  onClick={() => { /* 埋点【tab_switch】：底部 Tab 栏切换(首页/推荐/我的)；extra.from=来源 tab、to=目标 tab */ trackEvent("tab_switch", { from: activeTab, to: id }); setActiveTab(id); setSubPage(null); }}
+                  onClick={() => { /* 埋点【tab_switch】：底部 Tab 栏切换(首页/推荐/我的) */ trackEvent("tab_switch", { from: activeTab, to: id }, `切换 Tab：${activeTab} → ${id}`); setActiveTab(id); setSubPage(null); }}
                   style={{
                     flex: 1, display: "flex", flexDirection: "column", alignItems: "center",
                     gap: 3, padding: "10px 0 4px", background: "none", border: "none", cursor: "pointer",

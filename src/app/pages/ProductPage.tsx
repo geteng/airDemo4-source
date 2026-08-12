@@ -202,8 +202,8 @@ export function ProductPage({
         <div style={{ marginTop: 10, padding: "12px 0 10px" }}>
           <button
             onClick={() => {
-              // 埋点【click_buy】：搭配详情页内联「立即购买」按钮(仅首次点击上报，避免连点重复)；extra.product=商品名、price=价格
-              if (!added) trackEvent("click_buy", { product: title, price });
+              // 埋点【click_buy】：搭配详情页内联「立即购买」按钮(仅首次点击上报，避免连点重复)
+              if (!added) trackEvent("click_buy", { product: title, price }, `点击立即购买：${title}（￥${price}）`);
               setAdded(true);
             }}
             style={{
