@@ -16,8 +16,8 @@ const isDevEnv =
 export const TRACK_CONFIG = {
   // 上报接口地址
   reportApi: isDevEnv ? "/api/track" : "https://gtt666.cn/api/track",
-  // 应用标识（与文档 aid 对照表对应：airDemo5 / airDemo_xi / airDemo_cjy / airDemo4）
-  aid: "airDemo_cjy",
+  // 应用标识：直接取自 vite.config.ts 的 base 字段（构建时注入到 import.meta.env.BASE_URL，如 "/airDemo_cjy/"），去首尾斜杠即得 "airDemo_cjy"
+  aid: (import.meta.env.BASE_URL || "/").replace(/^\/|\/$/g, "") || "unknown",
   // 是否在控制台打印事件（便于本地调试验证）
   debug: true,
 };
