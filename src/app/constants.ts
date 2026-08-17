@@ -30,13 +30,9 @@ export const font = "'Noto Sans SC', 'DM Sans', sans-serif";
 // ─── 穿搭师名称（全局可改） ─────────────────────────────────────────────────
 export const STYLIST_NAME = "BALIVEGA";
 
-// ─── 微信跳转小程序配置（在微信聊天窗打开的 H5 使用 <wx-open-launch-weapp>） ──
-// 1) 公众号 appId：需为已认证服务号，并配置 JS 接口安全域名
-export const WX_APPID = "wx5b08503dff20cf33";
-// 2) 后端签名接口：返回 { appId, timestamp, nonceStr, signature }，由后端用 jsapi_ticket 计算
-export const WX_SIGN_API = "/api/wx/jssdk-signature";
-// 3) 目标小程序原始 ID（gh_ 开头）
-export const WX_MINI_USERNAME = "gh_8bc09d862227";
+// ─── 心愿单详情跳转链接（淘宝 H5） ───────────────────────────────────────────
+// export const FAV_DETAIL_URL = "https://e.tb.cn/h.8iO1BuVhtUs437y?tk=pZGxTYnR35v";
+export const FAV_DETAIL_URL = "#小程序://MiuMiu缪缪官方精品店/GfOfB7d3ZPYYGbc";
 
 // ─── 图片资源 ────────────────────────────────────────────────────────────────
 export const IMG = {
@@ -131,11 +127,11 @@ export const ordersData: OrderData[] = [
 const A = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 export const favoritesData: FavoriteData[] = [
-  { id: 1, img: `${A}/assets/like/1.jpg`, name: "府绸质感比基尼内裤", price: 3700, type: "单品", miniUsername: WX_MINI_USERNAME, miniPath: "pages/product/product?id=1", detailUrl: "#小程序://MiuMiu缪缪官方精品店/Lumbqv0J9nqWQWj" },
-  { id: 2, img: `${A}/assets/like/2.jpg`, name: "弹力府绸质感迷你半身裙", price: 20100, type: "单品", miniUsername: WX_MINI_USERNAME, miniPath: "pages/product/product?id=2", detailUrl: "#小程序://MiuMiu缪缪官方精品店/cLnNQv3pglUEgZF" },
-  { id: 3, img: `${A}/assets/like/3.jpg`, name: "亚麻迷你半身裙", price: 22800, type: "单品", miniUsername: WX_MINI_USERNAME, miniPath: "pages/product/product?id=3", detailUrl: "#小程序://MiuMiu缪缪官方精品店/tN28KrwH9vwakeK" },
-  { id: 4, img: `${A}/assets/like/4.jpg`, name: "[预售]蜡感双层羊毛连衣裙", price: 25900, type: "单品", miniUsername: WX_MINI_USERNAME, miniPath: "pages/product/product?id=4", detailUrl: "#小程序://MiuMiu缪缪官方精品店/H3P8DcvDvmz5gIs" },
-  { id: 5, img: `${A}/assets/like/5.jpg`, name: "威尔士亲王格纹短夹克", price: 32500, type: "单品", miniUsername: WX_MINI_USERNAME, miniPath: "pages/product/product?id=5", detailUrl: "#小程序://MiuMiu缪缪官方精品店/GfOfB7d3ZPYYGbc" },
+  { id: 1, img: `${A}/assets/like/1.jpg`, name: "府绸质感比基尼内裤", price: 3700, type: "单品", detailUrl: FAV_DETAIL_URL },
+  { id: 2, img: `${A}/assets/like/2.jpg`, name: "弹力府绸质感迷你半身裙", price: 20100, type: "单品", detailUrl: FAV_DETAIL_URL },
+  { id: 3, img: `${A}/assets/like/3.jpg`, name: "亚麻迷你半身裙", price: 22800, type: "单品", detailUrl: FAV_DETAIL_URL },
+  { id: 4, img: `${A}/assets/like/4.jpg`, name: "[预售]蜡感双层羊毛连衣裙", price: 25900, type: "单品", detailUrl: FAV_DETAIL_URL },
+  { id: 5, img: `${A}/assets/like/5.jpg`, name: "威尔士亲王格纹短夹克", price: 32500, type: "单品", detailUrl: FAV_DETAIL_URL },
 ];
 
 export const couponsData: CouponData[] = [
