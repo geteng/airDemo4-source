@@ -95,7 +95,8 @@ export interface VipBenefit {
   desc: string;
 }
 
-export interface ProductDetail {
+// ProductDetail 作为单一数据源：在 Look 基础上合并封面图、平铺图、详情等全部字段
+export interface ProductDetail extends Look {
   flatImgs: string[];
   reasons: string[];
   lengthLabel: string;
@@ -115,6 +116,9 @@ export interface ProductDetail {
     date: string;
     likes: number;
   }[];
+  // 首页轮播专属副文案（穿搭定制页无需）
+  carouselTitle?: string;
+  tags?: string[];
 }
 
 export interface TabItem {

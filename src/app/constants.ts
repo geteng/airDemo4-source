@@ -152,8 +152,10 @@ export const vipBenefits: VipBenefit[] = [
   { icon: "🚚", title: "全年免邮", desc: "所有订单全年免运费" },
 ];
 
-export const looks: Look[] = [
-  {
+export const productDetails: Record<number, ProductDetail> = {
+  // 穿搭定制页：通勤 / 约会 / 旅行（id 1/2/3）
+  // 首页轮播：第 1/2/3 屏（id 11/12/13，使用不同封面与平铺图，并带轮播副文案）
+  1: {
     id: 1,
     img: import.meta.env.BASE_URL + "assets/looks/41.png",
     scene: "约会",
@@ -162,32 +164,6 @@ export const looks: Look[] = [
     price: 899,
     liked: false,
     video: "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/1.mp4",
-  },
-  {
-    id: 2,
-    img: import.meta.env.BASE_URL + "assets/looks/51.png",
-    scene: "通勤",
-    title: "都市柔美格调",
-    items: "红色西装 + 丝绒裙 + 高跟鞋",
-    price: 1260,
-    liked: false,
-    video: "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/3.mp4",
-  },
-  {
-    id: 3,
-    img: import.meta.env.BASE_URL + "assets/looks/61.jpg",
-    scene: "旅行",
-    title: "轻盈度假系",
-    items: "皮裙套装 + 白色衬衣 + 高跟鞋",
-    price: 680,
-    liked: false,
-    video: "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/5.mp4",
-  },
-];
-
-export const productDetails: Record<number, ProductDetail> = {
-  // 穿搭定制页：通勤 / 约会 / 旅行
-  1: {
     flatImgs: [import.meta.env.BASE_URL + "assets/looks/42.png"],
     reasons: ["修饰肩型，西装垫肩显宽肩高挑", "高腰阔腿裤拉长轴线，强调腰线比例", "白衬衫挺括不透，通勤百搭不出错"],
     lengthLabel: "裤长",
@@ -204,6 +180,14 @@ export const productDetails: Record<number, ProductDetail> = {
     ],
   },
   2: {
+    id: 2,
+    img: import.meta.env.BASE_URL + "assets/looks/51.png",
+    scene: "通勤",
+    title: "都市柔美格调",
+    items: "红色西装 + 丝绒裙 + 高跟鞋",
+    price: 1260,
+    liked: false,
+    video: "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/3.mp4",
     flatImgs: [import.meta.env.BASE_URL + "assets/looks/52.png"],
     reasons: ["丝绒光泽感强，灯光下更显白显瘦", "收腰 A 字裙摆遮胯，约会穿很上镜", "西装短外套中和柔美，气场与温柔兼得"],
     lengthLabel: "裙长",
@@ -220,6 +204,14 @@ export const productDetails: Record<number, ProductDetail> = {
     ],
   },
   3: {
+    id: 3,
+    img: import.meta.env.BASE_URL + "assets/looks/61.jpg",
+    scene: "旅行",
+    title: "轻盈度假系",
+    items: "皮裙套装 + 白色衬衣 + 高跟鞋",
+    price: 680,
+    liked: false,
+    video: "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/5.mp4",
     flatImgs: [import.meta.env.BASE_URL + "assets/looks/62.png"],
     reasons: ["针织轻薄透气，海边度假整天不闷热", "草编帽提升拍照出片率，遮阳又减龄", "白色长裤清爽凉快，洗涤不易变形"],
     lengthLabel: "裤长",
@@ -235,8 +227,17 @@ export const productDetails: Record<number, ProductDetail> = {
       { user: "夏天", initial: "夏", rating: 4, size: "M", content: "针织衫稍微起球，其他都好，整体性价比高，会再买别的色。", date: "2026.07.10", likes: 12 },
     ],
   },
-  // 首页轮播：第 1/2/3 屏（与穿搭定制页使用不同封面与平铺图）
   11: {
+    id: 11,
+    img: import.meta.env.BASE_URL + "assets/looks/11.png",
+    scene: "通勤",
+    title: "高级感白领风",
+    items: "棕红色夹克+ 深棕色休闲裤+深色皮鞋",
+    price: 899,
+    liked: false,
+    video: "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/6.mp4",
+    carouselTitle: "今天适合你的通勤穿搭",
+    tags: ["显瘦通勤风", "165cm+", "轻熟风"],
     flatImgs: [import.meta.env.BASE_URL + "assets/looks/12.png"],
     reasons: ["廓形西装修饰肩背，通勤利落有精神", "直筒西裤显腿直，小个子也能穿出气场", "垂感面料抗皱好打理，久坐不出褶"],
     lengthLabel: "裤长",
@@ -253,6 +254,16 @@ export const productDetails: Record<number, ProductDetail> = {
     ],
   },
   12: {
+    id: 12,
+    img: import.meta.env.BASE_URL + "assets/looks/21.png",
+    scene: "约会",
+    title: "都市柔美格调",
+    items: "小吊带 + 丝绒裙 + 高跟鞋",
+    price: 1260,
+    liked: false,
+    video: "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/2.mp4",
+    carouselTitle: "约会也要温柔在线",
+    tags: ["约会必备", "显白", "法式风"],
     flatImgs: [import.meta.env.BASE_URL + "assets/looks/22.png"],
     reasons: ["吊带裙叠穿西装，层次丰富不单调", "高腰线设计拉高视觉重心，显比例", "金属配饰点缀，约会氛围感拉满"],
     lengthLabel: "裙长",
@@ -269,6 +280,16 @@ export const productDetails: Record<number, ProductDetail> = {
     ],
   },
   13: {
+    id: 13,
+    img: import.meta.env.BASE_URL + "assets/looks/31.png",
+    scene: "旅行",
+    title: "轻盈度假系",
+    items: "深棕宽大衣 + 包臀裙 + 高跟鞋",
+    price: 680,
+    liked: false,
+    video: "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/4.mp4",
+    carouselTitle: "周末轻盈度假感",
+    tags: ["透气舒适", "显高", "度假风"],
     flatImgs: [import.meta.env.BASE_URL + "assets/looks/32.png"],
     reasons: ["亚麻混纺透气，夏天穿不贴身不闷汗", "阔腿短裤清爽显腿长，度假松弛感拉满", "草编托特容量大，出海带娃一包搞定"],
     lengthLabel: "裤长",
@@ -285,3 +306,6 @@ export const productDetails: Record<number, ProductDetail> = {
     ],
   },
 };
+
+// 穿搭定制页数据（推荐页）直接引用 productDetails[1/2/3]，与详情页共用单一数据源
+export const looks: Look[] = [productDetails[1], productDetails[2], productDetails[3]];
