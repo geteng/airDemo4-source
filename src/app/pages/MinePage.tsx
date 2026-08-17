@@ -32,7 +32,6 @@ export function MinePage({
 
   const menuItems = [
     { icon: Package, label: "我的订单", desc: "查看所有订单", action: () => onGoOrders("all") },
-    { icon: Heart, label: "我的收藏", desc: "收藏的单品与搭配", action: onGoFavorites },
     { icon: Tag, label: "我的优惠券", desc: "3张可用", action: onGoCoupons },
     // { icon: Footprints, label: "足迹", desc: "已记录 24 套", action: onGoRecords },
     { icon: Headphones, label: "联系客服", desc: "7×12小时在线", action: onCallService },
@@ -94,6 +93,19 @@ export function MinePage({
           <div style={{ flex: 1 }}>
             <div style={{ fontFamily: font, fontSize: 14, fontWeight: 500, color: TEXT }}>个人衣橱</div>
             <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 1 }}>我的单品与搭配</div>
+          </div>
+          <ChevronRight size={16} color={MUTED} />
+        </div>
+        <div
+          onClick={onGoFavorites}
+          style={{ padding: "15px 18px", display: "flex", alignItems: "center", gap: 14, borderTop: `1px solid rgba(255,255,255,0.08)`, cursor: "pointer" }}
+        >
+          <div style={{ width: 36, height: 36, borderRadius: 10, background: ACCENT_LIGHT, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Heart size={16} color={ACCENT} />
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: font, fontSize: 14, fontWeight: 500, color: TEXT }}>衣橱心愿单</div>
+            <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 1 }}>收藏的单品与搭配</div>
           </div>
           <ChevronRight size={16} color={MUTED} />
         </div>

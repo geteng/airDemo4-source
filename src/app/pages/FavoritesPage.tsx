@@ -20,7 +20,7 @@ export function FavoritesPage({ onBack }: { onBack: () => void }) {
         <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex" }}>
           <X size={22} color={TEXT} />
         </button>
-        <span style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: TEXT }}>我的收藏</span>
+        <span style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: TEXT }}>心愿单</span>
       </div>
 
       <div style={{ padding: "0 20px 12px", display: "flex", gap: 8, flexShrink: 0 }}>
