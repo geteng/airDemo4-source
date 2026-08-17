@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Heart, X } from "lucide-react";
 import {
   ACCENT,
@@ -9,10 +9,16 @@ import {
   font,
   TEXT,
 } from "../constants";
+import { initWxConfig } from "../wx";
 
 export function FavoritesPage({ onBack }: { onBack: () => void }) {
   const [filter, setFilter] = useState<"all" | "单品" | "搭配">("all");
   const filtered = filter === "all" ? favoritesData : favoritesData.filter((f) => f.type === filter);
+
+  // 进入页面即注入微信 config（开放标签需要）
+  useEffect(() => {
+    initWxConfig();
+  }, []);
 
   return (
     <div style={{ height: "100%", display: "flex", flexDirection: "column", background: BG }}>
@@ -54,12 +60,7 @@ export function FavoritesPage({ onBack }: { onBack: () => void }) {
                   <span style={{ fontFamily: font, fontSize: 15, fontWeight: 700, color: ACCENT }}>¥{item.price}</span>
                   <Heart size={16} color="#e53935" fill="#e53935" />
                 </div>
-                <button
-                  onClick={() => (window.location.href = item.detailUrl)}
-                  style={{ marginTop: 10, width: "100%", background: ACCENT, color: "#fff", fontFamily: font, fontSize: 13, fontWeight: 600, padding: "8px 0", borderRadius: 10, border: "none", cursor: "pointer" }}
-                >
-                  详情
-                </button>
+                <DetailLaunch item={item} />
               </div>
             </div>
           ))}
@@ -67,4 +68,47 @@ export function FavoritesPage({ onBack }: { onBack: () => void }) {
       </div>
     </div>
   );
+}
+
+// 微信内：<wx-open-launch-weapp> 开放标签跳转小程序；非微信环境：兜底按钮尝试 scheme
+function DetailLaunch({ item }: { item: (typeof favoritesData)[number] }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [useFallback, setUseFallback] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current?.querySelector("wx-open-launch-weapp");
+    if (!el) {
+      setUseFallback(true);
+      return;
+    }
+    const onError = () => setUseFallback(true);
+    el.addEventListener("error", onError);
+    return () => el.removeEventListener("error", onError);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const html = `
+    <wx-open-launch-weapp
+      style="display:block;margin-top:10px;width:100%;"
+      username="${item.miniUsername}"
+      path="${item.miniPath}"
+      env-version="release"
+    >
+      <template>
+        <button style="width:100%;background:${ACCENT};color:#fff;font-family:${font};font-size:13px;font-weight:600;padding:8px 0;border:none;border-radius:10px;cursor:pointer;">详情</button>
+      </template>
+    </wx-open-launch-weapp>`;
+
+  if (useFallback) {
+    return (
+      <button
+        onClick={() => (window.location.href = item.detailUrl)}
+        style={{ marginTop: 10, width: "100%", background: ACCENT, color: "#fff", fontFamily: font, fontSize: 13, fontWeight: 600, padding: "8px 0", borderRadius: 10, border: "none", cursor: "pointer" }}
+      >
+        详情
+      </button>
+    );
+  }
+
+  return <div ref={ref} dangerouslySetInnerHTML={{ __html: html }} />;
 }

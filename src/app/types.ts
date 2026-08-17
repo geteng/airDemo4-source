@@ -68,6 +68,11 @@ export interface FavoriteData {
   name: string;
   price: number;
   type: string;
+  /** 小程序原始 ID（gh_ 开头），开放标签 username 使用 */
+  miniUsername: string;
+  /** 小程序内页面路径，如 pages/product/product?id=1 */
+  miniPath: string;
+  /** 兜底：小程序 scheme 链接（浏览器环境无法唤起） */
   detailUrl: string;
 }
 
