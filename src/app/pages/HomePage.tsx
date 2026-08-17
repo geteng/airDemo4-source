@@ -126,7 +126,7 @@ export function HomePage({
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <div style={{
-              width: 24,
+              width: 44,
               height: 24,
               borderRadius: 6,
               background: "linear-gradient(135deg, #ff2442, #ff6b6b)",
@@ -138,7 +138,7 @@ export function HomePage({
               fontWeight: 700,
               fontFamily: font,
             }}>
-              红
+              视频号
             </div>
             <span style={{ fontFamily: font, fontSize: 15, fontWeight: 700, color: TEXT }}>种草笔记</span>
           </div>

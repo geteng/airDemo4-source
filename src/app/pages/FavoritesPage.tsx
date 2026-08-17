@@ -54,6 +54,12 @@ export function FavoritesPage({ onBack }: { onBack: () => void }) {
                   <span style={{ fontFamily: font, fontSize: 15, fontWeight: 700, color: ACCENT }}>¥{item.price}</span>
                   <Heart size={16} color="#e53935" fill="#e53935" />
                 </div>
+                <button
+                  onClick={() => (window.location.href = item.detailUrl)}
+                  style={{ marginTop: 10, width: "100%", background: ACCENT, color: "#fff", fontFamily: font, fontSize: 13, fontWeight: 600, padding: "8px 0", borderRadius: 10, border: "none", cursor: "pointer" }}
+                >
+                  详情
+                </button>
               </div>
             </div>
           ))}

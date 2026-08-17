@@ -68,6 +68,7 @@ export interface FavoriteData {
   name: string;
   price: number;
   type: string;
+  detailUrl: string;
 }
 
 export interface CouponData {

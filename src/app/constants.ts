@@ -119,13 +119,15 @@ export const ordersData: OrderData[] = [
   { id: "DD20260705100", status: "done", statusLabel: "已完成", img: IMG.look3, name: "浅燕麦短款西装两件套休闲通勤", price: 680, date: "2026-07-05", items: "短款翻领小西装 + 白色短款抹胸内搭 + 同面料高腰阔腿西裤" },
 ];
 
+// public 资源路径需拼接 Vite base，否则部署到子路径（如 /airDemo_balivega/）会 404
+const A = import.meta.env.BASE_URL.replace(/\/$/, "");
+
 export const favoritesData: FavoriteData[] = [
-  { id: 1, img: IMG.look1, name: "银色抹胸缎面礼服造型套装", price: 899, type: "搭配" },
-  { id: 2, img: IMG.look2, name: "宝蓝廓形西装套装造型", price: 1260, type: "搭配" },
-  { id: 3, img: IMG.wardrobe1, name: "温柔肌理感针织衣", price: 199, type: "单品" },
-  { id: 4, img: IMG.wardrobe2, name: "暖色系日常", price: 1299, type: "单品" },
-  { id: 5, img: IMG.look3, name: "浅燕麦短款西装两件套休闲通勤", price: 680, type: "搭配" },
-  { id: 6, img: IMG.wardrobe4, name: "中性简约穿搭", price: 599, type: "单品" },
+  { id: 1, img: `${A}/assets/like/1.jpg`, name: "府绸质感比基尼内裤", price: 3700, type: "搭配", detailUrl: "#小程序://MiuMiu缪缪官方精品店/Lumbqv0J9nqWQWj" },
+  { id: 2, img: `${A}/assets/like/2.jpg`, name: "弹力府绸质感迷你半身裙", price: 20100, type: "单品", detailUrl: "#小程序://MiuMiu缪缪官方精品店/cLnNQv3pglUEgZF" },
+  { id: 3, img: `${A}/assets/like/3.jpg`, name: "亚麻迷你半身裙", price: 22800, type: "单品", detailUrl: "#小程序://MiuMiu缪缪官方精品店/tN28KrwH9vwakeK" },
+  { id: 4, img: `${A}/assets/like/4.jpg`, name: "[预售]蜡感双层羊毛连衣裙", price: 25900, type: "单品", detailUrl: "#小程序://MiuMiu缪缪官方精品店/H3P8DcvDvmz5gIs" },
+  { id: 5, img: `${A}/assets/like/5.jpg`, name: "威尔士亲王格纹短夹克", price: 32500, type: "单品", detailUrl: "#小程序://MiuMiu缪缪官方精品店/GfOfB7d3ZPYYGbc" },
 ];
 
 export const couponsData: CouponData[] = [
