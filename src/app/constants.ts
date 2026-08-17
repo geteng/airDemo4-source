@@ -207,7 +207,7 @@ export const productDetails: Record<number, ProductDetail> = {
   },
   3: {
     id: 3,
-    img: import.meta.env.BASE_URL + "assets/looks/61.jpg",
+    img: import.meta.env.BASE_URL + "assets/looks/61.png",
     scene: "旅行",
     title: "轻盈度假系",
     items: "皮裙套装 + 白色衬衣 + 高跟鞋",
