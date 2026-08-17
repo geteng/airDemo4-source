@@ -31,8 +31,8 @@ export const font = "'Noto Sans SC', 'DM Sans', sans-serif";
 export const STYLIST_NAME = "BALIVEGA";
 
 // ─── 心愿单详情跳转链接（淘宝 H5） ───────────────────────────────────────────
-// export const FAV_DETAIL_URL = "https://e.tb.cn/h.8iO1BuVhtUs437y?tk=pZGxTYnR35v";
-export const FAV_DETAIL_URL = "#小程序://MiuMiu缪缪官方精品店/GfOfB7d3ZPYYGbc";
+export const FAV_DETAIL_URL = "https://e.tb.cn/h.8iO1BuVhtUs437y?tk=pZGxTYnR35v";
+// export const FAV_DETAIL_URL = "#小程序://MiuMiu缪缪官方精品店/GfOfB7d3ZPYYGbc";
 
 // ─── 图片资源 ────────────────────────────────────────────────────────────────
 export const IMG = {
