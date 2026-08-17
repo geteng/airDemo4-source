@@ -71,44 +71,46 @@ export function FavoritesPage({ onBack }: { onBack: () => void }) {
 }
 
 // 微信内：<wx-open-launch-weapp> 开放标签跳转小程序；非微信环境：兜底按钮尝试 scheme
+// 策略：按钮始终可见（兜底）；微信环境且 wx.config 成功时，透明开放标签覆盖在按钮上方负责跳转
 function DetailLaunch({ item }: { item: (typeof favoritesData)[number] }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [useFallback, setUseFallback] = useState(false);
 
   useEffect(() => {
     const el = ref.current?.querySelector("wx-open-launch-weapp");
-    if (!el) {
-      setUseFallback(true);
-      return;
+    if (el) {
+      const onLaunch = () => console.log("[wx] 跳转小程序:", item.miniPath);
+      const onError = (e: any) => console.warn("[wx] 开放标签错误:", e?.detail);
+      el.addEventListener("launch", onLaunch);
+      el.addEventListener("error", onError);
+      return () => {
+        el.removeEventListener("launch", onLaunch);
+        el.removeEventListener("error", onError);
+      };
     }
-    const onError = () => setUseFallback(true);
-    el.addEventListener("error", onError);
-    return () => el.removeEventListener("error", onError);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const html = `
     <wx-open-launch-weapp
-      style="display:block;margin-top:10px;width:100%;"
+      style="position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;opacity:0;z-index:2;"
       username="${item.miniUsername}"
       path="${item.miniPath}"
       env-version="release"
     >
       <template>
-        <button style="width:100%;background:${ACCENT};color:#fff;font-family:${font};font-size:13px;font-weight:600;padding:8px 0;border:none;border-radius:10px;cursor:pointer;">详情</button>
+        <div style="width:100%;height:100%;"></div>
       </template>
     </wx-open-launch-weapp>`;
 
-  if (useFallback) {
-    return (
+  return (
+    <div style={{ position: "relative", marginTop: 10 }}>
       <button
         onClick={() => (window.location.href = item.detailUrl)}
-        style={{ marginTop: 10, width: "100%", background: ACCENT, color: "#fff", fontFamily: font, fontSize: 13, fontWeight: 600, padding: "8px 0", borderRadius: 10, border: "none", cursor: "pointer" }}
+        style={{ width: "100%", background: ACCENT, color: "#fff", fontFamily: font, fontSize: 13, fontWeight: 600, padding: "8px 0", borderRadius: 10, border: "none", cursor: "pointer" }}
       >
         详情
       </button>
-    );
-  }
-
-  return <div ref={ref} dangerouslySetInnerHTML={{ __html: html }} />;
+      <div ref={ref} dangerouslySetInnerHTML={{ __html: html }} style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 2 }} />
+    </div>
+  );
 }
