@@ -28,7 +28,7 @@ export const NAV_INACTIVE = "#8a6f4a";
 export const font = "'Noto Sans SC', 'DM Sans', sans-serif";
 
 // ─── 穿搭师名称（全局可改） ─────────────────────────────────────────────────
-export const STYLIST_NAME = "陈妍君";
+export const STYLIST_NAME = "BALIVEGA";
 
 // ─── 图片资源 ────────────────────────────────────────────────────────────────
 export const IMG = {
@@ -72,37 +72,37 @@ export const wardrobeItems: WardrobeItem[] = [
 
 export const notesData: NoteData[] = [
   {
-    img: import.meta.env.BASE_URL + "assets/notes/note1.jpg",
-    title: "Vlog｜服装助理人出差溯源工厂的一天",
+    img: import.meta.env.BASE_URL + "assets/notes/note1.png",
+    title: "BALIVEGA 26AW | 杏白配色穿搭讲解",
     likes: "6138",
-    author: "陈妍君",
+    author: "BALIVEGA",
     body: "我保证我是天使 只是偶尔有点坏\n\n#韩系 #自拍姿势 #红与黑的碰撞 #cleanfit简单出门 #ootd每日穿搭 #小黑裙 #黑色系穿搭",
-    images: [import.meta.env.BASE_URL + "assets/notes/note1.jpg"],
+    images: [import.meta.env.BASE_URL + "assets/notes/note1.png"],
     tags: ["韩系", "自拍姿势", "红与黑的碰撞", "cleanfit简单出门", "ootd每日穿搭", "小黑裙", "黑色系穿搭"],
-    link: "http://xhslink.cn/o/6KgEk9Lv5Ac",
-    imageCount: "7",
+    link: "https://weixin.qq.com/sph/AzAFfd1hbQ",
+    imageCount: "1",
   },
   {
-    img: import.meta.env.BASE_URL + "assets/notes/note2.jpg",
-    title: "✨｜悦己和自强才是荒芜人生的解药",
+    img: import.meta.env.BASE_URL + "assets/notes/note2.png",
+    title: "BALIVEGA美学赴场・终端赋新",
     likes: "4182",
-    author: "陈妍君",
+    author: "BALIVEGA",
     body: "淡人韩系穿搭\n\n#韩系 #自拍姿势 #cleanfit简单出门 #对镜拍 #喜欢一些对镜拍 #镜子里啥样我啥样 #对镜子拍照 #今天穿什么 #对着镜子自拍 #镜子里的自己",
-    images: [import.meta.env.BASE_URL + "assets/notes/note2.jpg"],
+    images: [import.meta.env.BASE_URL + "assets/notes/note2.png"],
     tags: ["韩系", "自拍姿势", "cleanfit简单出门", "对镜拍", "喜欢一些对镜拍", "镜子里啥样我啥样", "对镜子拍照", "今天穿什么", "对着镜子自拍", "镜子里的自己"],
-    link: "http://xhslink.cn/o/2h1siGmpas9",
-    imageCount: "7",
+    link: "https://weixin.qq.com/sph/ABeibYZhj4",
+    imageCount: "1",
   },
   {
-    img: import.meta.env.BASE_URL + "assets/notes/note3.jpg",
-    title: "没有人可以独自优秀， 优秀的人，必然是链接了优秀的...",
+    img: import.meta.env.BASE_URL + "assets/notes/note3.png",
+    title: "BALIVEGA 26AW I 初秋上新第一波讲解",
     likes: "2.4万",
-    author: "陈妍君",
+    author: "BALIVEGA",
     body: "一周穿搭（double版）\n\n14张穿搭图，日常通勤与周末休闲全覆盖，照着穿不出错。",
-    images: [import.meta.env.BASE_URL + "assets/notes/note3.jpg"],
+    images: [import.meta.env.BASE_URL + "assets/notes/note3.png"],
     tags: ["一周穿搭", "日常穿搭", "通勤穿搭", "休闲风"],
-    link: "http://xhslink.cn/o/A6EA0Q4Ol2q",
-    imageCount: "14",
+    link: "https://weixin.qq.com/sph/A8QyYcPOKD",
+    imageCount: "2",
   },
 ];
 
