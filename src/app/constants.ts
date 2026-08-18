@@ -30,10 +30,6 @@ export const font = "'Noto Sans SC', 'DM Sans', sans-serif";
 // ─── 穿搭师名称（全局可改） ─────────────────────────────────────────────────
 export const STYLIST_NAME = "BALIVEGA";
 
-// ─── 心愿单详情跳转链接（淘宝 H5） ───────────────────────────────────────────
-export const FAV_DETAIL_URL = "https://e.tb.cn/h.8iO1BuVhtUs437y?tk=pZGxTYnR35v";
-// export const FAV_DETAIL_URL = "#小程序://MiuMiu缪缪官方精品店/GfOfB7d3ZPYYGbc";
-
 // ─── 图片资源 ────────────────────────────────────────────────────────────────
 export const IMG = {
   hero: "https://images.unsplash.com/photo-1674457343601-85eacbf0f4b4?w=800&h=900&fit=crop&auto=format",
@@ -127,11 +123,11 @@ export const ordersData: OrderData[] = [
 const A = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 export const favoritesData: FavoriteData[] = [
-  { id: 1, img: `${A}/assets/like/1.jpg`, name: "府绸质感比基尼内裤", price: 3700, type: "单品", detailUrl: FAV_DETAIL_URL },
-  { id: 2, img: `${A}/assets/like/2.jpg`, name: "弹力府绸质感迷你半身裙", price: 20100, type: "单品", detailUrl: FAV_DETAIL_URL },
-  { id: 3, img: `${A}/assets/like/3.jpg`, name: "亚麻迷你半身裙", price: 22800, type: "单品", detailUrl: FAV_DETAIL_URL },
-  { id: 4, img: `${A}/assets/like/4.jpg`, name: "[预售]蜡感双层羊毛连衣裙", price: 25900, type: "单品", detailUrl: FAV_DETAIL_URL },
-  { id: 5, img: `${A}/assets/like/5.jpg`, name: "威尔士亲王格纹短夹克", price: 32500, type: "单品", detailUrl: FAV_DETAIL_URL },
+  { id: 1, img: `${A}/assets/like/1.jpg`, name: "府绸质感比基尼内裤", price: 3700, type: "单品", detailUrl: "https://detail.tmall.com/item.htm?abbucket=14&id=1022234165532" },
+  { id: 2, img: `${A}/assets/like/2.jpg`, name: "弹力府绸质感迷你半身裙", price: 20100, type: "单品", detailUrl: "https://detail.tmall.com/item.htm?abbucket=9&id=1068375071105" },
+  { id: 3, img: `${A}/assets/like/3.jpg`, name: "亚麻迷你半身裙", price: 22800, type: "单品", detailUrl: "https://detail.tmall.com/item.htm?abbucket=14&id=1034446087773" },
+  { id: 4, img: `${A}/assets/like/4.jpg`, name: "[预售]蜡感双层羊毛连衣裙", price: 25900, type: "单品", detailUrl: "https://detail.tmall.com/item.htm?id=740453095128" },
+  { id: 5, img: `${A}/assets/like/5.jpg`, name: "威尔士亲王格纹短夹克", price: 32500, type: "单品", detailUrl: "https://detail.tmall.com/item.htm?abbucket=14&id=909338989197" },
 ];
 
 export const couponsData: CouponData[] = [
