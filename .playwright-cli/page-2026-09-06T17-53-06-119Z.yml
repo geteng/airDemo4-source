@@ -1,0 +1,7 @@
+- generic [ref=e115]:
+  - generic [ref=e116]:
+    - button [ref=e117] [cursor=pointer]:
+      - img [ref=e118]
+    - generic [ref=e120]: 形象顾问档案
+    - button "预约顾问" [ref=e121] [cursor=pointer]
+  - img "形象顾问档案" [ref=e123]

@@ -1,0 +1,79 @@
+- generic [ref=e229]:
+  - generic [ref=e230]:
+    - button [ref=e231] [cursor=pointer]:
+      - img [ref=e232]
+    - generic [ref=e234]: 我的专属形象
+  - generic [ref=e235]:
+    - generic [ref=e236]:
+      - generic [ref=e237] [cursor=pointer]:
+        - generic [ref=e320]:
+          - img [ref=e321]
+          - text: 已上传
+        - img [ref=e239]
+        - generic [ref=e240]: 上传单人全身照
+        - generic [ref=e241]: 人物从头到脚占 2/3 以上
+      - generic [ref=e242] [cursor=pointer]:
+        - generic [ref=e243]:
+          - img [ref=e327]
+          - text: 已上传
+        - img [ref=e245]
+        - generic [ref=e246]: 上传正脸美颜照
+        - generic [ref=e247]: 头顶到下巴占 1/2 以上
+    - generic [ref=e248]:
+      - generic [ref=e249]:
+        - generic [ref=e250]: 拍照指南
+        - generic [ref=e251]:
+          - generic [ref=e252]:
+            - img "单人身" [ref=e253]
+            - img [ref=e255]
+            - generic [ref=e257]: 单人身
+          - generic [ref=e258]:
+            - img "多人" [ref=e259]
+            - img [ref=e261]
+            - generic [ref=e265]: 多人
+      - generic [ref=e266]:
+        - generic [ref=e267]: 拍照指南
+        - generic [ref=e268]:
+          - generic [ref=e269]:
+            - img "正脸无遮挡" [ref=e270]
+            - img [ref=e272]
+            - generic [ref=e274]: 正脸无遮挡
+          - generic [ref=e275]:
+            - img "墨镜帽子" [ref=e276]
+            - img [ref=e278]
+            - generic [ref=e282]: 墨镜帽子
+    - generic [ref=e283]:
+      - img [ref=e284]
+      - generic [ref=e287]: 您的照片仅用于虚拟试衣，平台严格保密，不会用于其他用途
+    - generic [ref=e288]:
+      - generic [ref=e289]:
+        - generic [ref=e290]: 定制精准身材(可选)
+        - generic [ref=e291] [cursor=pointer]: ⌃
+      - generic [ref=e292]:
+        - generic [ref=e293]:
+          - generic [ref=e294]:
+            - textbox "--" [ref=e295]: "160"
+            - generic [ref=e296]: 厘米
+          - generic [ref=e297]: 身高
+        - generic [ref=e298]:
+          - generic [ref=e299]:
+            - textbox "--" [ref=e300]
+            - generic [ref=e301]: 厘米
+          - generic [ref=e302]: 胸围
+        - generic [ref=e303]:
+          - generic [ref=e304]:
+            - textbox "--" [ref=e305]
+            - generic [ref=e306]: 厘米
+          - generic [ref=e307]: 腰围
+        - generic [ref=e308]:
+          - generic [ref=e309]:
+            - textbox "--" [ref=e310]
+            - generic [ref=e311]: 厘米
+          - generic [ref=e312]: 臀围
+      - generic [ref=e313]: 建议尽可能填写准确，系统将根据信息生成更贴合的个性化身份
+    - generic [ref=e316] [cursor=pointer]: 我已阅读并同意《照片用途说明》《肖像使用法律声明》《隐私授权条款》
+    - generic [ref=e317]: 点击视同阅读并同意服务条款与隐私协议
+  - button "上传照片创建身份" [disabled] [ref=e319]
+  - status [ref=e329]:
+    - img [ref=e330]
+    - text: 上传成功

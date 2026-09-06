@@ -1,6 +1,6 @@
 import {
   Package, Heart, Tag, Footprints, Headphones,
-  Award, ChevronRight, User, ShoppingBag,
+  Award, ChevronRight, User, ShoppingBag, ShieldCheck, Camera,
 } from "lucide-react";
 import { ACCENT, ACCENT_LIGHT, BG, CARD, font, IMG, MUTED, TEXT } from "../constants";
 
@@ -13,6 +13,8 @@ export function MinePage({
   onCallService,
   onGoStyleProfile,
   onGoWardrobe,
+  onGoPrivacy,
+  onGoIdentity,
 }: {
   onGoOrders: (tab?: string) => void;
   onGoFavorites: () => void;
@@ -22,6 +24,8 @@ export function MinePage({
   onCallService: () => void;
   onGoStyleProfile: () => void;
   onGoWardrobe: () => void;
+  onGoPrivacy: () => void;
+  onGoIdentity: () => void;
 }) {
   const orderStats = [
     { v: "3", l: "待付款", tab: "pending_pay" },
@@ -94,6 +98,38 @@ export function MinePage({
           <div style={{ flex: 1 }}>
             <div style={{ fontFamily: font, fontSize: 14, fontWeight: 500, color: TEXT }}>个人衣橱</div>
             <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 1 }}>我的单品与搭配</div>
+          </div>
+          <ChevronRight size={16} color={MUTED} />
+        </div>
+      </div>
+
+      {/* Identity & privacy card - right below 个人衣橱 */}
+      <div
+        style={{ margin: "12px 20px 0", background: CARD, borderRadius: 18, boxShadow: "0 2px 12px rgba(0,0,0,0.25)", overflow: "hidden" }}
+      >
+        <div
+          onClick={onGoIdentity}
+          style={{ padding: "15px 18px", display: "flex", alignItems: "center", gap: 14, cursor: "pointer" }}
+        >
+          <div style={{ width: 36, height: 36, borderRadius: 10, background: ACCENT_LIGHT, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Camera size={16} color={ACCENT} />
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: font, fontSize: 14, fontWeight: 500, color: TEXT }}>我的专属形象</div>
+            <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 1 }}>上传照片创建虚拟身份</div>
+          </div>
+          <ChevronRight size={16} color={MUTED} />
+        </div>
+        <div
+          onClick={onGoPrivacy}
+          style={{ padding: "15px 18px", display: "flex", alignItems: "center", gap: 14, borderTop: `1px solid rgba(255,255,255,0.08)`, cursor: "pointer" }}
+        >
+          <div style={{ width: 36, height: 36, borderRadius: 10, background: ACCENT_LIGHT, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <ShieldCheck size={16} color={ACCENT} />
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: font, fontSize: 14, fontWeight: 500, color: TEXT }}>隐私条款相关</div>
+            <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 1 }}>查看隐私政策与协议</div>
           </div>
           <ChevronRight size={16} color={MUTED} />
         </div>

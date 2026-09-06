@@ -1,0 +1,87 @@
+- generic [ref=e4]:
+  - generic [ref=e115]:
+    - generic [ref=e116]:
+      - generic [ref=e117]:
+        - img "头像" [ref=e119]
+        - generic [ref=e120]:
+          - generic [ref=e121]: 小美 · 会员等级:黄金
+          - generic [ref=e122]: 有效期至 2027.03.15
+      - generic [ref=e123]:
+        - generic [ref=e124] [cursor=pointer]:
+          - generic [ref=e125]: "3"
+          - generic [ref=e126]: 待付款
+        - generic [ref=e127] [cursor=pointer]:
+          - generic [ref=e128]: "1"
+          - generic [ref=e129]: 待发货
+        - generic [ref=e130] [cursor=pointer]:
+          - generic [ref=e131]: "2"
+          - generic [ref=e132]: 待评价
+        - generic [ref=e133] [cursor=pointer]:
+          - generic [ref=e134]: "2"
+          - generic [ref=e135]: 退换货
+    - generic [ref=e136]:
+      - generic [ref=e137] [cursor=pointer]:
+        - img [ref=e139]
+        - generic [ref=e142]:
+          - generic [ref=e143]: 个人穿搭画像
+          - generic [ref=e144]: 身材 · 风格 · 衣橱缺口
+        - img [ref=e145]
+      - generic [ref=e147] [cursor=pointer]:
+        - img [ref=e149]
+        - generic [ref=e152]:
+          - generic [ref=e153]: 个人衣橱
+          - generic [ref=e154]: 我的单品与搭配
+        - img [ref=e155]
+    - generic [ref=e157] [cursor=pointer]:
+      - img [ref=e159]
+      - generic [ref=e162]:
+        - generic [ref=e163]: VIP 专属权益
+        - generic [ref=e164]: 每周穿搭建议 · 新品优先看
+      - img [ref=e165]
+    - generic [ref=e167]:
+      - generic [ref=e168] [cursor=pointer]:
+        - img [ref=e170]
+        - generic [ref=e174]:
+          - generic [ref=e175]: 我的订单
+          - generic [ref=e176]: 查看所有订单
+        - img [ref=e177]
+      - generic [ref=e179] [cursor=pointer]:
+        - img [ref=e181]
+        - generic [ref=e183]:
+          - generic [ref=e184]: 我的收藏
+          - generic [ref=e185]: 收藏的单品与搭配
+        - img [ref=e186]
+      - generic [ref=e188] [cursor=pointer]:
+        - img [ref=e190]
+        - generic [ref=e193]:
+          - generic [ref=e194]: 我的优惠券
+          - generic [ref=e195]: 3张可用
+        - img [ref=e196]
+      - generic [ref=e198] [cursor=pointer]:
+        - img [ref=e200]
+        - generic [ref=e202]:
+          - generic [ref=e203]: 联系客服
+          - generic [ref=e204]: 7×12小时在线
+        - img [ref=e205]
+      - generic [ref=e207] [cursor=pointer]:
+        - img [ref=e209]
+        - generic [ref=e212]:
+          - generic [ref=e213]: 我的专属形象
+          - generic [ref=e214]: 上传照片创建虚拟身份
+        - img [ref=e215]
+      - generic [ref=e217] [cursor=pointer]:
+        - img [ref=e219]
+        - generic [ref=e222]:
+          - generic [ref=e223]: 隐私条款相关
+          - generic [ref=e224]: 查看隐私政策与协议
+        - img [ref=e225]
+  - generic [ref=e95]:
+    - button "首页" [ref=e96] [cursor=pointer]:
+      - img [ref=e98]
+      - generic [ref=e101]: 首页
+    - button "穿搭定制" [ref=e103] [cursor=pointer]:
+      - img [ref=e105]
+      - generic [ref=e107]: 穿搭定制
+    - button "我的" [active] [ref=e108] [cursor=pointer]:
+      - img [ref=e110]
+      - generic [ref=e113]: 我的

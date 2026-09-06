@@ -34,6 +34,8 @@ import { RecordsPage } from "./pages/RecordsPage";
 import { VipPage } from "./pages/VipPage";
 import { StylistProfilePage } from "./pages/StylistProfilePage";
 import { StyleProfilePage } from "./pages/StyleProfilePage";
+import { PrivacyPage } from "./pages/PrivacyPage";
+import { IdentityPage } from "./pages/IdentityPage";
 
 // ─── Bottom tab bar ──────────────────────────────────────────────────────────
 const tabs: {
@@ -198,6 +200,8 @@ export default function App() {
   const handleGoVip = () => { /* 埋点【click_nav】：我的页「我的会员」入口 */ trackEvent("click_nav", { page: "vip" }, "跳转我的会员"); setSubPage("vip"); };
   const handleGoStyleProfile = () => { /* 埋点【click_nav】：我的页「个人穿搭画像」入口 */ trackEvent("click_nav", { page: "styleProfile" }, "跳转个人穿搭画像"); setSubPage("styleProfile"); };
   const handleGoWardrobe = () => { /* 埋点【click_nav】：我的页「个人衣橱」入口 */ trackEvent("click_nav", { page: "wardrobe" }, "跳转个人衣橱"); setSubPage("wardrobe"); };
+  const handleGoPrivacy = () => { /* 埋点【click_nav】：我的页「隐私条款相关」入口 */ trackEvent("click_nav", { page: "privacy" }, "跳转隐私条款相关"); setSubPage("privacy"); };
+  const handleGoIdentity = () => { /* 埋点【click_nav】：我的页「我的专属形象」入口 */ trackEvent("click_nav", { page: "identity" }, "跳转我的专属形象"); setSubPage("identity"); };
   const handleCallService = () => { /* 埋点【click_nav】：我的页「拨打客服」按钮 → 弹出拨打确认弹窗 */ trackEvent("click_nav", { page: "call_dialog" }, "点击拨打客服（弹确认框）"); setShowCallDialog(true); };
   const handleGoStylist = () => { /* 埋点【click_nav】：首页/我的页「咨询穿搭老师」入口 → 进入咨询页 */ trackEvent("click_nav", { page: "stylist" }, "跳转咨询穿搭老师"); setSubPage("stylist"); };
 
@@ -262,6 +266,8 @@ export default function App() {
                   onCallService={handleCallService}
                   onGoStyleProfile={handleGoStyleProfile}
                   onGoWardrobe={handleGoWardrobe}
+                  onGoPrivacy={handleGoPrivacy}
+                  onGoIdentity={handleGoIdentity}
                 />}
               </motion.div>
             )}
@@ -439,6 +445,8 @@ export default function App() {
                 {subPage === "vip" && <VipPage onBack={handleBack} />}
                 {subPage === "styleProfile" && <StyleProfilePage onBack={handleBack} />}
                 {subPage === "stylist" && <StylistProfilePage onBack={handleBack} />}
+                {subPage === "privacy" && <PrivacyPage onBack={handleBack} />}
+                {subPage === "identity" && <IdentityPage onBack={handleBack} />}
               </motion.div>
             )}
           </AnimatePresence>
