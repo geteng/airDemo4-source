@@ -203,7 +203,7 @@ export default function App() {
   const handleGoPrivacy = () => { /* 埋点【click_nav】：我的页「隐私条款相关」入口 */ trackEvent("click_nav", { page: "privacy" }, "跳转隐私条款相关"); setSubPage("privacy"); };
   const handleGoIdentity = () => { /* 埋点【click_nav】：我的页「我的专属形象」入口 */ trackEvent("click_nav", { page: "identity" }, "跳转我的专属形象"); setSubPage("identity"); };
   const handleCallService = () => { /* 埋点【click_nav】：我的页「拨打客服」按钮 → 弹出拨打确认弹窗 */ trackEvent("click_nav", { page: "call_dialog" }, "点击拨打客服（弹确认框）"); setShowCallDialog(true); };
-  const handleGoStylist = () => { /* 埋点【click_nav】：首页/我的页「咨询穿搭老师」入口 → 进入咨询页 */ trackEvent("click_nav", { page: "stylist" }, "跳转咨询穿搭老师"); setSubPage("stylist"); };
+  const handleGoStylist = () => { /* 埋点【click_nav】：首页/我的页「咨询席霖老师」入口 → 进入咨询页 */ trackEvent("click_nav", { page: "stylist" }, "跳转咨询席霖老师"); setSubPage("stylist"); };
 
   return (
     <div
@@ -284,7 +284,7 @@ export default function App() {
               dragMomentum={false}
               whileDrag={{ scale: 1.12, boxShadow: "0 8px 28px rgba(184,135,74,0.5)" }}
               whileTap={{ scale: 0.95 }}
-              onTap={() => { /* 埋点【click_nav】：右侧「咨询穿搭老师」浮窗 → 弹出二维码弹窗 */ trackEvent("click_nav", { page: "stylist_qr" }, "点击咨询穿搭老师浮窗（弹二维码）"); setShowStylistQR(true); }}
+              onTap={() => { /* 埋点【click_nav】：右侧「咨询席霖老师」浮窗 → 弹出二维码弹窗 */ trackEvent("click_nav", { page: "stylist_qr" }, "点击咨询席霖老师浮窗（弹二维码）"); setShowStylistQR(true); }}
               style={{
                 position: "absolute",
                 right: 0,
@@ -313,7 +313,7 @@ export default function App() {
               <Headphones size={18} color="#322302" />
               <span style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, fontSize: 11, lineHeight: 1.2, letterSpacing: 1, userSelect: "none" }}>
                 <span>咨询</span>
-                <span>穿搭</span>
+                <span>席霖</span>
                 <span>老师</span>
               </span>
             </motion.button>
@@ -391,7 +391,7 @@ export default function App() {
                   </div>
 
                   <div style={{ fontFamily: font, fontSize: 17, fontWeight: 700, color: TEXT, marginBottom: 4 }}>
-                    咨询专属穿搭师
+                    咨询专属穿搭席老师
                   </div>
                   <div style={{ fontFamily: font, fontSize: 13, color: MUTED, marginBottom: 18 }}>
                     长按识别二维码，添加企业微信,获取1对1穿搭服务
