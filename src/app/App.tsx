@@ -15,7 +15,7 @@ import {
   X,
   Zap,
 } from "lucide-react";
-import { ACCENT, ACCENT_LIGHT, BG, CARD, font, IMG, MUTED, NAV_ACTIVE, NAV_BG, NAV_INACTIVE, TEXT } from "./constants";
+import { ACCENT, ACCENT_LIGHT, BG, CARD, font, IMG, MUTED, NAV_ACTIVE, NAV_BG, NAV_INACTIVE, STYLIST_NAME, TEXT } from "./constants";
 import { initStayDuration, reportPageLeave, trackEvent, trackScrollDepth } from "./track";
 import type { Look, NoteData, SubPage, Tab } from "./types";
 
@@ -381,13 +381,15 @@ export default function App() {
                     width: 52,
                     height: 52,
                     borderRadius: "50%",
-                    background: `linear-gradient(135deg, ${ACCENT}, #d4a56a)`,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    overflow: "hidden",
+                    border: `2px solid ${ACCENT}`,
                     margin: "0 auto 12px",
                   }}>
-                    <Headphones size={24} color="#fff" />
+                    <img
+                      src={import.meta.env.BASE_URL + "assets/stylist_avatar.png"}
+                      alt={STYLIST_NAME}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                    />
                   </div>
 
                   <div style={{ fontFamily: font, fontSize: 17, fontWeight: 700, color: TEXT, marginBottom: 4 }}>
