@@ -190,6 +190,11 @@ export const productDetails: Record<number, ProductDetail> = {
   1: {
     flatImgs: [import.meta.env.BASE_URL + "assets/looks/42.png"],
     reasons: ["修饰肩型，西装垫肩显宽肩高挑", "高腰阔腿裤拉长轴线，强调腰线比例", "白衬衫挺括不透，通勤百搭不出错"],
+    fabric: "西装：70% 聚酯纤维 + 28% 粘纤 + 2% 氨纶；衬衫：100% 长绒棉",
+    season: "春秋（15–24℃），空调房四季可穿",
+    wash: "外套建议干洗；衬衫可 30℃ 以下机洗（放入洗衣袋）",
+    care: "悬挂收纳避免折叠压痕，低温熨烫 ≤110℃，避免暴晒",
+    stock: { remaining: 18, sold: 236 },
     lengthLabel: "裤长",
     sizeChart: [
       { size: "S", shoulder: "38", bust: "92", waist: "72", length: "98" },
@@ -206,6 +211,11 @@ export const productDetails: Record<number, ProductDetail> = {
   2: {
     flatImgs: [import.meta.env.BASE_URL + "assets/looks/52.png"],
     reasons: ["丝绒光泽感强，灯光下更显白显瘦", "收腰 A 字裙摆遮胯，约会穿很上镜", "西装短外套中和柔美，气场与温柔兼得"],
+    fabric: "丝绒裙：92% 聚酯纤维 + 8% 氨纶；短外套：30% 羊毛混纺",
+    season: "春秋冬（10–22℃），冬季可内搭打底衫",
+    wash: "丝绒建议专业干洗，不可机洗甩干",
+    care: "蒸汽挂烫恢复绒面，避免重压与尖锐物勾丝",
+    stock: { remaining: 9, sold: 312 },
     lengthLabel: "裙长",
     sizeChart: [
       { size: "S", shoulder: "37", bust: "88", waist: "68", length: "92" },
@@ -222,6 +232,11 @@ export const productDetails: Record<number, ProductDetail> = {
   3: {
     flatImgs: [import.meta.env.BASE_URL + "assets/looks/62.png"],
     reasons: ["针织轻薄透气，海边度假整天不闷热", "草编帽提升拍照出片率，遮阳又减龄", "白色长裤清爽凉快，洗涤不易变形"],
+    fabric: "针织衫：65% 棉 + 35% 亚麻；长裤：100% 天丝亚麻",
+    season: "夏季（25–35℃），海边度假适用",
+    wash: "30℃ 以下冷水手洗，深浅分色，不可漂白",
+    care: "平铺阴干防变形，草编帽避潮防压存放",
+    stock: { remaining: 26, sold: 158 },
     lengthLabel: "裤长",
     sizeChart: [
       { size: "S", shoulder: "36", bust: "86", waist: "66", length: "96" },
@@ -239,6 +254,11 @@ export const productDetails: Record<number, ProductDetail> = {
   11: {
     flatImgs: [import.meta.env.BASE_URL + "assets/looks/12.png"],
     reasons: ["廓形西装修饰肩背，通勤利落有精神", "直筒西裤显腿直，小个子也能穿出气场", "垂感面料抗皱好打理，久坐不出褶"],
+    fabric: "80% 聚酯纤维 + 18% 粘纤 + 2% 氨纶（抗皱垂感面料）",
+    season: "春秋（16–25℃），通勤四季可穿",
+    wash: "可机洗（洗衣袋，30℃ 以下）或低温干洗",
+    care: "悬挂存放不易皱，低温熨烫，避免长时间暴晒",
+    stock: { remaining: 32, sold: 480 },
     lengthLabel: "裤长",
     sizeChart: [
       { size: "S", shoulder: "38", bust: "92", waist: "72", length: "98" },
@@ -255,6 +275,11 @@ export const productDetails: Record<number, ProductDetail> = {
   12: {
     flatImgs: [import.meta.env.BASE_URL + "assets/looks/22.png"],
     reasons: ["吊带裙叠穿西装，层次丰富不单调", "高腰线设计拉高视觉重心，显比例", "金属配饰点缀，约会氛围感拉满"],
+    fabric: "吊带裙：95% 聚酯纤维 + 5% 氨纶（缎面）；西装：TR 混纺",
+    season: "春夏（20–30℃），晚间约会适用",
+    wash: "缎面建议干洗；手洗请冷水轻压，不可搓揉",
+    care: "避免与粗糙物摩擦，悬挂收纳，低温隔布熨烫",
+    stock: { remaining: 12, sold: 205 },
     lengthLabel: "裙长",
     sizeChart: [
       { size: "S", shoulder: "37", bust: "88", waist: "68", length: "92" },
@@ -271,6 +296,11 @@ export const productDetails: Record<number, ProductDetail> = {
   13: {
     flatImgs: [import.meta.env.BASE_URL + "assets/looks/32.png"],
     reasons: ["亚麻混纺透气，夏天穿不贴身不闷汗", "阔腿短裤清爽显腿长，度假松弛感拉满", "草编托特容量大，出海带娃一包搞定"],
+    fabric: "55% 亚麻 + 45% 棉（透气混纺）；托特包：天然草编",
+    season: "夏季（26–35℃），度假旅行适用",
+    wash: "冷水手洗或轻柔机洗，使用中性洗涤剂",
+    care: "洗后轻拧平铺阴干，亚麻自然微皱属正常质感",
+    stock: { remaining: 21, sold: 143 },
     lengthLabel: "裤长",
     sizeChart: [
       { size: "S", shoulder: "36", bust: "86", waist: "66", length: "96" },

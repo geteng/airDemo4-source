@@ -117,6 +117,14 @@ export interface ProductDetail {
     date: string;
     likes: number;
   }[];
+  fabric: string;
+  season: string;
+  wash: string;
+  care: string;
+  stock: {
+    remaining: number;
+    sold: number;
+  };
 }
 
 export interface TabItem {
