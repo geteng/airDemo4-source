@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Heart, Sparkles, Check, Layers, MessageCircle, Ruler, Star, ThumbsUp, ShoppingBag } from "lucide-react";
+import { Droplets, Heart, Sparkles, Check, Layers, MessageCircle, Package, Ruler, Shirt, Star, Sun, ThumbsUp, ShoppingBag } from "lucide-react";
 import { ACCENT, ACCENT_LIGHT, CARD, font, looks, MUTED, productDetails, STYLIST_NAME, TEXT } from "../constants";
 import type { Look } from "../types";
 import { Pill } from "../components/Pill";
@@ -202,6 +202,60 @@ export function RecommendPage({
                     </div>
                   ))}
                   <div style={{ fontFamily: font, fontSize: 11, color: MUTED, marginTop: 10, lineHeight: 1.5 }}>＊ 以上为平铺手工测量数据，存在 1–2cm 误差，建议按平时尺码选择；试衣间已上线 AI 试衣可先预览上身效果。</div>
+                </div>
+
+                {/* 商品信息：面料成分 / 季节适用性 / 洗涤方式 / 保养说明 / 库存情况 */}
+                <div style={{ background: CARD, borderRadius: 16, padding: "14px 16px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", marginBottom: 16 }}>
+                  <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: TEXT, marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}>
+                    <Shirt size={16} color={ACCENT} /> 商品信息
+                  </div>
+                  {[
+                    { label: "面料成分", icon: Layers, value: detail.fabric },
+                    { label: "季节适用性", icon: Sun, value: detail.season },
+                    { label: "洗涤方式", icon: Droplets, value: detail.wash },
+                    { label: "保养说明", icon: Sparkles, value: detail.care },
+                  ].map((row, i, arr) => (
+                    <div
+                      key={row.label}
+                      style={{
+                        display: "flex",
+                        gap: 10,
+                        padding: "10px 0",
+                        borderBottom: i < arr.length - 1 ? "1px solid #f0ece6" : "none",
+                      }}
+                    >
+                      <row.icon size={14} color={ACCENT} style={{ flexShrink: 0, marginTop: 3 }} />
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginBottom: 3 }}>{row.label}</div>
+                        <div style={{ fontFamily: font, fontSize: 13, color: TEXT, lineHeight: 1.6 }}>{row.value}</div>
+                      </div>
+                    </div>
+                  ))}
+
+                  {/* 库存情况 */}
+                  <div style={{ marginTop: 12, background: ACCENT_LIGHT, borderRadius: 12, padding: "12px 14px" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+                      <span style={{ fontFamily: font, fontSize: 12, color: "#7a5c35", display: "flex", alignItems: "center", gap: 5 }}>
+                        <Package size={13} color={ACCENT} /> 库存情况
+                      </span>
+                      <span style={{ fontFamily: font, fontSize: 12, color: ACCENT, fontWeight: 600 }}>
+                        仅剩 {detail.stock?.remaining ?? 0} 件
+                      </span>
+                    </div>
+                    <div style={{ height: 6, borderRadius: 3, background: "rgba(122,92,53,0.15)", overflow: "hidden" }}>
+                      <div
+                        style={{
+                          width: `${Math.round(((detail.stock?.sold ?? 0) / ((detail.stock?.sold ?? 0) + (detail.stock?.remaining ?? 0) || 1)) * 100)}%`,
+                          height: "100%",
+                          background: ACCENT,
+                          borderRadius: 3,
+                        }}
+                      />
+                    </div>
+                    <div style={{ fontFamily: font, fontSize: 11, color: "#7a5c35", marginTop: 8, lineHeight: 1.5 }}>
+                      已售 {detail.stock?.sold ?? 0} 件 · {(detail.stock?.remaining ?? 0) <= 15 ? "库存紧张，喜欢建议尽快下单" : "库存充足，可正常发货"}
+                    </div>
+                  </div>
                 </div>
 
                 {/* 买家真实评价 */}
