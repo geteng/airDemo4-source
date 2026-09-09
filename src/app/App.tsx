@@ -39,6 +39,21 @@ import { IdentityPage } from "./pages/IdentityPage";
 import { LoginPage } from "./pages/LoginPage";
 import { FitFeedbackDialog } from "./components/FitFeedbackDialog";
 
+// ─── VIP 套餐元信息 ──────────────────────────────────────────────────────────
+const VIP_PLAN_META: Record<"month" | "season" | "year", { label: string; price: string; months: number }> = {
+  month: { label: "月卡", price: "¥29", months: 1 },
+  season: { label: "季卡", price: "¥79", months: 3 },
+  year: { label: "年卡", price: "¥288", months: 12 },
+};
+
+// 到期日 mock（按套餐时长自当前日期顺延）
+function vipExpireText(months: number): string {
+  const d = new Date();
+  d.setMonth(d.getMonth() + months);
+  const p = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}.${p(d.getMonth() + 1)}.${p(d.getDate())}`;
+}
+
 // ─── Bottom tab bar ──────────────────────────────────────────────────────────
 const tabs: {
   id: Tab;
@@ -62,6 +77,8 @@ export default function App() {
   const [showCallDialog, setShowCallDialog] = useState(false);
   const [showVipJoin, setShowVipJoin] = useState(false);
   const [vipPlan, setVipPlan] = useState<"month" | "season" | "year">("year");
+  // 已开通套餐（非空时展示「开通成功」弹窗）
+  const [vipJustJoined, setVipJustJoined] = useState<"month" | "season" | "year" | null>(null);
   const [orderInitialTab, setOrderInitialTab] = useState<string>("all");
   // 收藏状态提升到 App：首页轮播详情与穿搭定制页共享同一份，避免两处不同步
   const [likedIds, setLikedIds] = useState<Set<number>>(new Set());
@@ -743,7 +760,7 @@ export default function App() {
                   {/* CTA */}
                   <div style={{ padding: "0 20px", position: "sticky", bottom: 0, background: CARD, paddingBottom: 4 }}>
                     <button
-                      onClick={() => { /* 埋点【click_vip_subscribe】：VIP 弹窗底部「立即开通」按钮 */ trackEvent("click_vip_subscribe", { plan: vipPlan }, `VIP 立即开通（套餐=${vipPlan}）`); setShowVipJoin(false); }}
+                      onClick={() => { /* 埋点【click_vip_subscribe】：VIP 弹窗底部「立即开通」按钮 */ trackEvent("click_vip_subscribe", { plan: vipPlan }, `VIP 立即开通（套餐=${vipPlan}）`); setShowVipJoin(false); setVipJustJoined(vipPlan); }}
                       style={{
                         width: "100%", padding: "14px", borderRadius: 24,
                         border: "none",
@@ -759,6 +776,93 @@ export default function App() {
                       支付即同意《VIP会员服务协议》· 自动续费可随时取消
                     </div>
                   </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* VIP 开通成功弹窗 */}
+          <AnimatePresence>
+            {vipJustJoined && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setVipJustJoined(null)}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "rgba(0,0,0,0.6)",
+                  zIndex: 120,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "28px",
+                }}
+              >
+                <motion.div
+                  initial={{ scale: 0.85, y: 16 }}
+                  animate={{ scale: 1, y: 0 }}
+                  exit={{ scale: 0.9, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 320, damping: 26 }}
+                  onClick={(e) => e.stopPropagation()}
+                  style={{
+                    width: "100%",
+                    maxWidth: 320,
+                    background: CARD,
+                    borderRadius: 22,
+                    padding: "28px 22px 20px",
+                    textAlign: "center",
+                    border: "1px solid rgba(212,165,106,0.35)",
+                    boxShadow: "0 18px 50px rgba(0,0,0,0.6)",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 72,
+                      height: 72,
+                      borderRadius: "50%",
+                      background: `linear-gradient(135deg, ${ACCENT}, #d4a56a)`,
+                      margin: "0 auto 14px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      boxShadow: "0 10px 28px rgba(212,165,106,0.45)",
+                    }}
+                  >
+                    <Crown size={34} color="#fff" />
+                  </div>
+                  <div style={{ fontFamily: font, fontSize: 20, fontWeight: 800, color: TEXT }}>开通成功</div>
+                  <div style={{ fontFamily: font, fontSize: 13, color: MUTED, marginTop: 6, lineHeight: 1.6 }}>
+                    {VIP_PLAN_META[vipJustJoined].label} VIP 会员已生效，全部专属权益已解锁
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "center", alignItems: "baseline", gap: 6, marginTop: 14 }}>
+                    <span style={{ fontFamily: font, fontSize: 26, fontWeight: 800, color: ACCENT }}>
+                      {VIP_PLAN_META[vipJustJoined].price}
+                    </span>
+                    <span style={{ fontFamily: font, fontSize: 12, color: MUTED }}>
+                      有效期至 {vipExpireText(VIP_PLAN_META[vipJustJoined].months)}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => setVipJustJoined(null)}
+                    style={{
+                      width: "100%",
+                      marginTop: 20,
+                      padding: "12px 0",
+                      borderRadius: 22,
+                      border: "none",
+                      background: `linear-gradient(90deg, ${ACCENT}, #d4a56a)`,
+                      color: "#18160F",
+                      fontFamily: font,
+                      fontSize: 15,
+                      fontWeight: 700,
+                      cursor: "pointer",
+                    }}
+                  >
+                    开始体验
+                  </button>
                 </motion.div>
               </motion.div>
             )}
