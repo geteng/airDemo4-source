@@ -3,10 +3,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Check, X } from "lucide-react";
 import { ACCENT, ACCENT_LIGHT, CARD, font, MUTED, TEXT } from "../constants";
 
-// ── 数字形象免费调整次数（本地 mock 数据，localStorage 持久化）──
-// 暂时注释掉持久化逻辑：每次进入都固定弹出第一种「效果反馈选择窗」
-// 如需恢复：取消下方注释，并把 useEffect 与 confirmAdjust 中的调用恢复即可。
-// const ADJUST_KEY = "stylist_avatar_adjust_count";
+// 数字形象免费调整次数：仅记录在内存（模块级变量），刷新页面后自动重置为 0。
+// 未刷新页面期间再次进入详情页时，会直接提示"已用完"（见下方 useEffect）。
+let adjustUsedCount = 0;
 
 type Dialog = null | "choose" | "avatar" | "fit" | "done";
 
@@ -27,32 +26,15 @@ const FIT_ISSUES = [
   "更宽松舒服",
 ];
 
-// const readAdjustCount = () => {
-//   try {
-//     return Number(localStorage.getItem(ADJUST_KEY) || "0");
-//   } catch {
-//     return 0;
-//   }
-// };
-
-// const saveAdjustCount = () => {
-//   try {
-//     localStorage.setItem(ADJUST_KEY, String(readAdjustCount() + 1));
-//   } catch {
-//     /* localStorage 不可用时仅本次会话生效，忽略 */
-//   }
-// };
-
 export function FitFeedbackDialog({ onConsult }: { onConsult: () => void }) {
   const [dialog, setDialog] = useState<Dialog>(null);
   const [picked, setPicked] = useState<string[]>([]);
 
-  // 进入详情页停留 12 秒后弹出「效果反馈选择窗」（已暂时停用次数持久化判断）
+  // 进入详情页停留 12 秒后弹出：
+  // 本会话内点过「去调整形象」（内存已记录）→ 只提示已用完；否则 → 效果反馈选择窗
   useEffect(() => {
     const t = setTimeout(() => {
-    //   setDialog(readAdjustCount() > 0 ? "done" : "choose");
-      setDialog("choose");
-    //   setDialog("done");
+      setDialog(adjustUsedCount > 0 ? "done" : "choose");
       setPicked([]);
     }, 12000);
     return () => clearTimeout(t);
@@ -79,9 +61,9 @@ export function FitFeedbackDialog({ onConsult }: { onConsult: () => void }) {
     setTimeout(() => setDialog("fit"), 200);
   };
 
-  // 《去调整形象》：原逻辑会在本地记录一次（暂时停用持久化，仅收起弹窗）
+  // 《去调整形象》：内存中记一次已用过，之后再次进入只提示已用完（刷新页面后重置）
   const confirmAdjust = () => {
-    // saveAdjustCount();
+    adjustUsedCount += 1;
     close();
   };
 
