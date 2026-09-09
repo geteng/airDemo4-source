@@ -36,6 +36,7 @@ import { StylistProfilePage } from "./pages/StylistProfilePage";
 import { StyleProfilePage } from "./pages/StyleProfilePage";
 import { PrivacyPage } from "./pages/PrivacyPage";
 import { IdentityPage } from "./pages/IdentityPage";
+import { FitFeedbackDialog } from "./components/FitFeedbackDialog";
 
 // ─── Bottom tab bar ──────────────────────────────────────────────────────────
 const tabs: {
@@ -798,6 +799,11 @@ export default function App() {
               );
             })}
           </div>
+        )}
+
+        {/* 详情页停留 12 秒反馈/数字形象调整弹窗（《咨询》→ 复用上方二维码弹窗） */}
+        {subPage === "product" && (
+          <FitFeedbackDialog onConsult={() => setShowStylistQR(true)} />
         )}
       </div>
     </div>
