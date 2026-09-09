@@ -26,12 +26,6 @@ export function LoginPage({ onLogin }: { onLogin: (user: MockUser) => void }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const fillUser = (u: MockUser) => {
-    setAccount(u.account);
-    setPassword(u.password);
-    setError("");
-  };
-
   const doLogin = (u?: MockUser) => {
     const target =
       u ??
@@ -46,11 +40,6 @@ export function LoginPage({ onLogin }: { onLogin: (user: MockUser) => void }) {
     setLoading(true);
     // 模拟网络请求耗时，给出真实登录手感
     setTimeout(() => onLogin(target), 500);
-  };
-
-  // 快捷填充：点击直接把体验账号填入输入框（user1/1 等）
-  const quickFill = (u: MockUser) => {
-    fillUser(u);
   };
 
   const inputBase: React.CSSProperties = {
@@ -200,33 +189,6 @@ export function LoginPage({ onLogin }: { onLogin: (user: MockUser) => void }) {
             style={{ ...inputBase, width: "100%" }}
             autoComplete="off"
           />
-        </div>
-
-        {/* 体验账号快捷填充 */}
-        <div style={{ display: "flex", gap: 8, marginTop: 14 }}>
-          {MOCK_USERS.map((u) => {
-            const active = account === u.account;
-            return (
-              <button
-                key={u.account}
-                onClick={() => quickFill(u)}
-                style={{
-                  flex: 1,
-                  border: active ? "1.5px solid #d4a56a" : "1.5px solid #e6dfd4",
-                  background: active ? "rgba(212,165,106,0.16)" : "#faf7f2",
-                  borderRadius: 12,
-                  padding: "8px 4px",
-                  cursor: "pointer",
-                  fontFamily: font,
-                  fontSize: 12,
-                  color: active ? "#8a5a1e" : "#6d5c47",
-                  fontWeight: 600,
-                }}
-              >
-                {u.account}
-              </button>
-            );
-          })}
         </div>
 
         {/* 错误提示 */}
