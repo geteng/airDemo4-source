@@ -69,6 +69,16 @@ export default function App() {
       return next;
     });
   };
+  // 收藏入口统一处理（穿搭定制页小心心/收藏按钮、搭配详情页小心心）：
+  // 未收藏时 → 收藏并弹出「咨询老师二维码」弹窗；已收藏时 → 仅取消收藏，不弹窗
+  const handleLikeClick = (id: number) => {
+    if (!likedIds.has(id)) {
+      toggleLiked(id);
+      setShowStylistQR(true);
+      return;
+    }
+    toggleLiked(id);
+  };
   const dragConstraintsRef = useRef<HTMLDivElement>(null);
   const isFirstTabTrack = useRef(true);
 
@@ -266,7 +276,7 @@ export default function App() {
                 style={{ position: "absolute", inset: 0 }}
               >
                 {activeTab === "home" && <HomePage onGoProduct={handleGoProduct} onGoNote={handleGoNote} onGoVipJoin={() => { /* 埋点【click_nav】：首页「加入会员」横幅 → 弹出 VIP 开通弹窗 */ trackEvent("click_nav", { page: "vip_join" }, "首页加入会员横幅（弹 VIP 弹窗）"); setShowVipJoin(true); }} onGoStylist={handleGoStylist} />}
-                {activeTab === "recommend" && <RecommendPage onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title, video: look.video })} likedIds={likedIds} onToggleLike={toggleLiked} />}
+                {activeTab === "recommend" && <RecommendPage onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title, video: look.video })} likedIds={likedIds} onToggleLike={handleLikeClick} />}
                 {activeTab === "mine" && <MinePage
                   onGoOrders={handleGoOrders}
                   onGoFavorites={handleGoFavorites}
@@ -446,7 +456,7 @@ export default function App() {
                 style={{ position: "absolute", inset: 0, background: BG, zIndex: 20 }}
               >
                 {subPage === "live" && <LivePage onBack={handleBack} onGoProduct={handleGoProduct} />}
-                {subPage === "product" && <ProductPage look={selectedLook} onBack={handleBack} liked={selectedLook ? likedIds.has(selectedLook.id) : false} onToggleLike={() => { if (selectedLook) toggleLiked(selectedLook.id); }} onGoTryOn={() => handleGoTryOn({ img: selectedLook?.img ?? IMG.product, name: selectedLook?.title ?? "高级感白领风", video: selectedLook?.video })} />}
+                {subPage === "product" && <ProductPage look={selectedLook} onBack={handleBack} liked={selectedLook ? likedIds.has(selectedLook.id) : false} onToggleLike={() => { if (selectedLook) handleLikeClick(selectedLook.id); }} onGoTryOn={() => handleGoTryOn({ img: selectedLook?.img ?? IMG.product, name: selectedLook?.title ?? "高级感白领风", video: selectedLook?.video })} />}
                 {subPage === "tryon" && selectedTryOnItem && <TryOnPage item={selectedTryOnItem} onBack={handleBack} />}
                 {subPage === "note" && selectedNote && <NoteDetailPage note={selectedNote} onBack={handleBack} />}
                 {subPage === "wardrobe" && <WardrobePage onBack={handleBack} />}
