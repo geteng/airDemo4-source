@@ -3,9 +3,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Check, X } from "lucide-react";
 import { ACCENT, ACCENT_LIGHT, CARD, font, MUTED, TEXT } from "../constants";
 
-// 数字形象免费调整次数（本地 mock 数据，localStorage 持久化）。
-// 调试重置：清空 localStorage 中该 key 即可回到首次流程。
-const ADJUST_KEY = "stylist_avatar_adjust_count";
+// ── 数字形象免费调整次数（本地 mock 数据，localStorage 持久化）──
+// 暂时注释掉持久化逻辑：每次进入都固定弹出第一种「效果反馈选择窗」
+// 如需恢复：取消下方注释，并把 useEffect 与 confirmAdjust 中的调用恢复即可。
+// const ADJUST_KEY = "stylist_avatar_adjust_count";
 
 type Dialog = null | "choose" | "avatar" | "fit" | "done";
 
@@ -26,31 +27,30 @@ const FIT_ISSUES = [
   "更宽松舒服",
 ];
 
-const readAdjustCount = () => {
-  try {
-    return Number(localStorage.getItem(ADJUST_KEY) || "0");
-  } catch {
-    return 0;
-  }
-};
+// const readAdjustCount = () => {
+//   try {
+//     return Number(localStorage.getItem(ADJUST_KEY) || "0");
+//   } catch {
+//     return 0;
+//   }
+// };
 
-const saveAdjustCount = () => {
-  try {
-    localStorage.setItem(ADJUST_KEY, String(readAdjustCount() + 1));
-  } catch {
-    /* localStorage 不可用时仅本次会话生效，忽略 */
-  }
-};
+// const saveAdjustCount = () => {
+//   try {
+//     localStorage.setItem(ADJUST_KEY, String(readAdjustCount() + 1));
+//   } catch {
+//     /* localStorage 不可用时仅本次会话生效，忽略 */
+//   }
+// };
 
 export function FitFeedbackDialog({ onConsult }: { onConsult: () => void }) {
   const [dialog, setDialog] = useState<Dialog>(null);
   const [picked, setPicked] = useState<string[]>([]);
 
-  // 进入详情页停留 12 秒后弹出：
-  // 已点过「去调整形象」（本地已记录）→ 只提示两句话；否则 → 效果反馈选择窗
+  // 进入详情页停留 12 秒后弹出「效果反馈选择窗」（已暂时停用次数持久化判断）
   useEffect(() => {
     const t = setTimeout(() => {
-      setDialog(readAdjustCount() > 0 ? "done" : "choose");
+      setDialog("choose");
       setPicked([]);
     }, 12000);
     return () => clearTimeout(t);
@@ -77,9 +77,9 @@ export function FitFeedbackDialog({ onConsult }: { onConsult: () => void }) {
     setTimeout(() => setDialog("fit"), 200);
   };
 
-  // 《去调整形象》：本地记录一次，之后停留 12 秒只提示已用完
+  // 《去调整形象》：原逻辑会在本地记录一次（暂时停用持久化，仅收起弹窗）
   const confirmAdjust = () => {
-    saveAdjustCount();
+    // saveAdjustCount();
     close();
   };
 
