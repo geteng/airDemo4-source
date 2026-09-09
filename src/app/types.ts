@@ -2,6 +2,13 @@
 
 export type Tab = "home" | "recommend" | "mine";
 
+// 模拟微信小程序登录的体验账号（内存 mock，刷新页面后重新登录）
+export interface MockUser {
+  account: string;
+  password: string;
+  nickname: string;
+}
+
 export type SubPage =
   | "live"
   | "product"

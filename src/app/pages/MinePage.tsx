@@ -1,10 +1,13 @@
 import {
   Package, Heart, Tag, Footprints, Headphones,
-  Award, ChevronRight, User, ShoppingBag, ShieldCheck, Camera,
+  Award, ChevronRight, LogOut, User, ShoppingBag, ShieldCheck, Camera,
 } from "lucide-react";
 import { ACCENT, ACCENT_LIGHT, BG, CARD, font, IMG, MUTED, TEXT } from "../constants";
+import type { MockUser } from "../types";
 
 export function MinePage({
+  currentUser,
+  onLogout,
   onGoOrders,
   onGoFavorites,
   onGoCoupons,
@@ -16,6 +19,8 @@ export function MinePage({
   onGoPrivacy,
   onGoIdentity,
 }: {
+  currentUser?: MockUser | null;
+  onLogout: () => void;
   onGoOrders: (tab?: string) => void;
   onGoFavorites: () => void;
   onGoCoupons: () => void;
@@ -47,13 +52,67 @@ export function MinePage({
       {/* Profile header */}
       <div style={{ background: `linear-gradient(160deg, #3a2a18 0%, #6b4a28 100%)`, padding: "28px 20px 32px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div style={{ width: 64, height: 64, borderRadius: "50%", overflow: "hidden", border: `2.5px solid ${ACCENT}` }}>
-            <img src={IMG.hero} alt="头像" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          {currentUser ? (
+            <div
+              style={{
+                width: 64,
+                height: 64,
+                borderRadius: "50%",
+                border: `2.5px solid ${ACCENT}`,
+                background: `linear-gradient(150deg, #f0d7ae, #d4a56a)`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontFamily: font,
+                fontSize: 26,
+                fontWeight: 800,
+                color: "#2a1d0c",
+                flexShrink: 0,
+              }}
+            >
+              {currentUser.nickname.slice(0, 1)}
+            </div>
+          ) : (
+            <div style={{ width: 64, height: 64, borderRadius: "50%", overflow: "hidden", border: `2.5px solid ${ACCENT}` }}>
+              <img src={IMG.hero} alt="头像" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            </div>
+          )}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontFamily: font, fontSize: 16, fontWeight: 700, color: "#f5d9a8" }}>
+              {currentUser ? `${currentUser.nickname} · 会员等级:黄金` : "小美 · 会员等级:黄金"}
+            </div>
+            <div style={{ fontFamily: font, fontSize: 12, color: "rgba(245,217,168,0.6)", marginTop: 2 }}>
+              {currentUser ? (
+                <>
+                  <div style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>体验账号 {currentUser.account}</div>
+                  <div style={{ marginTop: 2, whiteSpace: "nowrap" }}>有效期至 2027.03.15</div>
+                </>
+              ) : (
+                "有效期至 2027.03.15"
+              )}
+            </div>
           </div>
-          <div>
-            <div style={{ fontFamily: font, fontSize: 16, fontWeight: 700, color: "#f5d9a8" }}>小美 · 会员等级:黄金</div>
-            <div style={{ fontFamily: font, fontSize: 12, color: "rgba(245,217,168,0.6)", marginTop: 2 }}>有效期至 2027.03.15</div>
-          </div>
+          <button
+            onClick={onLogout}
+            style={{
+              flexShrink: 0,
+              display: "flex",
+              alignItems: "center",
+              gap: 5,
+              border: "1px solid rgba(245,217,168,0.5)",
+              background: "rgba(255,255,255,0.08)",
+              color: "#f5d9a8",
+              borderRadius: 20,
+              padding: "7px 12px",
+              cursor: "pointer",
+              fontFamily: font,
+              fontSize: 12,
+              fontWeight: 600,
+            }}
+          >
+            <LogOut size={13} />
+            切换账号
+          </button>
         </div>
 
         {/* Stats - clickable, navigate to orders with tab */}

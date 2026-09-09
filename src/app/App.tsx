@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { ACCENT, ACCENT_LIGHT, BG, CARD, font, IMG, MUTED, NAV_ACTIVE, NAV_BG, NAV_INACTIVE, STYLIST_NAME, TEXT } from "./constants";
 import { initStayDuration, reportPageLeave, trackEvent, trackScrollDepth } from "./track";
-import type { Look, NoteData, SubPage, Tab } from "./types";
+import type { Look, MockUser, NoteData, SubPage, Tab } from "./types";
 
 import { HomePage } from "./pages/HomePage";
 import { RecommendPage } from "./pages/RecommendPage";
@@ -36,6 +36,7 @@ import { StylistProfilePage } from "./pages/StylistProfilePage";
 import { StyleProfilePage } from "./pages/StyleProfilePage";
 import { PrivacyPage } from "./pages/PrivacyPage";
 import { IdentityPage } from "./pages/IdentityPage";
+import { LoginPage } from "./pages/LoginPage";
 import { FitFeedbackDialog } from "./components/FitFeedbackDialog";
 
 // ─── Bottom tab bar ──────────────────────────────────────────────────────────
@@ -50,6 +51,8 @@ const tabs: {
 ];
 
 export default function App() {
+  // 模拟微信小程序登录：登录用户仅保存在内存，刷新页面后回到登录页
+  const [user, setUser] = useState<MockUser | null>(null);
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [subPage, setSubPage] = useState<SubPage>(null);
   const [selectedLook, setSelectedLook] = useState<Look | null>(null);
@@ -254,6 +257,9 @@ export default function App() {
           flexDirection: "column",
         }}
       >
+        {/* 登录态：未登录先展示模拟微信登录页，登录后才进入小程序主界面 */}
+        {user ? (
+          <>
         {/* Page content */}
         <div
           ref={dragConstraintsRef}
@@ -279,6 +285,8 @@ export default function App() {
                 {activeTab === "home" && <HomePage onGoProduct={handleGoProduct} onGoNote={handleGoNote} onGoVipJoin={() => { /* 埋点【click_nav】：首页「加入会员」横幅 → 弹出 VIP 开通弹窗 */ trackEvent("click_nav", { page: "vip_join" }, "首页加入会员横幅（弹 VIP 弹窗）"); setShowVipJoin(true); }} onGoStylist={handleGoStylist} />}
                 {activeTab === "recommend" && <RecommendPage onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title, video: look.video })} likedIds={likedIds} onToggleLike={handleLikeClick} />}
                 {activeTab === "mine" && <MinePage
+                  currentUser={user}
+                  onLogout={() => { /* 切换账号：回到模拟微信登录页 */ setUser(null); setSubPage(null); }}
                   onGoOrders={handleGoOrders}
                   onGoFavorites={handleGoFavorites}
                   onGoCoupons={handleGoCoupons}
@@ -804,6 +812,10 @@ export default function App() {
         {/* 详情页停留 12 秒反馈/数字形象调整弹窗（《咨询》→ 复用上方二维码弹窗） */}
         {subPage === "product" && (
           <FitFeedbackDialog onConsult={() => setShowStylistQR(true)} />
+        )}
+          </>
+        ) : (
+          <LoginPage onLogin={(u) => setUser(u)} />
         )}
       </div>
     </div>
