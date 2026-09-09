@@ -50,7 +50,9 @@ export function FitFeedbackDialog({ onConsult }: { onConsult: () => void }) {
   // 进入详情页停留 12 秒后弹出「效果反馈选择窗」（已暂时停用次数持久化判断）
   useEffect(() => {
     const t = setTimeout(() => {
+    //   setDialog(readAdjustCount() > 0 ? "done" : "choose");
       setDialog("choose");
+    //   setDialog("done");
       setPicked([]);
     }, 12000);
     return () => clearTimeout(t);
