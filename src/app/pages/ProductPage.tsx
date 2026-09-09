@@ -65,11 +65,11 @@ export function ProductPage({
           aria-label={liked ? "已收藏" : "收藏"}
           aria-pressed={liked}
           onClick={() => {
-            // 埋点【click_fav】：搭配详情页右上角「收藏」按钮
+            // 埋点【click_fav】：搭配详情页图片底部「收藏」按钮
             trackEvent("click_fav", { product: title }, liked ? `取消收藏：${title}` : `收藏：${title}`);
             onToggleLike();
           }}
-          style={{ position: "absolute", top: 16, right: 16, width: 36, height: 36, borderRadius: "50%", background: liked ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.25)", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(6px)" }}
+          style={{ position: "absolute", bottom: 12, left: "50%", transform: "translateX(-50%)", width: 36, height: 36, borderRadius: "50%", background: liked ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.3)", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(6px)", zIndex: 2 }}
         >
           <Heart size={16} color={liked ? "#e53935" : "#fff"} fill={liked ? "#e53935" : "none"} />
         </button>

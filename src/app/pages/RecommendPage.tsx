@@ -78,7 +78,7 @@ export function RecommendPage({
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(28,26,23,0.65) 0%, transparent 50%)" }} />
                 <button
                   onClick={(e) => { e.stopPropagation(); toggleLike(look.id); }}
-                  style={{ position: "absolute", top: 14, right: 14, width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.2)", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)", zIndex: 5 }}
+                  style={{ position: "absolute", bottom: 14, left: "50%", transform: "translateX(-50%)", width: 36, height: 36, borderRadius: "50%", background: liked ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.25)", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)", zIndex: 5 }}
                 >
                   <Heart size={16} color={liked ? "#e53935" : "#fff"} fill={liked ? "#e53935" : "none"} />
                 </button>
@@ -106,9 +106,9 @@ export function RecommendPage({
                 >
                   <Sparkles size={11} /> 我试试
                 </button>
-                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 16px 16px" }}>
-                  <div style={{ fontFamily: font, fontSize: 17, fontWeight: 700, color: "#fff" }}>{look.title}</div>
-                  <div style={{ fontFamily: font, fontSize: 12, color: "rgba(255,255,255,0.75)", marginTop: 2 }}>{look.items}</div>
+                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 16px 58px", pointerEvents: "none" }}>
+                  <div style={{ fontFamily: font, fontSize: 17, fontWeight: 700, color: "#fff", maxWidth: "62%" }}>{look.title}</div>
+                  <div style={{ fontFamily: font, fontSize: 12, color: "rgba(255,255,255,0.75)", marginTop: 2, maxWidth: "62%" }}>{look.items}</div>
                 </div>
               </div>
 
