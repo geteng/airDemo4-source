@@ -59,6 +59,16 @@ export default function App() {
   const [showVipJoin, setShowVipJoin] = useState(false);
   const [vipPlan, setVipPlan] = useState<"month" | "season" | "year">("year");
   const [orderInitialTab, setOrderInitialTab] = useState<string>("all");
+  // 收藏状态提升到 App：首页轮播详情与穿搭定制页共享同一份，避免两处不同步
+  const [likedIds, setLikedIds] = useState<Set<number>>(new Set());
+  const toggleLiked = (id: number) => {
+    setLikedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
   const dragConstraintsRef = useRef<HTMLDivElement>(null);
   const isFirstTabTrack = useRef(true);
 
@@ -256,7 +266,7 @@ export default function App() {
                 style={{ position: "absolute", inset: 0 }}
               >
                 {activeTab === "home" && <HomePage onGoProduct={handleGoProduct} onGoNote={handleGoNote} onGoVipJoin={() => { /* 埋点【click_nav】：首页「加入会员」横幅 → 弹出 VIP 开通弹窗 */ trackEvent("click_nav", { page: "vip_join" }, "首页加入会员横幅（弹 VIP 弹窗）"); setShowVipJoin(true); }} onGoStylist={handleGoStylist} />}
-                {activeTab === "recommend" && <RecommendPage onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title, video: look.video })} />}
+                {activeTab === "recommend" && <RecommendPage onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title, video: look.video })} likedIds={likedIds} onToggleLike={toggleLiked} />}
                 {activeTab === "mine" && <MinePage
                   onGoOrders={handleGoOrders}
                   onGoFavorites={handleGoFavorites}
@@ -436,7 +446,7 @@ export default function App() {
                 style={{ position: "absolute", inset: 0, background: BG, zIndex: 20 }}
               >
                 {subPage === "live" && <LivePage onBack={handleBack} onGoProduct={handleGoProduct} />}
-                {subPage === "product" && <ProductPage look={selectedLook} onBack={handleBack} onGoTryOn={() => handleGoTryOn({ img: selectedLook?.img ?? IMG.product, name: selectedLook?.title ?? "高级感白领风", video: selectedLook?.video })} />}
+                {subPage === "product" && <ProductPage look={selectedLook} onBack={handleBack} liked={selectedLook ? likedIds.has(selectedLook.id) : false} onToggleLike={() => { if (selectedLook) toggleLiked(selectedLook.id); }} onGoTryOn={() => handleGoTryOn({ img: selectedLook?.img ?? IMG.product, name: selectedLook?.title ?? "高级感白领风", video: selectedLook?.video })} />}
                 {subPage === "tryon" && selectedTryOnItem && <TryOnPage item={selectedTryOnItem} onBack={handleBack} />}
                 {subPage === "note" && selectedNote && <NoteDetailPage note={selectedNote} onBack={handleBack} />}
                 {subPage === "wardrobe" && <WardrobePage onBack={handleBack} />}

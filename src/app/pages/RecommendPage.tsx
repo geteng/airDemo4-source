@@ -6,11 +6,15 @@ import { Pill } from "../components/Pill";
 
 export function RecommendPage({
   onGoTryOn,
+  likedIds,
+  onToggleLike,
 }: {
   onGoTryOn: (look: Look) => void;
+  likedIds: Set<number>;
+  onToggleLike: (id: number) => void;
 }) {
   const [activeScene, setActiveScene] = useState("约会");
-  const [likedItems, setLikedItems] = useState<Set<number>>(new Set());
+
   // 自动轮播在用户操作后暂停，15 秒无操作再恢复
   const [paused, setPaused] = useState(false);
   const resumeTimer = useRef<ReturnType<typeof setTimeout>>();
@@ -43,12 +47,7 @@ export function RecommendPage({
 
   const toggleLike = (id: number) => {
     pauseThenResume();
-    setLikedItems((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+    onToggleLike(id);
   };
 
   return (
@@ -70,7 +69,7 @@ export function RecommendPage({
       {/* Look cards */}
       <div style={{ padding: "0 20px", display: "flex", flexDirection: "column", gap: 16 }}>
         {sceneLooks.map((look) => {
-          const liked = likedItems.has(look.id);
+          const liked = likedIds.has(look.id);
           const detail = productDetails[look.id] ?? productDetails[1];
           return (
             <div key={look.id} style={{ background: CARD, borderRadius: 20, overflow: "hidden", boxShadow: "0 3px 16px rgba(0,0,0,0.07)" }}>

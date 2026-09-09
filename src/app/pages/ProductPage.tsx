@@ -34,10 +34,14 @@ export function ProductPage({
   look,
   onBack,
   onGoTryOn,
+  liked,
+  onToggleLike,
 }: {
   look: Look | null;
   onBack: () => void;
   onGoTryOn: () => void;
+  liked: boolean;
+  onToggleLike: () => void;
 }) {
   const [added, setAdded] = useState(false);
   const img = look?.img ?? IMG.product;
@@ -57,8 +61,17 @@ export function ProductPage({
         >
           <X size={16} color="#fff" />
         </button>
-        <button style={{ position: "absolute", top: 16, right: 16, width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.25)", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(6px)" }}>
-          <Heart size={16} color="#fff" />
+        <button
+          aria-label={liked ? "已收藏" : "收藏"}
+          aria-pressed={liked}
+          onClick={() => {
+            // 埋点【click_fav】：搭配详情页右上角「收藏」按钮
+            trackEvent("click_fav", { product: title }, liked ? `取消收藏：${title}` : `收藏：${title}`);
+            onToggleLike();
+          }}
+          style={{ position: "absolute", top: 16, right: 16, width: 36, height: 36, borderRadius: "50%", background: liked ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.25)", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(6px)" }}
+        >
+          <Heart size={16} color={liked ? "#e53935" : "#fff"} fill={liked ? "#e53935" : "none"} />
         </button>
         <button
           onClick={onGoTryOn}
