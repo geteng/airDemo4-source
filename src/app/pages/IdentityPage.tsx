@@ -6,16 +6,60 @@ import {
   Lock,
   Plus,
   ShieldCheck,
+  X,
   XCircle,
 } from "lucide-react";
 import { ACCENT, BG, CARD, font, MUTED, TEXT } from "../constants";
 
 type SlotKey = "full" | "face";
 
+// ─── 协议条款 Mock 数据（点击协议链接时展示） ──────────────────────────────────
+interface PolicyDoc {
+  title: string;
+  effective: string;
+  paragraphs: string[];
+}
+
+const POLICY_DOCS: PolicyDoc[] = [
+  {
+    title: "照片用途说明",
+    effective: "生效日期：2026-03-01 · 版本 V1.2",
+    paragraphs: [
+      "您通过本页面上传的全身照、正脸美颜照，仅用于「虚拟试衣」「个性化穿搭推荐」「AI 生成穿搭上身效果」等功能实现。",
+      "平台不会将您的照片用于广告、宣传、转售或任何与本服务无关的商业用途，也不会向第三方提供、出售或共享您的照片。",
+      "照片在上传及存储过程中均采用加密传输，图片存放于受控服务器，访问权限仅限为您服务的专属穿搭师与 AI 系统。",
+      "您可随时在「我的-设置」中申请删除照片及由此生成的数字形象数据，删除后平台将在合理时间内彻底清除相关记录。",
+    ],
+  },
+  {
+    title: "肖像使用法律声明",
+    effective: "生效日期：2026-03-01 · 依据《民法典》第 1018 条",
+    paragraphs: [
+      "您上传的照片包含个人肖像，平台严格遵守《中华人民共和国民法典》关于肖像权的相关规定。",
+      "未经您本人明示授权，平台不会以任何形式使用、复制、编辑您的肖像用于本服务之外的用途。",
+      "AI 生成的试穿效果图仅向您本人展示，其他用户无法查看或下载您的专属形象、照片及衍生数据。",
+      "如因案例展示、宣传素材等场景确需使用您的肖像，平台将另行单独征求您的书面同意后才会使用。",
+      "如您发现肖像被不当使用，可随时联系在线客服，平台将在 48 小时内核实并处理。",
+    ],
+  },
+  {
+    title: "隐私授权条款",
+    effective: "生效日期：2026-03-01 · 版本 V2.0",
+    paragraphs: [
+      "为完成虚拟试衣与风格推荐，您授权平台收集以下信息：个人照片（全身照、正脸照）与身材数据（身高、三围，可选填写）。",
+      "上述信息仅在您主动提交「上传照片创建身份」后使用，授权范围以本页面功能为限，遵循最小化收集原则。",
+      "您可在「我的-设置-隐私管理」中随时查看授权记录、关闭或撤回授权；撤回授权不影响此前基于授权已完成的处理。",
+      "平台不会将您的个人信息与第三方共享，但法律法规另有规定或经您单独同意的除外。",
+      "未满 14 周岁的未成年人使用本服务，需在监护人同意并陪同操作下进行。",
+    ],
+  },
+];
+
 export function IdentityPage({ onBack }: { onBack: () => void }) {
   const [showToast, setShowToast] = useState(false);
   const [uploaded, setUploaded] = useState<Record<SlotKey, boolean>>({ full: false, face: false });
   const [agreed, setAgreed] = useState(false);
+  const [viewingDoc, setViewingDoc] = useState<PolicyDoc | null>(null);
   const [body, setBody] = useState<Record<"height" | "bust" | "waist" | "hip", string>>({
     height: "160",
     bust: "",
@@ -328,9 +372,9 @@ export function IdentityPage({ onBack }: { onBack: () => void }) {
           </span>
           <span style={{ fontFamily: font, fontSize: 12, color: MUTED, lineHeight: 1.7 }}>
             我已阅读并同意
-            <PolicyLink>《照片用途说明》</PolicyLink>
-            <PolicyLink>《肖像使用法律声明》</PolicyLink>
-            <PolicyLink>《隐私授权条款》</PolicyLink>
+            <PolicyLink doc={POLICY_DOCS[0]} onOpen={setViewingDoc}>《照片用途说明》</PolicyLink>
+            <PolicyLink doc={POLICY_DOCS[1]} onOpen={setViewingDoc}>《肖像使用法律声明》</PolicyLink>
+            <PolicyLink doc={POLICY_DOCS[2]} onOpen={setViewingDoc}>《隐私授权条款》</PolicyLink>
           </span>
         </label>
 
@@ -405,6 +449,104 @@ export function IdentityPage({ onBack }: { onBack: () => void }) {
         >
           <CheckCircle2 size={16} color={ACCENT} />
           上传成功
+        </div>
+      )}
+
+      {/* 条款查看弹层 */}
+      {viewingDoc && (
+        <div
+          onClick={() => setViewingDoc(null)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.6)",
+            zIndex: 150,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "24px",
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: "100%",
+              maxWidth: 360,
+              maxHeight: "72vh",
+              overflowY: "auto",
+              background: CARD,
+              border: "1px solid rgba(212,165,106,0.25)",
+              borderRadius: 18,
+              padding: "20px 20px 18px",
+              boxShadow: "0 18px 50px rgba(0,0,0,0.55)",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontFamily: font, fontSize: 17, fontWeight: 700, color: ACCENT }}>
+                  {viewingDoc.title}
+                </div>
+                <div style={{ fontFamily: font, fontSize: 11, color: MUTED, marginTop: 4 }}>
+                  {viewingDoc.effective}
+                </div>
+              </div>
+              <button
+                onClick={() => setViewingDoc(null)}
+                aria-label="关闭"
+                style={{
+                  flexShrink: 0,
+                  width: 28,
+                  height: 28,
+                  borderRadius: "50%",
+                  border: "none",
+                  background: "rgba(168,156,140,0.15)",
+                  color: MUTED,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <X size={15} />
+              </button>
+            </div>
+            <div style={{ height: 1, background: "rgba(168,156,140,0.18)", margin: "14px 0 12px" }} />
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {viewingDoc.paragraphs.map((p, i) => (
+                <p
+                  key={i}
+                  style={{
+                    fontFamily: font,
+                    fontSize: 13,
+                    color: TEXT,
+                    lineHeight: 1.75,
+                    margin: 0,
+                    textAlign: "justify",
+                  }}
+                >
+                  {p}
+                </p>
+              ))}
+            </div>
+            <button
+              onClick={() => setViewingDoc(null)}
+              style={{
+                width: "100%",
+                marginTop: 18,
+                padding: "11px 0",
+                borderRadius: 22,
+                border: "none",
+                background: `linear-gradient(90deg, ${ACCENT}, #c79758)`,
+                color: "#18160F",
+                fontFamily: font,
+                fontSize: 14,
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              我知道了
+            </button>
+          </div>
         </div>
       )}
     </div>
@@ -541,10 +683,22 @@ function BodyInput({
 }
 
 // ── 子组件：协议链接 ─────────────────────────────────────────────────────────────
-function PolicyLink({ children }: { children: React.ReactNode }) {
+function PolicyLink({
+  doc,
+  onOpen,
+  children,
+}: {
+  doc: PolicyDoc;
+  onOpen: (d: PolicyDoc) => void;
+  children: React.ReactNode;
+}) {
   return (
     <span
-      onClick={(e) => e.stopPropagation()}
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation(); // 避免触发外层勾选
+        onOpen(doc);
+      }}
       style={{
         color: ACCENT,
         textDecoration: "underline",
