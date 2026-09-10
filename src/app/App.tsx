@@ -981,9 +981,16 @@ export default function App() {
           </div>
         )}
 
-        {/* 详情页停留 12 秒反馈/数字形象调整弹窗（《咨询》→ 复用上方二维码弹窗） */}
+        {/* 详情页停留 12 秒反馈/数字形象调整弹窗（《咨询》→ 复用上方二维码弹窗；《去调整形象》→ 我的专属形象列表） */}
         {subPage === "product" && (
-          <FitFeedbackDialog onConsult={() => setShowStylistQR(true)} />
+          <FitFeedbackDialog
+            onConsult={() => setShowStylistQR(true)}
+            onAdjust={() => {
+              /* 埋点【click_nav】：详情页 12 秒弹窗「去调整形象」→ 我的专属形象列表 */
+              trackEvent("click_nav", { page: "myModels" }, "12秒弹窗：去调整形象");
+              setSubPage("myModels");
+            }}
+          />
         )}
           </>
         ) : (

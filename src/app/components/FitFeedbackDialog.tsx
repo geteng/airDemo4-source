@@ -26,7 +26,14 @@ const FIT_ISSUES = [
   "更宽松舒服",
 ];
 
-export function FitFeedbackDialog({ onConsult }: { onConsult: () => void }) {
+export function FitFeedbackDialog({
+  onConsult,
+  onAdjust,
+}: {
+  onConsult: () => void;
+  // 《去调整形象》：跳转到「我的专属形象」列表页
+  onAdjust: () => void;
+}) {
   const [dialog, setDialog] = useState<Dialog>(null);
   const [picked, setPicked] = useState<string[]>([]);
 
@@ -61,10 +68,12 @@ export function FitFeedbackDialog({ onConsult }: { onConsult: () => void }) {
     setTimeout(() => setDialog("fit"), 200);
   };
 
-  // 《去调整形象》：内存中记一次已用过，之后再次进入只提示已用完（刷新页面后重置）
+  // 《去调整形象》：内存中记一次已用过（之后再次进入只提示已用完，刷新页面后重置），
+  // 并跳转到「我的专属形象」列表页
   const confirmAdjust = () => {
     adjustUsedCount += 1;
     close();
+    onAdjust();
   };
 
   // 《咨询》：关闭当前弹窗并唤起咨询老师二维码
