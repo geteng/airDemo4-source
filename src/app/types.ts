@@ -24,6 +24,7 @@ export type SubPage =
   | "styleProfile"
   | "privacy"
   | "identity"
+  | "myModels"
   | null;
 
 export interface Look {
