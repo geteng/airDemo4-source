@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Lock, MessageCircle, User } from "lucide-react";
-import { BG, font } from "../constants";
+import { BG, font, STYLIST_NAME } from "../constants";
 import type { MockUser } from "../types";
 
 // ─── 模拟微信小程序登录的体验账号 ────────────────────────────────────────────
@@ -102,7 +102,7 @@ export function LoginPage({ onLogin }: { onLogin: (user: MockUser) => void }) {
           {WX_ICON}
         </div>
         <div style={{ fontFamily: font, fontSize: 22, fontWeight: 800, color: "#f3ece2" }}>
-          AI 智能穿搭
+          {STYLIST_NAME}的AI智能穿搭
         </div>
         <div style={{ fontFamily: font, fontSize: 13, color: "#a89c8c", marginTop: 6 }}>
           微信授权登录 · 尊享 1 对 1 穿搭定制服务

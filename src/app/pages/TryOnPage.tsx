@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Sparkles, Check, Share2 } from "lucide-react";
+import { X, Sparkles, Check, Share2, Users } from "lucide-react";
 import { ACCENT, ACCENT_LIGHT, CARD, getTryonVideoBySlot, TEXT, MUTED, BG, font } from "../constants";
 
 const TRYON_VIDEO_FALLBACK =
@@ -28,6 +28,15 @@ export function TryOnPage({
 
   const startSmallPlay = () => {
     setSmallPlaying(true);
+  };
+
+  // 分享类按钮的统一轻提示
+  const showToast = (text: string) => {
+    const el = document.createElement("div");
+    el.style.cssText = "position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#333;color:#fff;padding:12px 28px;border-radius:24px;font-size:14px;font-weight:600;z-index:9999;font-family:system-ui;";
+    el.textContent = text;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 2000);
   };
 
   // 小窗口视频在 smallPlaying 变为 true 后才会挂载，
@@ -325,34 +334,54 @@ export function TryOnPage({
               </div>
             </div>
 
-            {/* Share button */}
-            <button
-              onClick={() => {
-                const el = document.createElement("div");
-                el.style.cssText = "position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#333;color:#fff;padding:12px 28px;border-radius:24px;font-size:14px;font-weight:600;z-index:9999;font-family:system-ui;";
-                el.textContent = "已复制分享链接 ✅";
-                document.body.appendChild(el);
-                setTimeout(() => el.remove(), 2000);
-              }}
-              style={{
-                width: "100%",
-                padding: "12px",
-                borderRadius: 14,
-                border: `1.5px dashed ${ACCENT}`,
-                background: ACCENT_LIGHT,
-                color: ACCENT,
-                fontFamily: font,
-                fontSize: 14,
-                fontWeight: 600,
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 8,
-              }}
-            >
-              <Share2 size={16} /> 分享给穿搭师点评
-            </button>
+            {/* Share buttons：左=分享给穿搭师点评，右=分享给我的好友 */}
+            <div style={{ display: "flex", gap: 10 }}>
+              <button
+                onClick={() => showToast("已复制分享链接，已发送给穿搭师")}
+                style={{
+                  flex: 1,
+                  padding: "12px 8px",
+                  borderRadius: 14,
+                  border: `1.5px dashed ${ACCENT}`,
+                  background: ACCENT_LIGHT,
+                  color: ACCENT,
+                  fontFamily: font,
+                  fontSize: 14,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 6,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <Share2 size={16} /> 分享给穿搭师点评
+              </button>
+              <button
+                onClick={() => showToast("已复制分享链接，快分享给好友")}
+                style={{
+                  flex: 1,
+                  padding: "12px 8px",
+                  borderRadius: 14,
+                  border: "none",
+                  background: `linear-gradient(90deg, ${ACCENT}, #e0b67e)`,
+                  color: "#2a1d0c",
+                  fontFamily: font,
+                  fontSize: 14,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 6,
+                  whiteSpace: "nowrap",
+                  boxShadow: "0 4px 14px rgba(212,165,106,0.3)",
+                }}
+              >
+                <Users size={16} /> 分享给我的好友
+              </button>
+            </div>
 
             {/* Why it works */}
             <div style={{ background: CARD, borderRadius: 16, padding: "16px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
