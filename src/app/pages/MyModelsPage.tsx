@@ -11,12 +11,26 @@ interface ModelItem {
   height: string;
 }
 
-const AVATAR =
-  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop&auto=format";
-
 const INITIAL_MODELS: ModelItem[] = [
-  { id: 1, img: AVATAR, selected: true, height: "160cm" },
-  { id: 2, img: AVATAR, selected: false, defective: true, height: "160cm" },
+  {
+    id: 1,
+    img: "https://admins3.tos-cn-shanghai.volces.com/tmp_522c5ade4151f7432fdd91ca07e92b61.jpg",
+    selected: true,
+    height: "160cm",
+  },
+  {
+    id: 2,
+    img: "https://admins3.tos-cn-shanghai.volces.com/tmp_b8b0264f8af7a7b01ff823cdedd27817.jpg",
+    selected: false,
+    defective: true,
+    height: "160cm",
+  },
+  {
+    id: 3,
+    img: "https://admins3.tos-cn-shanghai.volces.com/PXmRWyidzR1ahzB.jpeg",
+    selected: false,
+    height: "160cm",
+  },
 ];
 
 export function MyModelsPage({
