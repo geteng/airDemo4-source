@@ -273,8 +273,8 @@ export function ProductPage({
         <div style={{ marginTop: 10, padding: "12px 0 10px" }}>
           <button
             onClick={() => {
-              // 埋点【click_buy】：搭配详情页内联「立即购买」按钮(仅首次点击上报，避免连点重复)
-              if (!added) trackEvent("click_buy", { product: title, price }, `点击立即购买：${title}（￥${price}）`);
+              // 埋点【click_buy】：搭配详情页内联「加入购物车」按钮(仅首次点击上报，避免连点重复)
+              if (!added) trackEvent("click_buy", { product: title, price }, `点击加入购物车：${title}（￥${price}）`);
               setAdded(true);
             }}
             style={{
@@ -285,7 +285,7 @@ export function ProductPage({
               display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
             }}
           >
-            {added ? <><Check size={16} /> 已加入购物车</> : <><ShoppingBag size={16} /> 立即购买</>}
+            {added ? <><Check size={16} /> 已加入购物车</> : <><ShoppingBag size={16} /> 加入购物车</>}
           </button>
         </div>
       </div>

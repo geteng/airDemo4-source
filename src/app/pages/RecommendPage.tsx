@@ -18,7 +18,7 @@ export function RecommendPage({
   // 自动轮播在用户操作后暂停，15 秒无操作再恢复
   const [paused, setPaused] = useState(false);
   const resumeTimer = useRef<ReturnType<typeof setTimeout>>();
-  // 「立即购买」点击后的视觉反馈状态
+  // 「加入购物车」点击后的视觉反馈状态
   const [purchasedId, setPurchasedId] = useState<number | null>(null);
   // 「更多穿搭建议」点击后的「敬请期待」弹窗
   const [showComingSoon, setShowComingSoon] = useState(false);
@@ -290,7 +290,7 @@ export function RecommendPage({
                   ))}
                 </div>
 
-                {/* 立即购买 */}
+                {/* 加入购物车 */}
                 <button
                   onClick={() => { pauseThenResume(); setPurchasedId(look.id); }}
                   style={{
@@ -300,7 +300,7 @@ export function RecommendPage({
                     transition: "background 0.25s ease",
                   }}
                 >
-                  {purchasedId === look.id ? (<><Check size={16} /> 已加入购物车</>) : (<><ShoppingBag size={16} /> 立即购买</>)}
+                  {purchasedId === look.id ? (<><Check size={16} /> 已加入购物车</>) : (<><ShoppingBag size={16} /> 加入购物车</>)}
                 </button>
               </div>
             </div>

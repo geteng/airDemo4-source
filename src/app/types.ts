@@ -17,6 +17,7 @@ export type SubPage =
   | "wardrobe"
   | "orders"
   | "favorites"
+  | "cart"
   | "coupons"
   | "records"
   | "vip"
@@ -86,6 +87,18 @@ export interface FavoriteData {
   img: string;
   name: string;
   price: number;
+  type: string;
+}
+
+// 购物车商品（Mock）
+export interface CartItem {
+  id: number;
+  img: string;
+  name: string;
+  // 规格：尺码 / 颜色等
+  spec: string;
+  price: number;
+  qty: number;
   type: string;
 }
 

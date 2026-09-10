@@ -29,6 +29,7 @@ import { TryOnPage } from "./pages/TryOnPage";
 import { WardrobePage } from "./pages/WardrobePage";
 import { OrdersPage } from "./pages/OrdersPage";
 import { FavoritesPage } from "./pages/FavoritesPage";
+import { CartPage } from "./pages/CartPage";
 import { CouponsPage } from "./pages/CouponsPage";
 import { RecordsPage } from "./pages/RecordsPage";
 import { VipPage } from "./pages/VipPage";
@@ -243,6 +244,7 @@ export default function App() {
   };
   // 以下 9 个为「我的」页各入口：点击均上报 click_nav 并进入对应子页面
   const handleGoOrders = (tab?: string) => { /* 埋点【click_nav】：我的页「我的订单」入口 */ trackEvent("click_nav", { page: "orders", tab: tab || "all" }, `跳转我的订单（tab=${tab || "all"}）`); setOrderInitialTab(tab || "all"); setSubPage("orders"); };
+  const handleGoCart = () => { /* 埋点【click_nav】：我的页「购物车」入口 */ trackEvent("click_nav", { page: "cart" }, "跳转购物车"); setSubPage("cart"); };
   const handleGoFavorites = () => { /* 埋点【click_nav】：我的页「我的收藏」入口 */ trackEvent("click_nav", { page: "favorites" }, "跳转我的收藏"); setSubPage("favorites"); };
   const handleGoCoupons = () => { /* 埋点【click_nav】：我的页「优惠券」入口 */ trackEvent("click_nav", { page: "coupons" }, "跳转优惠券"); setSubPage("coupons"); };
   const handleGoRecords = () => { /* 埋点【click_nav】：我的页「服务记录」入口 */ trackEvent("click_nav", { page: "records" }, "跳转服务记录"); setSubPage("records"); };
@@ -313,6 +315,7 @@ export default function App() {
                   currentUser={user}
                   onLogout={() => { /* 切换账号：回到模拟微信登录页 */ setUser(null); setSubPage(null); }}
                   onGoOrders={handleGoOrders}
+                  onGoCart={handleGoCart}
                   onGoFavorites={handleGoFavorites}
                   onGoCoupons={handleGoCoupons}
                   onGoRecords={handleGoRecords}
@@ -555,6 +558,7 @@ export default function App() {
                 {subPage === "wardrobe" && <WardrobePage onBack={handleBack} />}
                 {subPage === "orders" && <OrdersPage onBack={handleBack} initialTab={orderInitialTab} />}
                 {subPage === "favorites" && <FavoritesPage onBack={handleBack} />}
+                {subPage === "cart" && <CartPage onBack={handleBack} />}
                 {subPage === "coupons" && <CouponsPage onBack={handleBack} />}
                 {subPage === "records" && <RecordsPage onBack={handleBack} />}
                 {subPage === "vip" && <VipPage onBack={handleBack} />}

@@ -1,14 +1,15 @@
 import {
   Package, Heart, Tag, Footprints, Headphones,
-  Award, ChevronRight, LogOut, User, ShoppingBag, ShieldCheck, Camera,
+  Award, ChevronRight, LogOut, User, ShoppingBag, ShoppingCart, ShieldCheck, Camera,
 } from "lucide-react";
-import { ACCENT, ACCENT_LIGHT, BG, CARD, font, IMG, MUTED, TEXT } from "../constants";
+import { ACCENT, ACCENT_LIGHT, BG, CARD, cartData, font, IMG, MUTED, TEXT } from "../constants";
 import type { MockUser } from "../types";
 
 export function MinePage({
   currentUser,
   onLogout,
   onGoOrders,
+  onGoCart,
   onGoFavorites,
   onGoCoupons,
   onGoRecords,
@@ -22,6 +23,7 @@ export function MinePage({
   currentUser?: MockUser | null;
   onLogout: () => void;
   onGoOrders: (tab?: string) => void;
+  onGoCart: () => void;
   onGoFavorites: () => void;
   onGoCoupons: () => void;
   onGoRecords: () => void;
@@ -40,6 +42,7 @@ export function MinePage({
   ];
 
   const menuItems = [
+    { icon: ShoppingCart, label: "购物车", desc: `已加入 ${cartData.reduce((sum, i) => sum + i.qty, 0)} 件商品`, action: onGoCart },
     { icon: Package, label: "我的订单", desc: "查看所有订单", action: () => onGoOrders("all") },
     { icon: Heart, label: "我的收藏", desc: "收藏的单品与搭配", action: onGoFavorites },
     { icon: Tag, label: "我的优惠券", desc: "3张可用", action: onGoCoupons },

@@ -1,5 +1,6 @@
 // 全局共享常量、主题色与 Mock 数据
 import type {
+  CartItem,
   CouponData,
   FavoriteData,
   Look,
@@ -127,6 +128,13 @@ export const favoritesData: FavoriteData[] = [
   { id: 4, img: IMG.wardrobe2, name: "暖色系日常", price: 1299, type: "单品" },
   { id: 5, img: IMG.look3, name: "浅燕麦短款西装两件套休闲通勤", price: 680, type: "搭配" },
   { id: 6, img: IMG.wardrobe4, name: "中性简约穿搭", price: 599, type: "单品" },
+];
+
+// 购物车（Mock）：我的 → 购物车 页展示的商品
+export const cartData: CartItem[] = [
+  { id: 1, img: IMG.look1, name: "银色抹胸缎面礼服造型套装", spec: "裙长 M / 银色 长手套", price: 899, qty: 1, type: "搭配" },
+  { id: 2, img: IMG.wardrobe1, name: "白色薄棉衬衫", spec: "尺码 M / 白色", price: 269, qty: 2, type: "单品" },
+  { id: 3, img: IMG.look3, name: "浅燕麦短款西装两件套休闲通勤", spec: "尺码 L / 燕麦色", price: 680, qty: 1, type: "搭配" },
 ];
 
 export const couponsData: CouponData[] = [
