@@ -74,6 +74,8 @@ export default function App() {
   const [selectedTryOnItem, setSelectedTryOnItem] = useState<{ img: string; name: string; video?: string } | null>(null);
   const [selectedNote, setSelectedNote] = useState<NoteData | null>(null);
   const [showStylistQR, setShowStylistQR] = useState(false);
+  // 点击二维码后全屏放大展示
+  const [qrFullscreen, setQrFullscreen] = useState(false);
   const [showCallDialog, setShowCallDialog] = useState(false);
   const [showVipJoin, setShowVipJoin] = useState(false);
   const [vipPlan, setVipPlan] = useState<"month" | "season" | "year">("year");
@@ -403,7 +405,7 @@ export default function App() {
                 >
                   {/* Close */}
                   <button
-                    onClick={() => setShowStylistQR(false)}
+                    onClick={() => { setShowStylistQR(false); setQrFullscreen(false); }}
                     style={{
                       position: "absolute",
                       top: 12,
@@ -445,27 +447,86 @@ export default function App() {
                     长按识别二维码，添加企业微信,获取1对1穿搭服务
                   </div>
 
-                  {/* QR code placeholder */}
-                  <div style={{
-                    width: 200,
-                    height: 200,
-                    margin: "0 auto 16px",
-                    borderRadius: 16,
-                    background: "#f8f6f3",
-                    border: `2px solid ${ACCENT_LIGHT}`,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    position: "relative",
-                    overflow: "hidden",
-                  }}>
+                  {/* QR code placeholder（点击可全屏放大） */}
+                  <div
+                    onClick={(e) => { e.stopPropagation(); setQrFullscreen(true); }}
+                    style={{
+                      width: 200,
+                      height: 200,
+                      margin: "0 auto 10px",
+                      borderRadius: 16,
+                      background: "#f8f6f3",
+                      border: `2px solid ${ACCENT_LIGHT}`,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      position: "relative",
+                      overflow: "hidden",
+                      cursor: "zoom-in",
+                    }}
+                  >
                     <img
                       src={`${import.meta.env.BASE_URL}assets/stylist_qr.png`}
                       alt="企业微信二维码"
                       style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 14, display: "block" }}
                     />
                   </div>
+                  <div style={{ fontFamily: font, fontSize: 11, color: MUTED, marginBottom: 4 }}>
+                    点击二维码可全屏放大
+                  </div>
                 </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* QR fullscreen view */}
+          <AnimatePresence>
+            {qrFullscreen && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setQrFullscreen(false)}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "rgba(0,0,0,0.92)",
+                  zIndex: 200,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "32px",
+                }}
+              >
+                <motion.div
+                  initial={{ scale: 0.85, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.85, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 320, damping: 28 }}
+                  onClick={(e) => e.stopPropagation()}
+                  style={{
+                    width: "100%",
+                    maxWidth: 320,
+                    background: "#fff",
+                    borderRadius: 24,
+                    padding: 14,
+                    boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
+                  }}
+                >
+                  <img
+                    src={`${import.meta.env.BASE_URL}assets/stylist_qr.png`}
+                    alt="企业微信二维码"
+                    style={{ width: "100%", display: "block", borderRadius: 16 }}
+                  />
+                </motion.div>
+                <div style={{ fontFamily: font, fontSize: 14, fontWeight: 600, color: "#f5d9a8", marginTop: 20 }}>
+                  长按识别二维码，添加企业微信
+                </div>
+                <div style={{ fontFamily: font, fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 8 }}>
+                  点击任意处关闭
+                </div>
               </motion.div>
             )}
           </AnimatePresence>

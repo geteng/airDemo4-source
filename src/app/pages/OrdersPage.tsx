@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X } from "lucide-react";
+import { Sparkles, X } from "lucide-react";
 import { ACCENT, ACCENT_LIGHT, BG, CARD, font, MUTED, ordersData, TEXT } from "../constants";
 
 export function OrdersPage({
@@ -10,6 +10,9 @@ export function OrdersPage({
   initialTab?: string;
 }) {
   const [activeTab, setActiveTab] = useState(initialTab || "all");
+  // 订单列表内各操作按钮点击后的「敬请期待」弹窗
+  const [showComingSoon, setShowComingSoon] = useState(false);
+  const comingSoon = () => setShowComingSoon(true);
   const orderTabs = [
     { key: "all", label: "全部" },
     { key: "pending_pay", label: "待付款" },
@@ -83,21 +86,21 @@ export function OrdersPage({
                 <div style={{ padding: "8px 16px 14px", display: "flex", gap: 8, justifyContent: "flex-end" }}>
                   {order.status === "pending_pay" && (
                     <>
-                      <button style={{ padding: "7px 16px", borderRadius: 18, border: `1px solid ${ACCENT}`, background: "transparent", color: ACCENT, fontFamily: font, fontSize: 12, fontWeight: 500, cursor: "pointer" }}>取消订单</button>
-                      <button style={{ padding: "7px 16px", borderRadius: 18, border: "none", background: ACCENT, color: "#fff", fontFamily: font, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>去付款</button>
+                      <button onClick={comingSoon} style={{ padding: "7px 16px", borderRadius: 18, border: `1px solid ${ACCENT}`, background: "transparent", color: ACCENT, fontFamily: font, fontSize: 12, fontWeight: 500, cursor: "pointer" }}>取消订单</button>
+                      <button onClick={comingSoon} style={{ padding: "7px 16px", borderRadius: 18, border: "none", background: ACCENT, color: "#fff", fontFamily: font, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>去付款</button>
                     </>
                   )}
                   {order.status === "pending_ship" && (
-                    <button style={{ padding: "7px 16px", borderRadius: 18, border: `1px solid ${ACCENT}`, background: "transparent", color: ACCENT, fontFamily: font, fontSize: 12, fontWeight: 500, cursor: "pointer" }}>提醒发货</button>
+                    <button onClick={comingSoon} style={{ padding: "7px 16px", borderRadius: 18, border: `1px solid ${ACCENT}`, background: "transparent", color: ACCENT, fontFamily: font, fontSize: 12, fontWeight: 500, cursor: "pointer" }}>提醒发货</button>
                   )}
                   {order.status === "pending_review" && (
-                    <button style={{ padding: "7px 16px", borderRadius: 18, border: "none", background: ACCENT, color: "#fff", fontFamily: font, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>去评价</button>
+                    <button onClick={comingSoon} style={{ padding: "7px 16px", borderRadius: 18, border: "none", background: ACCENT, color: "#fff", fontFamily: font, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>去评价</button>
                   )}
                   {order.status === "refund" && (
-                    <button style={{ padding: "7px 16px", borderRadius: 18, border: `1px solid ${ACCENT}`, background: "transparent", color: ACCENT, fontFamily: font, fontSize: 12, fontWeight: 500, cursor: "pointer" }}>查看详情</button>
+                    <button onClick={comingSoon} style={{ padding: "7px 16px", borderRadius: 18, border: `1px solid ${ACCENT}`, background: "transparent", color: ACCENT, fontFamily: font, fontSize: 12, fontWeight: 500, cursor: "pointer" }}>查看详情</button>
                   )}
                   {order.status === "done" && (
-                    <button style={{ padding: "7px 16px", borderRadius: 18, border: `1px solid ${ACCENT}`, background: "transparent", color: ACCENT, fontFamily: font, fontSize: 12, fontWeight: 500, cursor: "pointer" }}>再次购买</button>
+                    <button onClick={comingSoon} style={{ padding: "7px 16px", borderRadius: 18, border: `1px solid ${ACCENT}`, background: "transparent", color: ACCENT, fontFamily: font, fontSize: 12, fontWeight: 500, cursor: "pointer" }}>再次购买</button>
                   )}
                 </div>
               </div>
@@ -105,6 +108,74 @@ export function OrdersPage({
           </div>
         )}
       </div>
+
+      {/* 敬请期待弹窗 */}
+      {showComingSoon && (
+        <div
+          onClick={() => setShowComingSoon(false)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.6)",
+            zIndex: 150,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "28px",
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: "100%",
+              maxWidth: 300,
+              background: CARD,
+              border: "1px solid rgba(212,165,106,0.3)",
+              borderRadius: 20,
+              padding: "26px 22px 20px",
+              textAlign: "center",
+              boxShadow: "0 18px 50px rgba(0,0,0,0.55)",
+            }}
+          >
+            <div
+              style={{
+                width: 64,
+                height: 64,
+                borderRadius: "50%",
+                background: "rgba(212,165,106,0.14)",
+                margin: "0 auto 14px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Sparkles size={30} color={ACCENT} />
+            </div>
+            <div style={{ fontFamily: font, fontSize: 18, fontWeight: 800, color: TEXT }}>敬请期待</div>
+            <div style={{ fontFamily: font, fontSize: 13, color: MUTED, marginTop: 8, lineHeight: 1.65 }}>
+              该功能正在开发中，敬请期待
+            </div>
+            <button
+              onClick={() => setShowComingSoon(false)}
+              style={{
+                width: "100%",
+                marginTop: 18,
+                padding: "12px 0",
+                borderRadius: 22,
+                border: "none",
+                background: `linear-gradient(90deg, ${ACCENT}, #d4a56a)`,
+                color: "#18160F",
+                fontFamily: font,
+                fontSize: 15,
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              我知道了
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

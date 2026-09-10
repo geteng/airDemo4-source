@@ -20,6 +20,8 @@ export function RecommendPage({
   const resumeTimer = useRef<ReturnType<typeof setTimeout>>();
   // 「立即购买」点击后的视觉反馈状态
   const [purchasedId, setPurchasedId] = useState<number | null>(null);
+  // 「更多穿搭建议」点击后的「敬请期待」弹窗
+  const [showComingSoon, setShowComingSoon] = useState(false);
 
   const scenes = ["约会", "通勤", "旅行"];
   const sceneLooks = looks.filter((l) => l.scene === activeScene);
@@ -306,16 +308,85 @@ export function RecommendPage({
         })}
       </div>
 
-      {/* 更多穿搭建议 */}
+      {/* 更多穿搭建议（点击提示敬请期待） */}
       <div
-        style={{ margin: "24px 20px 0", background: ACCENT_LIGHT, borderRadius: 18, padding: "20px 18px", display: "flex", alignItems: "center", gap: 14 }}
+        onClick={() => setShowComingSoon(true)}
+        style={{ margin: "24px 20px 0", background: ACCENT_LIGHT, borderRadius: 18, padding: "20px 18px", display: "flex", alignItems: "center", gap: 14, cursor: "pointer" }}
       >
         <Sparkles size={28} color={ACCENT} />
-        <div>
+        <div style={{ flex: 1 }}>
           <div style={{ fontFamily: font, fontSize: 14, fontWeight: 700, color: TEXT }}>更多穿搭建议</div>
           <div style={{ fontFamily: font, fontSize: 12, color: MUTED, marginTop: 2 }}>根据你的身材与喜好，每日更新专属搭配</div>
         </div>
       </div>
+
+      {/* 敬请期待弹窗 */}
+      {showComingSoon && (
+        <div
+          onClick={() => setShowComingSoon(false)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.6)",
+            zIndex: 150,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "28px",
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: "100%",
+              maxWidth: 300,
+              background: CARD,
+              border: "1px solid rgba(212,165,106,0.3)",
+              borderRadius: 20,
+              padding: "26px 22px 20px",
+              textAlign: "center",
+              boxShadow: "0 18px 50px rgba(0,0,0,0.55)",
+            }}
+          >
+            <div
+              style={{
+                width: 64,
+                height: 64,
+                borderRadius: "50%",
+                background: "rgba(212,165,106,0.14)",
+                margin: "0 auto 14px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Sparkles size={30} color={ACCENT} />
+            </div>
+            <div style={{ fontFamily: font, fontSize: 18, fontWeight: 800, color: TEXT }}>敬请期待</div>
+            <div style={{ fontFamily: font, fontSize: 13, color: MUTED, marginTop: 8, lineHeight: 1.65 }}>
+              更多专属穿搭建议正在打磨中，上线后将第一时间为你更新
+            </div>
+            <button
+              onClick={() => setShowComingSoon(false)}
+              style={{
+                width: "100%",
+                marginTop: 18,
+                padding: "12px 0",
+                borderRadius: 22,
+                border: "none",
+                background: `linear-gradient(90deg, ${ACCENT}, #d4a56a)`,
+                color: "#18160F",
+                fontFamily: font,
+                fontSize: 15,
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              我知道了
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
