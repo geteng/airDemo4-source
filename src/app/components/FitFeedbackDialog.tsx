@@ -14,7 +14,7 @@ const AVATAR_ISSUES = [
   "看起来偏瘦",
   "身高/腿比例不对",
   "腰腹比例不对",
-  "脸/姿态不像我",
+  "脸不像我",
 ];
 
 const FIT_ISSUES = [
