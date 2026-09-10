@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Sparkles, Check, Share2 } from "lucide-react";
-import { ACCENT, ACCENT_LIGHT, CARD, TEXT, MUTED, BG, font } from "../constants";
+import { ACCENT, ACCENT_LIGHT, CARD, getTryonVideoBySlot, TEXT, MUTED, BG, font } from "../constants";
 
 const TRYON_VIDEO_FALLBACK =
   "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/1.mp4";
@@ -10,16 +10,19 @@ export function TryOnPage({
   item,
   onBack,
 }: {
-  item: { img: string; name: string; video?: string };
+  item: { img: string; name: string; slot: number };
   onBack: () => void;
 }) {
-  const tryonVideo = item.video ?? TRYON_VIDEO_FALLBACK;
+  // 视频来源：当前「默认试衣形象」+ 当前穿搭「槽位」共同决定（对照表见 constants.ts）
+  const tryonVideo = getTryonVideoBySlot(item.slot) || TRYON_VIDEO_FALLBACK;
   const tryonSnapshot = `${tryonVideo}?x-tos-process=video/snapshot%2Ct_1`;
 
   const [stage, setStage] = useState<"analyzing" | "generating" | "result">("analyzing");
   const [progress, setProgress] = useState(0);
   const [showVideo, setShowVideo] = useState(false);
   const [smallPlaying, setSmallPlaying] = useState(false);
+  // 视频首帧截图取不到时降级为纯色占位（仍可点击播放）
+  const [snapshotFailed, setSnapshotFailed] = useState(false);
 
   const smallVideoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -118,11 +121,22 @@ export function TryOnPage({
                       onClick={startSmallPlay}
                       style={{ position: "absolute", inset: 0, cursor: "pointer" }}
                     >
-                      <img
-                        src={tryonSnapshot}
-                        alt="AI试衣效果"
-                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                      />
+                      {snapshotFailed ? (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            background: `linear-gradient(180deg, ${ACCENT_LIGHT} 0%, rgba(184,135,74,0.1) 100%)`,
+                          }}
+                        />
+                      ) : (
+                        <img
+                          src={tryonSnapshot}
+                          alt="AI试衣效果"
+                          onError={() => setSnapshotFailed(true)}
+                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        />
+                      )}
                       <div style={{
                         position: "absolute",
                         top: 6,

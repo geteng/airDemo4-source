@@ -3,6 +3,7 @@ import type {
   CouponData,
   FavoriteData,
   Look,
+  MyModel,
   NoteData,
   OrderData,
   ProductDetail,
@@ -184,6 +185,107 @@ export const looks: Look[] = [
     video: "https://admins3.tos-cn-shanghai.volces.com/Ai-Video/5.mp4",
   },
 ];
+
+// ─── 我的专属形象（Mock 数据）───────────────────────────────────────────────
+// 列表页（我的 → 我的专属形象）展示的 3 个形象，对应下面 MODEL_TRYON_VIDEOS 的 3 组视频
+export const myModelsData: MyModel[] = [
+  {
+    id: 1,
+    img: "https://admins3.tos-cn-shanghai.volces.com/tmp_522c5ade4151f7432fdd91ca07e92b61.jpg",
+    height: "160cm",
+  },
+  {
+    id: 2,
+    img: "https://admins3.tos-cn-shanghai.volces.com/tmp_b8b0264f8af7a7b01ff823cdedd27817.jpg",
+    height: "160cm",
+    defective: true,
+  },
+  {
+    id: 3,
+    img: "https://admins3.tos-cn-shanghai.volces.com/PXmRWyidzR1ahzB.jpeg",
+    height: "160cm",
+  },
+];
+
+// ─── 专属形象 × AI 试衣视频 对照表 ──────────────────────────────────────────
+// 每个专属形象（全身照）各有 6 段 AI 试衣视频，按「穿搭槽位」1~6 取用：
+//   全身照1 → 视频1~6（tmp_522c5ade...jpg）
+//   全身照2 → 视频1~6（tmp_b8b0264f...jpg）
+//   全身照3 → 视频1~6（PXmRWyidzR1ahzB.jpeg）
+// 「今日推荐搭配--我的上身效果」页面展示哪一段，取决于「默认试衣形象 + 穿搭槽位」，
+// 穿搭槽位由 LOOK_TRYON_SLOT 定义。
+export const MODEL_TRYON_VIDEOS: Record<string, string[]> = {
+  // 全身照1
+  "https://admins3.tos-cn-shanghai.volces.com/tmp_522c5ade4151f7432fdd91ca07e92b61.jpg": [
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_154749_f44d7dc4.mp4",
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_160523_22ba6810.mp4",
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_161312_b1b57790.mp4",
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_161143_31cc84e3.mp4",
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_161140_10e40a40.mp4",
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_161139_609e8ba9.mp4",
+  ],
+  // 全身照2
+  "https://admins3.tos-cn-shanghai.volces.com/tmp_b8b0264f8af7a7b01ff823cdedd27817.jpg": [
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_163719_d9a67c16.mp4",
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_163212_19bb32a0.mp4",
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_163218_81801c7b.mp4",
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_164354_8ca79368.mp4",
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_163248_8e4e2881.mp4",
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_163808_f75235f7.mp4",
+  ],
+  // 全身照3
+  "https://admins3.tos-cn-shanghai.volces.com/PXmRWyidzR1ahzB.jpeg": [
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_165435_d3576db0.mp4",
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_164611_be5d2a92.mp4",
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_164616_b33b8ac8.mp4",
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_165444_f5f4d9da.mp4",
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_164629_2215a460.mp4",
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_165733_ad3ca715.mp4",
+  ],
+};
+
+// 穿搭入口（Look.id）→ 视频槽位（1~6）
+// 首页「今日推荐穿搭」轮播 3 套 → 视频 1~3；推荐页 / 穿搭详情页 3 套 → 视频 4~6
+export const LOOK_TRYON_SLOT: Record<number, number> = {
+  11: 1,
+  12: 2,
+  13: 3,
+  1: 4,
+  2: 5,
+  3: 6,
+};
+
+// 默认试衣形象（localStorage 持久化，key 存全身照 URL）
+export const DEFAULT_MODEL_STORAGE_KEY = "airU_default_model_photo";
+
+// 读取当前默认试衣形象；未设置过时回退到列表第一个形象
+export function getDefaultModelPhoto(): string {
+  try {
+    const saved = localStorage.getItem(DEFAULT_MODEL_STORAGE_KEY);
+    if (saved && MODEL_TRYON_VIDEOS[saved]) return saved;
+  } catch {
+    // localStorage 不可用时忽略
+  }
+  return myModelsData[0].img;
+}
+
+// 设置默认试衣形象（写入本地，刷新页面后仍生效）
+export function setDefaultModelPhoto(photo: string) {
+  try {
+    localStorage.setItem(DEFAULT_MODEL_STORAGE_KEY, photo);
+  } catch {
+    // localStorage 不可用时忽略
+  }
+}
+
+// 按「当前默认形象 + 穿搭槽位」取对应的 AI 试衣视频
+export function getTryonVideoBySlot(slot: number): string {
+  const photo = getDefaultModelPhoto();
+  const videos =
+    MODEL_TRYON_VIDEOS[photo] ?? MODEL_TRYON_VIDEOS[myModelsData[0].img];
+  if (!videos || videos.length === 0) return "";
+  return videos[(slot - 1 + videos.length) % videos.length];
+}
 
 export const productDetails: Record<number, ProductDetail> = {
   // 穿搭定制页：通勤 / 约会 / 旅行

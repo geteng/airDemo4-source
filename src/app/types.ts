@@ -38,6 +38,15 @@ export interface Look {
   video?: string;
 }
 
+// 我的专属形象（Mock）：一张全身照对应一段可试衣的 AI 形象
+export interface MyModel {
+  id: number;
+  img: string;
+  height: string;
+  // 形象部分细节识别不完整（列表页展示「该形象可优化」）
+  defective?: boolean;
+}
+
 export interface WardrobeItem {
   id: number;
   img: string;

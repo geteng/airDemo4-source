@@ -15,7 +15,7 @@ import {
   X,
   Zap,
 } from "lucide-react";
-import { ACCENT, ACCENT_LIGHT, BG, CARD, font, IMG, MUTED, NAV_ACTIVE, NAV_BG, NAV_INACTIVE, STYLIST_NAME, TEXT } from "./constants";
+import { ACCENT, ACCENT_LIGHT, BG, CARD, font, IMG, LOOK_TRYON_SLOT, MUTED, NAV_ACTIVE, NAV_BG, NAV_INACTIVE, STYLIST_NAME, TEXT } from "./constants";
 import { initStayDuration, reportPageLeave, trackEvent, trackScrollDepth } from "./track";
 import type { Look, MockUser, NoteData, SubPage, Tab } from "./types";
 
@@ -72,7 +72,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [subPage, setSubPage] = useState<SubPage>(null);
   const [selectedLook, setSelectedLook] = useState<Look | null>(null);
-  const [selectedTryOnItem, setSelectedTryOnItem] = useState<{ img: string; name: string; video?: string } | null>(null);
+  const [selectedTryOnItem, setSelectedTryOnItem] = useState<{ img: string; name: string; slot: number } | null>(null);
   const [selectedNote, setSelectedNote] = useState<NoteData | null>(null);
   const [showStylistQR, setShowStylistQR] = useState(false);
   // 点击二维码后全屏放大展示
@@ -215,10 +215,15 @@ export default function App() {
     if (look) setSelectedLook(look);
     setSubPage("product");
   };
-  const handleGoTryOn = (item: { img: string; name: string; video?: string }) => {
+  // 进入 AI 试衣：展示的视频由「当前默认试衣形象 + 穿搭槽位」共同决定（对照表见 constants.ts）
+  const handleGoTryOn = (item: { img: string; name: string; lookId: number }) => {
     // 埋点【click_nav】：位置=推荐页「AI 试衣」卡片 → 进入 AI 虚拟试衣；用途=统计试衣页跳转
     trackEvent("click_nav", { page: "tryon", item: item.name }, `跳转 AI 试衣：${item.name}`);
-    setSelectedTryOnItem(item);
+    setSelectedTryOnItem({
+      img: item.img,
+      name: item.name,
+      slot: LOOK_TRYON_SLOT[item.lookId] ?? 1,
+    });
     setSubPage("tryon");
   };
   const handleGoNote = (note: NoteData) => {
@@ -303,7 +308,7 @@ export default function App() {
                 style={{ position: "absolute", inset: 0 }}
               >
                 {activeTab === "home" && <HomePage onGoProduct={handleGoProduct} onGoNote={handleGoNote} onGoVipJoin={() => { /* 埋点【click_nav】：首页「加入会员」横幅 → 弹出 VIP 开通弹窗 */ trackEvent("click_nav", { page: "vip_join" }, "首页加入会员横幅（弹 VIP 弹窗）"); setShowVipJoin(true); }} onGoStylist={handleGoStylist} />}
-                {activeTab === "recommend" && <RecommendPage onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title, video: look.video })} likedIds={likedIds} onToggleLike={handleLikeClick} />}
+                {activeTab === "recommend" && <RecommendPage onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title, lookId: look.id })} likedIds={likedIds} onToggleLike={handleLikeClick} />}
                 {activeTab === "mine" && <MinePage
                   currentUser={user}
                   onLogout={() => { /* 切换账号：回到模拟微信登录页 */ setUser(null); setSubPage(null); }}
@@ -544,7 +549,7 @@ export default function App() {
                 style={{ position: "absolute", inset: 0, background: BG, zIndex: 20 }}
               >
                 {subPage === "live" && <LivePage onBack={handleBack} onGoProduct={handleGoProduct} />}
-                {subPage === "product" && <ProductPage look={selectedLook} onBack={handleBack} liked={selectedLook ? likedIds.has(selectedLook.id) : false} onToggleLike={() => { if (selectedLook) handleLikeClick(selectedLook.id); }} onGoTryOn={() => handleGoTryOn({ img: selectedLook?.img ?? IMG.product, name: selectedLook?.title ?? "高级感白领风", video: selectedLook?.video })} />}
+                {subPage === "product" && <ProductPage look={selectedLook} onBack={handleBack} liked={selectedLook ? likedIds.has(selectedLook.id) : false} onToggleLike={() => { if (selectedLook) handleLikeClick(selectedLook.id); }} onGoTryOn={() => handleGoTryOn({ img: selectedLook?.img ?? IMG.product, name: selectedLook?.title ?? "高级感白领风", lookId: selectedLook?.id ?? 1 })} />}
                 {subPage === "tryon" && selectedTryOnItem && <TryOnPage item={selectedTryOnItem} onBack={handleBack} />}
                 {subPage === "note" && selectedNote && <NoteDetailPage note={selectedNote} onBack={handleBack} />}
                 {subPage === "wardrobe" && <WardrobePage onBack={handleBack} />}
