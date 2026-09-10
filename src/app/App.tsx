@@ -345,7 +345,8 @@ export default function App() {
               style={{
                 position: "absolute",
                 right: 0,
-                top: "calc(50% - 30px)",
+                // 浮窗位置：由垂直居中下移约 1/4 屏（50% → 75%）
+                top: "calc(75% - 30px)",
                 background: "#EDC297",
                 color: "#322302",
                 border: "none",
