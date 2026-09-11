@@ -227,16 +227,6 @@ export default function App() {
     });
     setSubPage("tryon");
   };
-  const handleGoNote = (note: NoteData) => {
-    // 埋点【click_nav】：位置=首页种草笔记卡片 → 打开笔记；用途=统计笔记打开/外链跳转
-    trackEvent("click_nav", { page: "note", note: note.title }, `打开种草笔记：${note.title}`);
-    if (note.link) {
-      window.open(note.link, "_blank");
-      return;
-    }
-    setSelectedNote(note);
-    setSubPage("note");
-  };
   const handleBack = () => {
     // 埋点【click_nav】：位置=各次级页面顶部返回按钮；用途=统计返回行为及来源
     trackEvent("click_nav", { page: "back", from: subPage }, `返回上一页（来自：${subPage ?? "未知"}）`);
@@ -309,7 +299,7 @@ export default function App() {
                 transition={{ duration: 0.22, ease: "easeInOut" }}
                 style={{ position: "absolute", inset: 0 }}
               >
-                {activeTab === "home" && <HomePage onGoProduct={handleGoProduct} onGoNote={handleGoNote} onGoVipJoin={() => { /* 埋点【click_nav】：首页「加入会员」横幅 → 弹出 VIP 开通弹窗 */ trackEvent("click_nav", { page: "vip_join" }, "首页加入会员横幅（弹 VIP 弹窗）"); setShowVipJoin(true); }} onGoStylist={handleGoStylist} />}
+                {activeTab === "home" && <HomePage onGoProduct={handleGoProduct} onGoVipJoin={() => { /* 埋点【click_nav】：首页「加入会员」横幅 → 弹出 VIP 开通弹窗 */ trackEvent("click_nav", { page: "vip_join" }, "首页加入会员横幅（弹 VIP 弹窗）"); setShowVipJoin(true); }} onGoStylist={handleGoStylist} />}
                 {activeTab === "recommend" && <RecommendPage onGoTryOn={(look) => handleGoTryOn({ img: look.img, name: look.title, lookId: look.id })} likedIds={likedIds} onToggleLike={handleLikeClick} />}
                 {activeTab === "mine" && <MinePage
                   currentUser={user}
