@@ -239,7 +239,7 @@ export const MODEL_TRYON_VIDEOS: Record<string, string[]> = {
     "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_163218_81801c7b.mp4",
     "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_164354_8ca79368.mp4",
     "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_163248_8e4e2881.mp4",
-    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260910_163808_f75235f7.mp4",
+    "https://test-assets.tos-cn-shanghai.volces.com/videos/20260914_190917_75120fab.mp4",
   ],
   // 全身照3
   "https://admins3.tos-cn-shanghai.volces.com/PXmRWyidzR1ahzB.jpeg": [
