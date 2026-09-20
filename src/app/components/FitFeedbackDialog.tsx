@@ -32,7 +32,7 @@ export function FitFeedbackDialog({
   onSetAvatar,
 }: {
   onConsult: () => void;
-  // 《去调整形象》：跳转到「我的专属形象」列表页
+  // 《去新建形象》：跳转到「我的专属形象」列表页
   onAdjust: () => void;
   // 《设置数字形象》：跳转到数字形象设置页（上传/更换形象照片）
   onSetAvatar: () => void;
@@ -41,7 +41,7 @@ export function FitFeedbackDialog({
   const [picked, setPicked] = useState<string[]>([]);
 
   // 进入详情页停留 12 秒后弹出：
-  // 本会话内点过「去调整形象」（内存已记录）→ 只提示已用完；否则 → 效果反馈选择窗
+  // 本会话内点过「去新建形象」（内存已记录）→ 只提示已用完；否则 → 效果反馈选择窗
   useEffect(() => {
     const t = setTimeout(() => {
       setDialog(adjustUsedCount > 0 ? "done" : "choose");
@@ -71,7 +71,7 @@ export function FitFeedbackDialog({
     setTimeout(() => setDialog("fit"), 200);
   };
 
-  // 《去调整形象》：内存中记一次已用过（之后再次进入只提示已用完，刷新页面后重置），
+  // 《去新建形象》：内存中记一次已用过（之后再次进入只提示已用完，刷新页面后重置），
   // 并跳转到「我的专属形象」列表页
   const confirmAdjust = () => {
     adjustUsedCount += 1;
@@ -293,21 +293,10 @@ export function FitFeedbackDialog({
                   );
                 })}
               </div>
-              <div style={{ fontFamily: font, fontSize: 12.5, color: MUTED, lineHeight: 1.6, marginBottom: 3 }}>
-                可以立即调整你的数字形象，不影响衣服尺码判断
-              </div>
-              <div style={{ fontFamily: font, fontSize: 12.5, color: "#f0d7ae", fontWeight: 700, marginBottom: 14 }}>
-                您还有1次免费调整数字形象机会
-              </div>
-              <div style={{ display: "flex", gap: 10 }}>
-                <button onClick={close} style={ghostBtn}>取消</button>
-                <button onClick={confirmAdjust} style={primaryBtn}>去调整形象</button>
-              </div>
               <button
                 onClick={goSetAvatar}
                 style={{
                   width: "100%",
-                  marginTop: 10,
                   padding: "12px",
                   borderRadius: 22,
                   border: "1px solid rgba(212,165,106,0.5)",
@@ -321,6 +310,17 @@ export function FitFeedbackDialog({
               >
                 设置数字形象
               </button>
+              <div style={{ height: 1, background: "rgba(244,236,224,0.14)", margin: "14px 0 12px" }} />
+              <div style={{ fontFamily: font, fontSize: 12.5, color: MUTED, lineHeight: 1.6, marginBottom: 3 }}>
+                可以立即调整你的数字形象，不影响衣服尺码判断
+              </div>
+              <div style={{ fontFamily: font, fontSize: 12.5, color: "#f0d7ae", fontWeight: 700, marginBottom: 14 }}>
+                您还有1次免费调整数字形象机会
+              </div>
+              <div style={{ display: "flex", gap: 10 }}>
+                <button onClick={close} style={ghostBtn}>取消</button>
+                <button onClick={confirmAdjust} style={primaryBtn}>去新建形象</button>
+              </div>
             </motion.div>
           )}
 
