@@ -29,10 +29,13 @@ const FIT_ISSUES = [
 export function FitFeedbackDialog({
   onConsult,
   onAdjust,
+  onSetAvatar,
 }: {
   onConsult: () => void;
   // 《去调整形象》：跳转到「我的专属形象」列表页
   onAdjust: () => void;
+  // 《设置数字形象》：跳转到数字形象设置页（上传/更换形象照片）
+  onSetAvatar: () => void;
 }) {
   const [dialog, setDialog] = useState<Dialog>(null);
   const [picked, setPicked] = useState<string[]>([]);
@@ -74,6 +77,12 @@ export function FitFeedbackDialog({
     adjustUsedCount += 1;
     close();
     onAdjust();
+  };
+
+  // 《设置数字形象》：关闭弹窗并跳转到数字形象设置页（不消耗免费调整次数）
+  const goSetAvatar = () => {
+    close();
+    onSetAvatar();
   };
 
   // 《咨询》：关闭当前弹窗并唤起咨询老师二维码
@@ -268,6 +277,9 @@ export function FitFeedbackDialog({
               <button onClick={close} style={closeXBtn} aria-label="关闭">
                 <X size={16} color="#e6dccb" />
               </button>
+              <div style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: TEXT, marginBottom: 12 }}>
+                调整
+              </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 14 }}>
                 {AVATAR_ISSUES.map((item) => {
                   const active = picked.includes(item);
@@ -291,6 +303,24 @@ export function FitFeedbackDialog({
                 <button onClick={close} style={ghostBtn}>取消</button>
                 <button onClick={confirmAdjust} style={primaryBtn}>去调整形象</button>
               </div>
+              <button
+                onClick={goSetAvatar}
+                style={{
+                  width: "100%",
+                  marginTop: 10,
+                  padding: "12px",
+                  borderRadius: 22,
+                  border: "1px solid rgba(212,165,106,0.5)",
+                  background: "rgba(212,165,106,0.14)",
+                  color: "#f0d7ae",
+                  fontFamily: font,
+                  fontSize: 14.5,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                }}
+              >
+                设置数字形象
+              </button>
             </motion.div>
           )}
 

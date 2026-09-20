@@ -985,6 +985,11 @@ export default function App() {
               trackEvent("click_nav", { page: "myModels" }, "12秒弹窗：去调整形象");
               setSubPage("myModels");
             }}
+            onSetAvatar={() => {
+              /* 埋点【click_nav】：详情页 12 秒弹窗「设置数字形象」→ 数字形象设置页 */
+              trackEvent("click_nav", { page: "identity" }, "12秒弹窗：设置数字形象");
+              setSubPage("identity");
+            }}
           />
         )}
           </>
